@@ -1,0 +1,37 @@
+diff --git a/src/grammar.pegjs b/src/grammar.pegjs
+index 9d1d625..8d85b83 100644
+--- a/src/grammar.pegjs
++++ b/src/grammar.pegjs
+@@ -204,7 +204,7 @@ postfixControlFlowExpression
+             postfix = postfixContainer[1],
+             indicator = postfix.type;
+         switch(indicator){
+-          case 'if':
++          case 'если':
+           case 'unless':
+             raw = expr.raw + ws + postfix.raw;
+             constructor = (indicator == 'unless') ? CS.NegatedConditional : CS.Conditional;
+@@ -1071,12 +1071,12 @@ CLASS = w:"class" !identifierPart { return w; }
+ DELETE = w:"delete" !identifierPart { return w; }
+ DEBUGGER = w:"debugger" !identifierPart { return w; }
+ DO = w:"do" !identifierPart { return w; }
+-ELSE = w:"else" !identifierPart { return w; }
++ELSE = w:"иначе" !identifierPart { return w; }
+ EXTENDS = w:"extends" !identifierPart { return w; }
+ FALSE = w:"false" !identifierPart { return w; }
+ FINALLY = w:"finally" !identifierPart { return w; }
+ FOR = w:"for" !identifierPart { return w; }
+-IF = w:"if" !identifierPart { return w; }
++IF = w:"если" !identifierPart { return w; }
+ IN = w:"in" !identifierPart { return w; }
+ INSTANCEOF = w:"instanceof" !identifierPart { return w; }
+ IS = w:"is" !identifierPart { return w; }
+@@ -1109,7 +1109,7 @@ YES = w:"yes" !identifierPart { return w; }
+ SharedKeywords
+   = ("true" / "false" / "null" / "this" / "new" / "delete" / "typeof" /
+   "instanceof" / "in" / "return" / "throw" / "break" / "continue" / "debugger" /
+-  "if" / "else" / "switch" / "for" / "while" / "do" / "try" / "catch" /
++  "если" /"иначе" / "switch" / "for" / "while" / "do" / "try" / "catch" /
+   "finally" / "class" / "extends" / "super") !identifierPart
+ 
+ JSKeywords

@@ -10,3 +10,9 @@ https://github.com/michaelficarra/CoffeeScriptRedux
 
 Рабочее название языка - "Пропись".
 
+### Наложение патча
+
+	git co https://github.com/michaelficarra/CoffeeScriptRedux.git
+	git co https://github.com/app/propis.git
+	cd CoffeeScriptRedux
+	git apply ../propis/propis.patch

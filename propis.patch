@@ -1,16 +1,34 @@
 diff --git a/src/grammar.pegjs b/src/grammar.pegjs
-index 9d1d625..8d85b83 100644
+index 9d1d625..d8973de 100644
 --- a/src/grammar.pegjs
 +++ b/src/grammar.pegjs
-@@ -204,7 +204,7 @@ postfixControlFlowExpression
+@@ -204,11 +204,11 @@ postfixControlFlowExpression
              postfix = postfixContainer[1],
              indicator = postfix.type;
          switch(indicator){
 -          case 'if':
+-          case 'unless':
 +          case 'если':
-           case 'unless':
++          case 'еслине':
              raw = expr.raw + ws + postfix.raw;
-             constructor = (indicator == 'unless') ? CS.NegatedConditional : CS.Conditional;
+-            constructor = (indicator == 'unless') ? CS.NegatedConditional : CS.Conditional;
+-            cond = (indicator == 'unless') ? new CS.LogicalNotOp(postfix.cond).g() : postfix.cond;
++            constructor = (indicator == 'еслине') ? CS.NegatedConditional : CS.Conditional;
++            cond = (indicator == 'еслине') ? new CS.LogicalNotOp(postfix.cond).g() : postfix.cond;
+             return new constructor(cond, expr, null).r(raw).p(line, column, offset)
+           case 'while':
+           case 'until':
+@@ -523,8 +523,8 @@ spread
+ conditional
+   = kw:(IF / UNLESS) ws0:_ cond:assignmentExpression body:conditionalBody elseClause:elseClause? {
+       var raw = kw + ws0 + cond.raw + body.raw + (elseClause ? elseClause.raw : '');
+-      var constructor = kw == 'unless' ? CS.NegatedConditional : CS.Conditional;
+-      if(kw == 'unless') cond = new CS.LogicalNotOp(cond).g();
++      var constructor = kw == 'еслине' ? CS.NegatedConditional : CS.Conditional;
++      if(kw == 'еслине') cond = new CS.LogicalNotOp(cond).g();
+       var elseBlock = elseClause ? elseClause.block : null;
+       return new constructor(cond, body.block, elseBlock).r(raw).p(line, column, offset);
+     }
 @@ -1071,12 +1071,12 @@ CLASS = w:"class" !identifierPart { return w; }
  DELETE = w:"delete" !identifierPart { return w; }
  DEBUGGER = w:"debugger" !identifierPart { return w; }
@@ -26,6 +44,15 @@ index 9d1d625..8d85b83 100644
  IN = w:"in" !identifierPart { return w; }
  INSTANCEOF = w:"instanceof" !identifierPart { return w; }
  IS = w:"is" !identifierPart { return w; }
+@@ -1100,7 +1100,7 @@ TRUE = w:"true" !identifierPart { return w; }
+ TRY = w:"try" !identifierPart { return w; }
+ TYPEOF = w:"typeof" !identifierPart { return w; }
+ UNDEFINED = w:"undefined" !identifierPart { return w; }
+-UNLESS = w:"unless" !identifierPart { return w; }
++UNLESS = w:"еслине" !identifierPart { return w; }
+ UNTIL = w:"until" !identifierPart { return w; }
+ WHEN = w:"when" !identifierPart { return w; }
+ WHILE = w:"while" !identifierPart { return w; }
 @@ -1109,7 +1109,7 @@ YES = w:"yes" !identifierPart { return w; }
  SharedKeywords
    = ("true" / "false" / "null" / "this" / "new" / "delete" / "typeof" /
@@ -35,3 +62,12 @@ index 9d1d625..8d85b83 100644
    "finally" / "class" / "extends" / "super") !identifierPart
  
  JSKeywords
+@@ -1118,7 +1118,7 @@ JSKeywords
+   "package" / "private" / "protected" / "public" / "static" / "yield") !identifierPart
+ 
+ CSKeywords
+-  = ("undefined" / "then" / "unless" / "until" / "loop" / "off" / "by" / "when" /
++  = ("undefined" / "then" / "еслине" / "until" / "loop" / "off" / "by" / "when" /
+   "and" / "or" / "isnt" / "is" / "not" / "yes" / "no" / "on" / "of") !identifierPart
+ 
+ StandardPredefinedMacros

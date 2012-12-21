@@ -1,0 +1,340 @@
+diff --git a/test/assignment.coffee b/test/assignment.coffee
+index afadf17..b49e872 100644
+--- a/test/assignment.coffee
++++ b/test/assignment.coffee
+@@ -211,7 +211,7 @@ suite 'Assignment', ->
+ 
+     test "destructuring assignment against an expression", ->
+       a={}; b={}
+-      [y, z] = if true then [a, b] else [b, a]
++      [y, z] = если true then [a, b] иначе [b, a]
+       eq a, y
+       eq b, z
+ 
+@@ -304,7 +304,7 @@ suite 'Assignment', ->
+       #the first ?= compiles into a statement; the second ?= compiles to a ternary expression
+       eq a ?= b ?= 1, nonce
+ 
+-      if a then a ?= 2 else a = 3
++      если a then a ?= 2 иначе a = 3
+       eq a, nonce
+ 
+     #test "#1591, #1101: splatted expressions in destructuring assignment must be assignable", ->
+diff --git a/test/classes.coffee b/test/classes.coffee
+index c06ff49..e0ddc6e 100644
+--- a/test/classes.coffee
++++ b/test/classes.coffee
+@@ -151,9 +151,9 @@ suite 'Classes', ->
+     #test 'exectuable class bodies', ->
+     #
+     #  class A
+-    #    if true
++    #    если true
+     #      b: 'b'
+-    #    else
++    #    иначе
+     #      c: 'c'
+     #
+     #  a = new A
+@@ -166,9 +166,9 @@ suite 'Classes', ->
+       class Base
+         @attr = (name) ->
+           @::[name] = (val) ->
+-            if arguments.length > 0
++            если arguments.length > 0
+               @["_#{name}"] = val
+-            else
++            иначе
+               @["_#{name}"]
+ 
+       class Robot extends Base
+@@ -467,7 +467,7 @@ suite 'Classes', ->
+     #
+     #  # Ensure that constructors invoked with splats cache the function.
+     #  called = 0
+-    #  get = -> if called++ then false else class Type
++    #  get = -> если called++ then false иначе class Type
+     #  new get() args...
+ 
+     test '`new` shouldn\'t add extra parens', ->
+diff --git a/test/debugger.coffee b/test/debugger.coffee
+index f42d361..9021eb5 100644
+--- a/test/debugger.coffee
++++ b/test/debugger.coffee
+@@ -15,4 +15,4 @@ suite 'Debugger', ->
+ 
+   test 'function with conditional debugger as last statement', ->
+     x = true
+-    if x then debugger
++    если x then debugger
+diff --git a/test/function-invocation.coffee b/test/function-invocation.coffee
+index 27e43aa..3e8867c 100644
+--- a/test/function-invocation.coffee
++++ b/test/function-invocation.coffee
+@@ -4,7 +4,7 @@ suite 'Function Invocation', ->
+ # * Splats in Function Invocations
+ # * Implicit Returns
+ # * Explicit Returns
+-  id = (_) -> if arguments.length is 1 then _ else [].slice.call arguments
++  id = (_) -> если arguments.length is 1 then _ иначе [].slice.call arguments
+ 
+   test "basic argument passing", ->
+     a = {}
+@@ -51,7 +51,7 @@ suite 'Function Invocation', ->
+ 
+   test "function invocation", ->
+     func = ->
+-      return if true
++      return если true
+     eq undefined, func()
+     result = ("hello".slice) 3
+     ok result is 'lo'
+@@ -134,9 +134,9 @@ suite 'Function Invocation', ->
+   #    2 + 1
+   #  )
+ 
+-  test "Implicit call with a trailing if statement as a param.", ->
++  test "Implicit call with a trailing если statement as a param.", ->
+     func = -> arguments[1]
+-    result = func 'one', if false then 100 else 13
++    result = func 'one', если false then 100 иначе 13
+     ok result is 13
+ 
+   #test "Test more function passing:", ->
+@@ -243,7 +243,7 @@ suite 'Function Invocation', ->
+     ok (func --val) is 5
+ 
+   test "jashkenas/coffee-script#855: execution context for `func arr...` should be `null`", ->
+-    contextTest = -> eq @, if window? then window else global
++    contextTest = -> eq @, если window? then window иначе global
+     array = []
+     contextTest array
+     contextTest.apply null, array
+@@ -339,10 +339,10 @@ suite 'Function Invocation', ->
+   test "implicit returns with multiple branches", ->
+     nonce = {}
+     fn = ->
+-      if false
++      если false
+         for a in b
+-          return c if d
+-      else
++          return c если d
++      иначе
+         nonce
+     eq nonce, fn()
+ 
+@@ -351,15 +351,15 @@ suite 'Function Invocation', ->
+     fn = ->
+       switch nonce
+         when nonce then nonce
+-        else return undefined
++        иначе return undefined
+     eq nonce, fn()
+ 
+   test "preserve context when generating closure wrappers for expression conversions", ->
+     nonce = {}
+     obj = {property: nonce, method: ->
+-      this.result = if false
++      this.result = если false
+         10
+-      else
++      иначе
+         "a"
+         "b"
+         this.property
+@@ -372,7 +372,7 @@ suite 'Function Invocation', ->
+   #  items = [0, 1, 2, 3, nonce, 4, 5]
+   #  fn = (items) ->
+   #    for item in items
+-  #      return item if item is nonce
++  #      return item если item is nonce
+   #  eq nonce, fn items
+ 
+   test "usage of `new` is careful about where the invocation parens end up", ->
+@@ -390,15 +390,15 @@ suite 'Function Invocation', ->
+         'false'
+     eq result, 'false'
+ 
+-    save if id false
++    save если id false
+       'false'
+-    else
++    иначе
+       'true'
+     eq result, 'true'
+ 
+-    save unless id false
++    save еслине id false
+       'true'
+-    else
++    иначе
+       'false'
+     eq result, 'true'
+ 
+diff --git a/test/functions.coffee b/test/functions.coffee
+index ee1446f..a549eb0 100644
+--- a/test/functions.coffee
++++ b/test/functions.coffee
+@@ -38,7 +38,7 @@ suite 'Function Literals', ->
+ 
+     test "#1859: inline function bodies shouldn't modify prior postfix ifs", ->
+       list = [1, 2, 3]
+-      ok true if list.some (x) -> x is 2
++      ok true если list.some (x) -> x is 2
+ 
+ 
+   suite 'Bound Function Definition', ->
+@@ -207,4 +207,4 @@ suite 'Function Literals', ->
+       (->) -> throw {}
+       (->) ->
+         a = Math.random()
+-        if a then throw {}
++        если a then throw {}
+diff --git a/test/operators.coffee b/test/operators.coffee
+index 54531e2..36ca443 100644
+--- a/test/operators.coffee
++++ b/test/operators.coffee
+@@ -105,7 +105,7 @@ suite 'Operators', ->
+   suite 'Existential Operator (Unary)', ->
+ 
+     test "postfix existential operator", ->
+-      ok (if nonexistent? then false else true)
++      ok (если nonexistent? then false иначе true)
+       defined = true
+       ok defined?
+       defined = false
+@@ -114,9 +114,9 @@ suite 'Operators', ->
+     test "postfix existential operator only evaluates its operand once", ->
+       semaphore = 0
+       fn = ->
+-        ok false if semaphore
++        ok false если semaphore
+         ++semaphore
+-      ok(if fn()? then true else false)
++      ok(если fn()? then true иначе false)
+ 
+     test "negated postfix existential operator", ->
+       ok !nothing?.value
+@@ -142,8 +142,8 @@ suite 'Operators', ->
+ 
+ 
+   suite '[not] in/of', ->
+-    # - `in` should check if an array contains a value using `indexOf`
+-    # - `of` should check if a property is defined on an object using `in`
++    # - `in` should check если an array contains a value using `indexOf`
++    # - `of` should check если a property is defined on an object using `in`
+ 
+     test "in, of", ->
+       arr = [1]
+@@ -178,9 +178,9 @@ suite 'Operators', ->
+ 
+     test "jashkenas/coffee-script#768: `in` should preserve evaluation order", ->
+       share = 0
+-      a = -> share++ if share is 0
+-      b = -> share++ if share is 1
+-      c = -> share++ if share is 2
++      a = -> share++ если share is 0
++      b = -> share++ если share is 1
++      c = -> share++ если share is 2
+       ok a() not in [b(),c()]
+       eq 3, share
+ 
+@@ -227,8 +227,8 @@ suite 'Operators', ->
+     ok 1 < 2 > 1
+     ok 10 < 20 > 2+3 is 5
+ 
+-  test "some chainable operators can be negated by `unless`", ->
+-    ok (true unless 0==10!=100)
++  test "some chainable operators can be negated by `еслине`", ->
++    ok (true еслине 0==10!=100)
+ 
+   test "operator precedence: `|` lower than `<`", ->
+     eq 1, 1 | 2 < 3 < 4
+@@ -244,8 +244,8 @@ suite 'Operators', ->
+     ok 1 > a++ < 1
+ 
+   #test "jashkenas/coffee-script#891: incorrect inversion of chained comparisons", ->
+-  #  ok (true unless 0 > 1 > 2)
+-  #  ok (true unless (NaN = 0/0) < 0/0 < NaN)
++  #  ok (true еслине 0 > 1 > 2)
++  #  ok (true еслине (NaN = 0/0) < 0/0 < NaN)
+ 
+   test "jashkenas/coffee-script#1234: Applying a splat to :: applies the splat to the wrong object", ->
+     nonce = {}
+@@ -271,7 +271,7 @@ suite 'Operators', ->
+ 
+   test "jashkenas/coffee-script#2155: conditional assignment to a closure", ->
+     x = null
+-    func = -> x ?= (-> if true then 'hi')
++    func = -> x ?= (-> если true then 'hi')
+     func()
+     eq x(), 'hi'
+ 
+diff --git a/test/optimisations.coffee b/test/optimisations.coffee
+index 6821390..bd791b4 100644
+--- a/test/optimisations.coffee
++++ b/test/optimisations.coffee
+@@ -11,9 +11,9 @@ suite 'Optimisations', ->
+       delete global.thisShouldBeInTheGlobalScope
+ 
+     test 'do not optimise away declarations in conditionals', ->
+-      if 0 then a = 0
++      если 0 then a = 0
+       eq undefined, a
+-      if 1 then 0 else b = 0
++      если 1 then 0 иначе b = 0
+       eq undefined, b
+ 
+     test 'do not optimise away declarations in while loops', ->
+diff --git a/test/scope.coffee b/test/scope.coffee
+index a84a1b5..19ab9a1 100644
+--- a/test/scope.coffee
++++ b/test/scope.coffee
+@@ -21,9 +21,9 @@ suite 'Scope', ->
+ 
+   test 'vars are function-scoped, not block-scoped', ->
+     fn = -> true
+-    if fn()
++    если fn()
+       a = 1
+-    else
++    иначе
+       a = 0
+     ok a
+ 
+diff --git a/test/setup.coffee b/test/setup.coffee
+index 457b518..0253eef 100644
+--- a/test/setup.coffee
++++ b/test/setup.coffee
+@@ -5,16 +5,16 @@ global[name] = func for name, func of require 'assert'
+ 
+ # See http://wiki.ecmascript.org/doku.php?id=harmony:egal
+ egal = (a, b) ->
+-  if a is b
++  если a is b
+     a isnt 0 or 1/a is 1/b
+-  else
++  иначе
+     a isnt a and b isnt b
+ 
+ # A recursive functional equivalence helper; uses egal for testing equivalence.
+ arrayEgal = (a, b) ->
+-  if egal a, b then yes
+-  else if a instanceof Array and b instanceof Array
+-    return no unless a.length is b.length
++  если egal a, b then yes
++  иначе если a instanceof Array and b instanceof Array
++    return no еслине a.length is b.length
+     return no for el, idx in a when not arrayEgal el, b[idx]
+     yes
+ 
+@@ -22,7 +22,7 @@ global.eq      = (a, b, msg) -> ok egal(a, b), msg ? "#{inspect a} === #{inspect
+ global.arrayEq = (a, b, msg) -> ok arrayEgal(a,b), msg ? "#{inspect a} === #{inspect b}"
+ 
+ 
+-libDir = if typeof _$jscoverage is 'undefined' then 'lib' else 'instrumented'
++libDir = если typeof _$jscoverage is 'undefined' then 'lib' иначе 'instrumented'
+ global.CoffeeScript = require '..'
+ global.CS = require "../#{libDir}/coffee-script/nodes"
+ global.JS = require "../#{libDir}/coffee-script/js-nodes"

@@ -21,7 +21,7 @@ index afadf17..b49e872 100644
  
      #test "#1591, #1101: splatted expressions in destructuring assignment must be assignable", ->
 diff --git a/test/classes.coffee b/test/classes.coffee
-index c06ff49..e0ddc6e 100644
+index be696e6..5f66abe 100644
 --- a/test/classes.coffee
 +++ b/test/classes.coffee
 @@ -151,9 +151,9 @@ suite 'Classes', ->
@@ -68,7 +68,7 @@ index f42d361..9021eb5 100644
 -    if x then debugger
 +    если x then debugger
 diff --git a/test/function-invocation.coffee b/test/function-invocation.coffee
-index 27e43aa..3e8867c 100644
+index 51faacd..8439f29 100644
 --- a/test/function-invocation.coffee
 +++ b/test/function-invocation.coffee
 @@ -4,7 +4,7 @@ suite 'Function Invocation', ->
@@ -110,21 +110,19 @@ index 27e43aa..3e8867c 100644
      array = []
      contextTest array
      contextTest.apply null, array
-@@ -339,10 +339,10 @@ suite 'Function Invocation', ->
+@@ -339,9 +339,9 @@ suite 'Function Invocation', ->
    test "implicit returns with multiple branches", ->
      nonce = {}
      fn = ->
--      if false
-+      если false
-         for a in b
--          return c if d
+-      if not nonce
++      если not nonce
+         null
 -      else
-+          return c если d
 +      иначе
          nonce
      eq nonce, fn()
  
-@@ -351,15 +351,15 @@ suite 'Function Invocation', ->
+@@ -350,15 +350,15 @@ suite 'Function Invocation', ->
      fn = ->
        switch nonce
          when nonce then nonce
@@ -143,7 +141,7 @@ index 27e43aa..3e8867c 100644
          "a"
          "b"
          this.property
-@@ -372,7 +372,7 @@ suite 'Function Invocation', ->
+@@ -371,7 +371,7 @@ suite 'Function Invocation', ->
    #  items = [0, 1, 2, 3, nonce, 4, 5]
    #  fn = (items) ->
    #    for item in items
@@ -152,7 +150,7 @@ index 27e43aa..3e8867c 100644
    #  eq nonce, fn items
  
    test "usage of `new` is careful about where the invocation parens end up", ->
-@@ -390,15 +390,15 @@ suite 'Function Invocation', ->
+@@ -389,15 +389,15 @@ suite 'Function Invocation', ->
          'false'
      eq result, 'false'
  

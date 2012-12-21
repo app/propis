@@ -1,59 +1,85 @@
 diff --git a/src/grammar.pegjs b/src/grammar.pegjs
-index 9d1d625..d8973de 100644
+index 704518e..616fa5b 100644
 --- a/src/grammar.pegjs
 +++ b/src/grammar.pegjs
-@@ -204,11 +204,11 @@ postfixControlFlowExpression
+@@ -195,15 +195,15 @@ postfixControlFlowExpression
              postfix = postfixContainer[1],
              indicator = postfix.type;
          switch(indicator){
 -          case 'if':
 -          case 'unless':
+-            constructor = ('unless' === indicator) ? CS.NegatedConditional : CS.Conditional;
+-            cond = ('unless' === indicator) ? new CS.LogicalNotOp(postfix.cond).g() : postfix.cond;
 +          case 'если':
 +          case 'еслине':
-             raw = expr.raw + ws + postfix.raw;
--            constructor = (indicator == 'unless') ? CS.NegatedConditional : CS.Conditional;
--            cond = (indicator == 'unless') ? new CS.LogicalNotOp(postfix.cond).g() : postfix.cond;
-+            constructor = (indicator == 'еслине') ? CS.NegatedConditional : CS.Conditional;
-+            cond = (indicator == 'еслине') ? new CS.LogicalNotOp(postfix.cond).g() : postfix.cond;
-             return new constructor(cond, expr, null).r(raw).p(line, column, offset)
++            constructor = ('еслине' === indicator) ? CS.NegatedConditional : CS.Conditional;
++            cond = ('еслине' === indicator) ? new CS.LogicalNotOp(postfix.cond).g() : postfix.cond;
+             return rp(new constructor(cond, expr, null));
            case 'while':
            case 'until':
-@@ -523,8 +523,8 @@ spread
+-            constructor = ('unless' === indicator) ? CS.NegatedWhile : CS.While;
+-            cond = ('unless' === indicator) ? new CS.LogicalNotOp(postfix.cond).g() : postfix.cond;
++            constructor = ('еслине' === indicator) ? CS.NegatedWhile : CS.While;
++            cond = ('еслине' === indicator) ? new CS.LogicalNotOp(postfix.cond).g() : postfix.cond;
+             return rp(new constructor(cond, expr));
+           case 'for-in':
+             return rp(new CS.ForIn(postfix.val, postfix.key, postfix.list, postfix.step, postfix.filter, expr));
+@@ -501,8 +501,8 @@ spread
+ 
  conditional
-   = kw:(IF / UNLESS) ws0:_ cond:assignmentExpression body:conditionalBody elseClause:elseClause? {
-       var raw = kw + ws0 + cond.raw + body.raw + (elseClause ? elseClause.raw : '');
--      var constructor = kw == 'unless' ? CS.NegatedConditional : CS.Conditional;
--      if(kw == 'unless') cond = new CS.LogicalNotOp(cond).g();
-+      var constructor = kw == 'еслине' ? CS.NegatedConditional : CS.Conditional;
-+      if(kw == 'еслине') cond = new CS.LogicalNotOp(cond).g();
-       var elseBlock = elseClause ? elseClause.block : null;
-       return new constructor(cond, body.block, elseBlock).r(raw).p(line, column, offset);
+   = kw:(IF / UNLESS) _ cond:assignmentExpression body:conditionalBody elseClause:elseClause? {
+-      var constructor = 'unless' === kw ? CS.NegatedConditional : CS.Conditional;
+-      if('unless' === kw) cond = new CS.LogicalNotOp(cond).g();
++      var constructor = 'еслине' === kw ? CS.NegatedConditional : CS.Conditional;
++      if('еслине' === kw) cond = new CS.LogicalNotOp(cond).g();
+       return rp(new constructor(cond, body.block, elseClause || null));
      }
-@@ -1071,12 +1071,12 @@ CLASS = w:"class" !identifierPart { return w; }
- DELETE = w:"delete" !identifierPart { return w; }
- DEBUGGER = w:"debugger" !identifierPart { return w; }
- DO = w:"do" !identifierPart { return w; }
--ELSE = w:"else" !identifierPart { return w; }
-+ELSE = w:"иначе" !identifierPart { return w; }
- EXTENDS = w:"extends" !identifierPart { return w; }
- FALSE = w:"false" !identifierPart { return w; }
- FINALLY = w:"finally" !identifierPart { return w; }
- FOR = w:"for" !identifierPart { return w; }
--IF = w:"if" !identifierPart { return w; }
-+IF = w:"если" !identifierPart { return w; }
- IN = w:"in" !identifierPart { return w; }
- INSTANCEOF = w:"instanceof" !identifierPart { return w; }
- IS = w:"is" !identifierPart { return w; }
-@@ -1100,7 +1100,7 @@ TRUE = w:"true" !identifierPart { return w; }
- TRY = w:"try" !identifierPart { return w; }
- TYPEOF = w:"typeof" !identifierPart { return w; }
- UNDEFINED = w:"undefined" !identifierPart { return w; }
--UNLESS = w:"unless" !identifierPart { return w; }
-+UNLESS = w:"еслине" !identifierPart { return w; }
- UNTIL = w:"until" !identifierPart { return w; }
- WHEN = w:"when" !identifierPart { return w; }
- WHILE = w:"while" !identifierPart { return w; }
-@@ -1109,7 +1109,7 @@ YES = w:"yes" !identifierPart { return w; }
+   conditionalBody
+@@ -624,16 +624,16 @@ forIn
+ 
+ switch
+   = SWITCH _ e:(expressionworthy / assignmentExpression)? body:switchBody {
+-      return rp(new CS.Switch(e || null, body.cases, body['else'] || null));
++      return rp(new CS.Switch(e || null, body.cases, body['иначе'] || null));
+     }
+   switchBody
+-    = _ TERMINDENT b:switchBlock DEDENT { return r({cases: b.cases, 'else': b['else']}); }
++    = _ TERMINDENT b:switchBlock DEDENT { return r({cases: b.cases, 'иначе': b['иначе']}); }
+     / _ THEN _ c:case { return r({cases: [c]}); }
+     / _ THEN { return r({cases: []}); }
+   switchBlock
+     = c:case cs:(_ TERMINATOR _ case)* elseClause:(_ TERMINATOR _ elseClause)? TERMINATOR? {
+         var cases = [c].concat(cs.map(function(w){ return w[3]; }));
+-        return r({cases: cases, 'else': elseClause ? elseClause[3] : null});
++        return r({cases: cases, 'иначе': elseClause ? elseClause[3] : null});
+       }
+   case
+     = WHEN _ conditions:caseConditions body:caseBody {
+@@ -975,12 +975,12 @@ CLASS = $("class" !identifierPart)
+ DELETE = $("delete" !identifierPart)
+ DEBUGGER = $("debugger" !identifierPart)
+ DO = $("do" !identifierPart)
+-ELSE = $("else" !identifierPart)
++ELSE = $("иначе" !identifierPart)
+ EXTENDS = $("extends" !identifierPart)
+ FALSE = $("false" !identifierPart)
+ FINALLY = $("finally" !identifierPart)
+ FOR = $("for" !identifierPart)
+-IF = $("if" !identifierPart)
++IF = $("если" !identifierPart)
+ IN = $("in" !identifierPart)
+ INSTANCEOF = $("instanceof" !identifierPart)
+ IS = $("is" !identifierPart)
+@@ -1004,7 +1004,7 @@ TRUE = $("true" !identifierPart)
+ TRY = $("try" !identifierPart)
+ TYPEOF = $("typeof" !identifierPart)
+ UNDEFINED = $("undefined" !identifierPart)
+-UNLESS = $("unless" !identifierPart)
++UNLESS = $("еслине" !identifierPart)
+ UNTIL = $("until" !identifierPart)
+ WHEN = $("when" !identifierPart)
+ WHILE = $("while" !identifierPart)
+@@ -1013,7 +1013,7 @@ YES = $("yes" !identifierPart)
  SharedKeywords
    = ("true" / "false" / "null" / "this" / "new" / "delete" / "typeof" /
    "instanceof" / "in" / "return" / "throw" / "break" / "continue" / "debugger" /
@@ -62,7 +88,7 @@ index 9d1d625..d8973de 100644
    "finally" / "class" / "extends" / "super") !identifierPart
  
  JSKeywords
-@@ -1118,7 +1118,7 @@ JSKeywords
+@@ -1022,7 +1022,7 @@ JSKeywords
    "package" / "private" / "protected" / "public" / "static" / "yield") !identifierPart
  
  CSKeywords

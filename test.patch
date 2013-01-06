@@ -1,7 +1,55 @@
 diff --git a/test/assignment.coffee b/test/assignment.coffee
-index afadf17..b49e872 100644
+index afadf17..e1e0190 100644
 --- a/test/assignment.coffee
 +++ b/test/assignment.coffee
+@@ -27,24 +27,24 @@ suite 'Assignment', ->
+       nonce = {}
+ 
+       a  = 0
+-      a or= nonce
++      a или= nonce
+       eq nonce, a
+ 
+       b  = 1
+-      b or= nonce
++      b или= nonce
+       eq 1, b
+ 
+       c = 0
+-      c and= nonce
++      c и= nonce
+       eq 0, c
+ 
+       d = 1
+-      d and= nonce
++      d и= nonce
+       eq nonce, d
+ 
+       # ensure that RHS is treated as a group
+       e = f = false
+-      e and= f or true
++      e и= f or true
+       eq false, e
+ 
+     test "compound assignment as a sub expression", ->
+@@ -67,7 +67,7 @@ suite 'Assignment', ->
+     #  eq 2, list[2]
+     #  eq 2, count
+ 
+-    #  list[count++] and= 6
++    #  list[count++] и= 6
+     #  eq 6, list[2]
+     #  eq 3, count
+ 
+@@ -90,7 +90,7 @@ suite 'Assignment', ->
+ 
+       eq 1, obj.one
+ 
+-      obj and=
++      obj и=
+         two: 2
+ 
+       eq undefined, obj.one
 @@ -211,7 +211,7 @@ suite 'Assignment', ->
  
      test "destructuring assignment against an expression", ->
@@ -11,6 +59,15 @@ index afadf17..b49e872 100644
        eq a, y
        eq b, z
  
+@@ -293,7 +293,7 @@ suite 'Assignment', ->
+       obj = {}
+       obj.temp ?= 0
+       eq obj.temp, 0
+-      obj.temp or= 100
++      obj.temp или= 100
+       eq obj.temp, 100
+ 
+     test "#1348, #1216: existential assignment compilation", ->
 @@ -304,7 +304,7 @@ suite 'Assignment', ->
        #the first ?= compiles into a statement; the second ?= compiles to a ternary expression
        eq a ?= b ?= 1, nonce
@@ -190,7 +247,7 @@ index ee1446f..a549eb0 100644
 -        if a then throw {}
 +        если a then throw {}
 diff --git a/test/operators.coffee b/test/operators.coffee
-index 54531e2..36ca443 100644
+index 54531e2..aab5557 100644
 --- a/test/operators.coffee
 +++ b/test/operators.coffee
 @@ -105,7 +105,7 @@ suite 'Operators', ->
@@ -202,7 +259,7 @@ index 54531e2..36ca443 100644
        defined = true
        ok defined?
        defined = false
-@@ -114,9 +114,9 @@ suite 'Operators', ->
+@@ -114,36 +114,36 @@ suite 'Operators', ->
      test "postfix existential operator only evaluates its operand once", ->
        semaphore = 0
        fn = ->
@@ -214,7 +271,28 @@ index 54531e2..36ca443 100644
  
      test "negated postfix existential operator", ->
        ok !nothing?.value
-@@ -142,8 +142,8 @@ suite 'Operators', ->
+ 
+     test "postfix existential operator on expressions", ->
+-      eq true, (1 or 0)?, true
++      eq true, (1 или 0)?, true
+ 
+ 
+   suite '`is`,`isnt`,`==`,`!=`', ->
+ 
+     test "`==` and `is` should be interchangeable", ->
+       a = b = 1
+-      ok a is 1 and b == 1
++      ok a is 1 и b == 1
+       ok a == b
+       ok a is b
+ 
+     test "`!=` and `isnt` should be interchangeable", ->
+       a = 0
+       b = 1
+-      ok a isnt 1 and b != 0
++      ok a isnt 1 и b != 0
+       ok a != b
+       ok a isnt b
  
  
    suite '[not] in/of', ->
@@ -225,7 +303,12 @@ index 54531e2..36ca443 100644
  
      test "in, of", ->
        arr = [1]
-@@ -178,9 +178,9 @@ suite 'Operators', ->
+@@ -174,13 +174,13 @@ suite 'Operators', ->
+       eq 1, [Object() in Array()].length
+ 
+     test "jashkenas/coffee-script#737: `in` should have higher precedence than logical operators", ->
+-      eq 1, 1 in [1] and 1
++      eq 1, 1 in [1] и 1
  
      test "jashkenas/coffee-script#768: `in` should preserve evaluation order", ->
        share = 0
@@ -238,6 +321,19 @@ index 54531e2..36ca443 100644
        ok a() not in [b(),c()]
        eq 3, share
  
+@@ -193,9 +193,9 @@ suite 'Operators', ->
+       eq 9 in [3, a...], true
+ 
+     test "jashkenas/coffee-script#1100: precedence in or-test compilation of `in`", ->
+-      ok 0 in [1 and 0]
+-      ok 0 in [1, 1 and 0]
+-      ok not (0 in [1, 0 or 1])
++      ok 0 in [1 и 0]
++      ok 0 in [1, 1 и 0]
++      ok not (0 in [1, 0 или 1])
+ 
+     test "jashkenas/coffee-script#1630: `in` should check `hasOwnProperty`", ->
+       ok undefined not in {length: 1}
 @@ -227,8 +227,8 @@ suite 'Operators', ->
      ok 1 < 2 > 1
      ok 10 < 20 > 2+3 is 5
@@ -302,7 +398,7 @@ index a84a1b5..19ab9a1 100644
      ok a
  
 diff --git a/test/setup.coffee b/test/setup.coffee
-index 457b518..0253eef 100644
+index 457b518..b8bfc1a 100644
 --- a/test/setup.coffee
 +++ b/test/setup.coffee
 @@ -5,16 +5,16 @@ global[name] = func for name, func of require 'assert'
@@ -310,11 +406,13 @@ index 457b518..0253eef 100644
  # See http://wiki.ecmascript.org/doku.php?id=harmony:egal
  egal = (a, b) ->
 -  if a is b
-+  если a is b
-     a isnt 0 or 1/a is 1/b
+-    a isnt 0 or 1/a is 1/b
 -  else
+-    a isnt a and b isnt b
++  если a is b
++    a isnt 0 или 1/a is 1/b
 +  иначе
-     a isnt a and b isnt b
++    a isnt a и b isnt b
  
  # A recursive functional equivalence helper; uses egal for testing equivalence.
  arrayEgal = (a, b) ->
@@ -322,7 +420,7 @@ index 457b518..0253eef 100644
 -  else if a instanceof Array and b instanceof Array
 -    return no unless a.length is b.length
 +  если egal a, b then yes
-+  иначе если a instanceof Array and b instanceof Array
++  иначе если a instanceof Array и b instanceof Array
 +    return no еслине a.length is b.length
      return no for el, idx in a when not arrayEgal el, b[idx]
      yes

@@ -1,7 +1,19 @@
 diff --git a/src/grammar.pegjs b/src/grammar.pegjs
-index 704518e..616fa5b 100644
+index 704518e..75363b4 100644
 --- a/src/grammar.pegjs
 +++ b/src/grammar.pegjs
+@@ -5,9 +5,9 @@ var CS = require("./nodes"),
+     { ';': CS.SeqOp
+     , '=': CS.AssignOp
+     , '&&': CS.LogicalAndOp
+-    , and: CS.LogicalAndOp
++    , и: CS.LogicalAndOp
+     , '||': CS.LogicalOrOp
+-    , or: CS.LogicalOrOp
++    , 'или': CS.LogicalOrOp
+     , '|': CS.BitOrOp
+     , '^': CS.BitXorOp
+     , '&': CS.BitAndOp
 @@ -195,15 +195,15 @@ postfixControlFlowExpression
              postfix = postfixContainer[1],
              indicator = postfix.type;
@@ -55,6 +67,15 @@ index 704518e..616fa5b 100644
        }
    case
      = WHEN _ conditions:caseConditions body:caseBody {
+@@ -966,7 +966,7 @@ TERMINDENT = $(TERMINATOR INDENT)
+ 
+ 
+ // keywords
+-AND = $("and" !identifierPart)
++AND = $("и" !identifierPart)
+ BREAK = $("break" !identifierPart)
+ BY = $("by" !identifierPart)
+ CATCH = $("catch" !identifierPart)
 @@ -975,12 +975,12 @@ CLASS = $("class" !identifierPart)
  DELETE = $("delete" !identifierPart)
  DEBUGGER = $("debugger" !identifierPart)
@@ -70,6 +91,15 @@ index 704518e..616fa5b 100644
  IN = $("in" !identifierPart)
  INSTANCEOF = $("instanceof" !identifierPart)
  IS = $("is" !identifierPart)
+@@ -993,7 +993,7 @@ NULL = $("null" !identifierPart)
+ OF = $("of" !identifierPart)
+ OFF = $("off" !identifierPart)
+ ON = $("on" !identifierPart)
+-OR = $("or" !identifierPart)
++OR = $("или" !identifierPart)
+ OWN = $("own" !identifierPart)
+ RETURN = $("return" !identifierPart)
+ SWITCH = $("switch" !identifierPart)
 @@ -1004,7 +1004,7 @@ TRUE = $("true" !identifierPart)
  TRY = $("try" !identifierPart)
  TYPEOF = $("typeof" !identifierPart)
@@ -88,12 +118,14 @@ index 704518e..616fa5b 100644
    "finally" / "class" / "extends" / "super") !identifierPart
  
  JSKeywords
-@@ -1022,7 +1022,7 @@ JSKeywords
+@@ -1022,8 +1022,8 @@ JSKeywords
    "package" / "private" / "protected" / "public" / "static" / "yield") !identifierPart
  
  CSKeywords
 -  = ("undefined" / "then" / "unless" / "until" / "loop" / "off" / "by" / "when" /
+-  "and" / "or" / "isnt" / "is" / "not" / "yes" / "no" / "on" / "of") !identifierPart
 +  = ("undefined" / "then" / "еслине" / "until" / "loop" / "off" / "by" / "when" /
-   "and" / "or" / "isnt" / "is" / "not" / "yes" / "no" / "on" / "of") !identifierPart
++  "или" / "и" / "isnt" / "is" / "not" / "yes" / "no" / "on" / "of") !identifierPart
  
  StandardPredefinedMacros
+   = "__" ("FILENAME" / "LINE" / "DATETIMEMS" / "DATE" / "TIME") "__"

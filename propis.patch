@@ -1,5 +1,5 @@
 diff --git a/src/grammar.pegjs b/src/grammar.pegjs
-index 704518e..75363b4 100644
+index 704518e..fd2cb9b 100644
 --- a/src/grammar.pegjs
 +++ b/src/grammar.pegjs
 @@ -5,9 +5,9 @@ var CS = require("./nodes"),
@@ -27,10 +27,12 @@ index 704518e..75363b4 100644
 +            constructor = ('еслине' === indicator) ? CS.NegatedConditional : CS.Conditional;
 +            cond = ('еслине' === indicator) ? new CS.LogicalNotOp(postfix.cond).g() : postfix.cond;
              return rp(new constructor(cond, expr, null));
-           case 'while':
-           case 'until':
+-          case 'while':
+-          case 'until':
 -            constructor = ('unless' === indicator) ? CS.NegatedWhile : CS.While;
 -            cond = ('unless' === indicator) ? new CS.LogicalNotOp(postfix.cond).g() : postfix.cond;
++          case 'пока':
++          case 'покане':
 +            constructor = ('еслине' === indicator) ? CS.NegatedWhile : CS.While;
 +            cond = ('еслине' === indicator) ? new CS.LogicalNotOp(postfix.cond).g() : postfix.cond;
              return rp(new constructor(cond, expr));
@@ -47,6 +49,17 @@ index 704518e..75363b4 100644
        return rp(new constructor(cond, body.block, elseClause || null));
      }
    conditionalBody
+@@ -515,8 +515,8 @@ conditional
+ 
+ while
+   = kw:(WHILE / UNTIL) _ cond:assignmentExpression body:whileBody {
+-      var constructor = 'until' === kw ? CS.NegatedWhile : CS.While;
+-      if('until' === kw) cond = new CS.LogicalNotOp(cond).g();
++      var constructor = 'покане' === kw ? CS.NegatedWhile : CS.While;
++      if('покане' === kw) cond = new CS.LogicalNotOp(cond).g();
+       return rp(new constructor(cond, body.block));
+     }
+   whileBody = conditionalBody
 @@ -624,16 +624,16 @@ forIn
  
  switch
@@ -91,7 +104,7 @@ index 704518e..75363b4 100644
  IN = $("in" !identifierPart)
  INSTANCEOF = $("instanceof" !identifierPart)
  IS = $("is" !identifierPart)
-@@ -993,7 +993,7 @@ NULL = $("null" !identifierPart)
+@@ -993,27 +993,27 @@ NULL = $("null" !identifierPart)
  OF = $("of" !identifierPart)
  OFF = $("off" !identifierPart)
  ON = $("on" !identifierPart)
@@ -100,21 +113,29 @@ index 704518e..75363b4 100644
  OWN = $("own" !identifierPart)
  RETURN = $("return" !identifierPart)
  SWITCH = $("switch" !identifierPart)
-@@ -1004,7 +1004,7 @@ TRUE = $("true" !identifierPart)
+-THEN = $("then" !identifierPart)
++THEN = $("то" !identifierPart)
+ THIS = $("this" !identifierPart)
+ THROW = $("throw" !identifierPart)
+ TRUE = $("true" !identifierPart)
  TRY = $("try" !identifierPart)
  TYPEOF = $("typeof" !identifierPart)
  UNDEFINED = $("undefined" !identifierPart)
 -UNLESS = $("unless" !identifierPart)
+-UNTIL = $("until" !identifierPart)
+-WHEN = $("when" !identifierPart)
+-WHILE = $("while" !identifierPart)
 +UNLESS = $("еслине" !identifierPart)
- UNTIL = $("until" !identifierPart)
- WHEN = $("when" !identifierPart)
- WHILE = $("while" !identifierPart)
-@@ -1013,7 +1013,7 @@ YES = $("yes" !identifierPart)
++UNTIL = $("покане" !identifierPart)
++WHEN = $("когда" !identifierPart)
++WHILE = $("пока" !identifierPart)
+ YES = $("yes" !identifierPart)
+ 
  SharedKeywords
    = ("true" / "false" / "null" / "this" / "new" / "delete" / "typeof" /
    "instanceof" / "in" / "return" / "throw" / "break" / "continue" / "debugger" /
 -  "if" / "else" / "switch" / "for" / "while" / "do" / "try" / "catch" /
-+  "если" /"иначе" / "switch" / "for" / "while" / "do" / "try" / "catch" /
++  "если" /"иначе" / "switch" / "for" / "пока" / "do" / "try" / "catch" /
    "finally" / "class" / "extends" / "super") !identifierPart
  
  JSKeywords
@@ -124,7 +145,7 @@ index 704518e..75363b4 100644
  CSKeywords
 -  = ("undefined" / "then" / "unless" / "until" / "loop" / "off" / "by" / "when" /
 -  "and" / "or" / "isnt" / "is" / "not" / "yes" / "no" / "on" / "of") !identifierPart
-+  = ("undefined" / "then" / "еслине" / "until" / "loop" / "off" / "by" / "when" /
++  = ("undefined" / "то" / "еслине" / "покане" / "loop" / "off" / "by" / "когда" /
 +  "или" / "и" / "isnt" / "is" / "not" / "yes" / "no" / "on" / "of") !identifierPart
  
  StandardPredefinedMacros

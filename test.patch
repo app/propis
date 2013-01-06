@@ -1,7 +1,16 @@
 diff --git a/test/assignment.coffee b/test/assignment.coffee
-index afadf17..e1e0190 100644
+index afadf17..e94d7c8 100644
 --- a/test/assignment.coffee
 +++ b/test/assignment.coffee
+@@ -19,7 +19,7 @@ suite 'Assignment', ->
+     #test "unassignable values", ->
+     #  nonce = {}
+     #  for nonref in ['', '""', '0', 'f()'].concat CoffeeScript.RESERVED
+-    #    eq nonce, (try CoffeeScript.compile "#{nonref} = v" catch e then nonce)
++    #    eq nonce, (try CoffeeScript.compile "#{nonref} = v" catch e то nonce)
+ 
+   suite 'Compound Assignment', ->
+ 
 @@ -27,24 +27,24 @@ suite 'Assignment', ->
        nonce = {}
  
@@ -50,15 +59,38 @@ index afadf17..e1e0190 100644
          two: 2
  
        eq undefined, obj.one
-@@ -211,7 +211,7 @@ suite 'Assignment', ->
+@@ -141,7 +141,7 @@ suite 'Assignment', ->
+       eq nonce, b
+       eq nonce, c
+ 
+-    test "variable swapping to verify caching of RHS values when appropriate", ->
++    test "variable swapping to verify caching of RHS values когда appropriate", ->
+       a = nonceA = {}
+       b = nonceB = {}
+       c = nonceC = {}
+@@ -211,11 +211,11 @@ suite 'Assignment', ->
  
      test "destructuring assignment against an expression", ->
        a={}; b={}
 -      [y, z] = if true then [a, b] else [b, a]
-+      [y, z] = если true then [a, b] иначе [b, a]
++      [y, z] = если true то [a, b] иначе [b, a]
        eq a, y
        eq b, z
  
+-    test "bracket insertion when necessary", ->
++    test "bracket insertion когда necessary", ->
+       [a] = [0] ? [1]
+       eq a, 0
+ 
+@@ -243,7 +243,7 @@ suite 'Assignment', ->
+     #  throws (-> CoffeeScript.compile "[#{disallowed.join ', '}] = x"), null, 'all disallowed'
+     #  throws (-> CoffeeScript.compile "[#{disallowed.join '..., '}...] = x"), null, 'all disallowed as splats'
+     #  t = tSplat = null
+-    #  for v in disallowed when v isnt 'class' # `class` by itself is an expression
++    #  for v in disallowed когда v isnt 'class' # `class` by itself is an expression
+     #    throws (-> CoffeeScript.compile t), null, t = "[#{v}] = x"
+     #    throws (-> CoffeeScript.compile tSplat), null, tSplat = "[#{v}...] = x"
+     #  doesNotThrow ->
 @@ -293,7 +293,7 @@ suite 'Assignment', ->
        obj = {}
        obj.temp ?= 0
@@ -68,19 +100,71 @@ index afadf17..e1e0190 100644
        eq obj.temp, 100
  
      test "#1348, #1216: existential assignment compilation", ->
-@@ -304,7 +304,7 @@ suite 'Assignment', ->
+@@ -304,13 +304,13 @@ suite 'Assignment', ->
        #the first ?= compiles into a statement; the second ?= compiles to a ternary expression
        eq a ?= b ?= 1, nonce
  
 -      if a then a ?= 2 else a = 3
-+      если a then a ?= 2 иначе a = 3
++      если a то a ?= 2 иначе a = 3
        eq a, nonce
  
      #test "#1591, #1101: splatted expressions in destructuring assignment must be assignable", ->
+     #  nonce = {}
+     #  for nonref in ['', '""', '0', 'f()', '(->)'].concat CoffeeScript.RESERVED
+-    #    eq nonce, (try CoffeeScript.compile "[#{nonref}...] = v" catch e then nonce)
++    #    eq nonce, (try CoffeeScript.compile "[#{nonref}...] = v" catch e то nonce)
+ 
+     #test "#1643: splatted accesses in destructuring assignments should not be declared as variables", ->
+     #  nonce = {}
+@@ -320,11 +320,11 @@ suite 'Assignment', ->
+     #      code =
+     #        """
+     #        nonce = {}; nonce2 = {}; nonce3 = {};
+-    #        @o = o = new (class C then a:{}); f = -> o
++    #        @o = o = new (class C то a:{}); f = -> o
+     #        [#{new Array(i).join('x,')}#{access}...] = [#{new Array(i).join('0,')}nonce, nonce2, nonce3]
+-    #        unless #{access}[0] is nonce and #{access}[1] is nonce2 and #{access}[2] is nonce3 then throw new Error('[...]')
++    #        unless #{access}[0] is nonce and #{access}[1] is nonce2 and #{access}[2] is nonce3 то throw new Error('[...]')
+     #        """
+-    #      eq nonce, unless (try CoffeeScript.run code, bare: true catch e then true) then nonce
++    #      eq nonce, unless (try CoffeeScript.run code, bare: true catch e то true) то nonce
+     #  # subpatterns like `[[a]...]` and `[{a}...]`
+     #  subpatterns = ['[sub, sub2, sub3]', '{0: sub, 1: sub2, 2: sub3}']
+     #  for subpattern in subpatterns
+@@ -333,9 +333,9 @@ suite 'Assignment', ->
+     #        """
+     #        nonce = {}; nonce2 = {}; nonce3 = {};
+     #        [#{new Array(i).join('x,')}#{subpattern}...] = [#{new Array(i).join('0,')}nonce, nonce2, nonce3]
+-    #        unless sub is nonce and sub2 is nonce2 and sub3 is nonce3 then throw new Error('[sub...]')
++    #        unless sub is nonce and sub2 is nonce2 and sub3 is nonce3 то throw new Error('[sub...]')
+     #        """
+-    #      eq nonce, unless (try CoffeeScript.run code, bare: true catch e then true) then nonce
++    #      eq nonce, unless (try CoffeeScript.run code, bare: true catch e то true) то nonce
+ 
+     test "#1838: Regression with variable assignment", ->
+       name =
+@@ -358,7 +358,7 @@ suite 'Assignment', ->
+     #  throws -> CoffeeScript.compile '({a:b()})->'
+     #  throws -> CoffeeScript.compile '({a:b.c()})->'
+ 
+-    test '#72: parsing assignment fails when the assignee is member access of a result of a call', ->
++    test '#72: parsing assignment fails когда the assignee is member access of a result of a call', ->
+       f = (o) -> o
+       g = -> this
+       nonce = {}
 diff --git a/test/classes.coffee b/test/classes.coffee
-index be696e6..5f66abe 100644
+index be696e6..5b9da14 100644
 --- a/test/classes.coffee
 +++ b/test/classes.coffee
+@@ -53,7 +53,7 @@ suite 'Classes', ->
+ 
+     test 'static assignment via colon', ->
+       nonce = {}
+-      class A then @b: nonce
++      class A то @b: nonce
+       eq nonce, A.b
+ 
+     test 'classes with JS-keyword properties', ->
 @@ -151,9 +151,9 @@ suite 'Classes', ->
      #test 'exectuable class bodies', ->
      #
@@ -105,17 +189,75 @@ index be696e6..5f66abe 100644
                @["_#{name}"]
  
        class Robot extends Base
+@@ -320,7 +320,7 @@ suite 'Classes', ->
+     test 'jashkenas/coffee-script#1813: Passing class definitions as expressions', ->
+       ident = (x) -> x
+ 
+-      result = ident class A then x = 1
++      result = ident class A то x = 1
+ 
+       eq result, A
+ 
+@@ -331,19 +331,19 @@ suite 'Classes', ->
+ 
+     test 'jashkenas/coffee-script#1966: external constructors should produce their return value', ->
+       ctor = -> {}
+-      class A then constructor: ctor
++      class A то constructor: ctor
+       ok (new A) not instanceof A
+ 
+-    #test 'jashkenas/coffee-script#1534: class then 'use strict'', ->
++    #test 'jashkenas/coffee-script#1534: class то 'use strict'', ->
+     #  # [14.1 Directive Prologues and the Use Strict Directive](http://es5.github.com/#x14.1)
+     #  nonce = {}
+     #  error = 'do -> ok this'
+     #  strictTest = "do ->'use strict';#{error}"
+-    #  return unless (try CoffeeScript.run strictTest, bare: yes catch e then nonce) is nonce
++    #  return unless (try CoffeeScript.run strictTest, bare: yes catch e то nonce) is nonce
+     #
+-    #  throws -> CoffeeScript.run "class then 'use strict';#{error}", bare: yes
+-    #  doesNotThrow -> CoffeeScript.run "class then #{error}", bare: yes
+-    #  doesNotThrow -> CoffeeScript.run "class then #{error};'use strict'", bare: yes
++    #  throws -> CoffeeScript.run "class то 'use strict';#{error}", bare: yes
++    #  doesNotThrow -> CoffeeScript.run "class то #{error}", bare: yes
++    #  doesNotThrow -> CoffeeScript.run "class то #{error};'use strict'", bare: yes
+     #
+     #  # comments are ignored in the Directive Prologue
+     #  comments = ["""
 @@ -467,7 +467,7 @@ suite 'Classes', ->
      #
      #  # Ensure that constructors invoked with splats cache the function.
      #  called = 0
 -    #  get = -> if called++ then false else class Type
-+    #  get = -> если called++ then false иначе class Type
++    #  get = -> если called++ то false иначе class Type
      #  new get() args...
  
      test '`new` shouldn\'t add extra parens', ->
+@@ -619,7 +619,7 @@ suite 'Classes', ->
+     test 'jashkenas/coffee-script#1482: classes can extend expressions', ->
+       id = (x) -> x
+       nonce = {}
+-      class A then nonce: nonce
++      class A то nonce: nonce
+       class B extends id A
+       eq nonce, (new B).nonce
+ 
+diff --git a/test/comprehensions.coffee b/test/comprehensions.coffee
+index 2c76f64..f706ac2 100644
+--- a/test/comprehensions.coffee
++++ b/test/comprehensions.coffee
+@@ -1,7 +1,7 @@
+ suite 'Comprehensions', ->
+ 
+   test 'comprehensions with no body produce `undefined` for each entry', ->
+-    arrayEq (undefined for a in [0..9]), for b in [0..9] then
++    arrayEq (undefined for a in [0..9]), for b in [0..9] то
+ 
+   test '#66: `throw` as the final expression in the body of a comprehension', ->
+-    (->) -> for a in [0..9] then throw {}
++    (->) -> for a in [0..9] то throw {}
 diff --git a/test/debugger.coffee b/test/debugger.coffee
-index f42d361..9021eb5 100644
+index f42d361..38abd5f 100644
 --- a/test/debugger.coffee
 +++ b/test/debugger.coffee
 @@ -15,4 +15,4 @@ suite 'Debugger', ->
@@ -123,9 +265,9 @@ index f42d361..9021eb5 100644
    test 'function with conditional debugger as last statement', ->
      x = true
 -    if x then debugger
-+    если x then debugger
++    если x то debugger
 diff --git a/test/function-invocation.coffee b/test/function-invocation.coffee
-index 51faacd..8439f29 100644
+index 51faacd..e58c4a9 100644
 --- a/test/function-invocation.coffee
 +++ b/test/function-invocation.coffee
 @@ -4,7 +4,7 @@ suite 'Function Invocation', ->
@@ -133,7 +275,7 @@ index 51faacd..8439f29 100644
  # * Implicit Returns
  # * Explicit Returns
 -  id = (_) -> if arguments.length is 1 then _ else [].slice.call arguments
-+  id = (_) -> если arguments.length is 1 then _ иначе [].slice.call arguments
++  id = (_) -> если arguments.length is 1 то _ иначе [].slice.call arguments
  
    test "basic argument passing", ->
      a = {}
@@ -154,7 +296,7 @@ index 51faacd..8439f29 100644
 +  test "Implicit call with a trailing если statement as a param.", ->
      func = -> arguments[1]
 -    result = func 'one', if false then 100 else 13
-+    result = func 'one', если false then 100 иначе 13
++    result = func 'one', если false то 100 иначе 13
      ok result is 13
  
    #test "Test more function passing:", ->
@@ -163,7 +305,7 @@ index 51faacd..8439f29 100644
  
    test "jashkenas/coffee-script#855: execution context for `func arr...` should be `null`", ->
 -    contextTest = -> eq @, if window? then window else global
-+    contextTest = -> eq @, если window? then window иначе global
++    contextTest = -> eq @, если window? то window иначе global
      array = []
      contextTest array
      contextTest.apply null, array
@@ -179,15 +321,18 @@ index 51faacd..8439f29 100644
          nonce
      eq nonce, fn()
  
-@@ -350,15 +350,15 @@ suite 'Function Invocation', ->
+@@ -349,16 +349,16 @@ suite 'Function Invocation', ->
+     nonce = {}
      fn = ->
        switch nonce
-         when nonce then nonce
+-        when nonce then nonce
 -        else return undefined
++        когда nonce то nonce
 +        иначе return undefined
      eq nonce, fn()
  
-   test "preserve context when generating closure wrappers for expression conversions", ->
+-  test "preserve context when generating closure wrappers for expression conversions", ->
++  test "preserve context когда generating closure wrappers for expression conversions", ->
      nonce = {}
      obj = {property: nonce, method: ->
 -      this.result = if false
@@ -207,7 +352,15 @@ index 51faacd..8439f29 100644
    #  eq nonce, fn items
  
    test "usage of `new` is careful about where the invocation parens end up", ->
-@@ -389,15 +389,15 @@ suite 'Function Invocation', ->
+@@ -383,21 +383,21 @@ suite 'Function Invocation', ->
+     save   = (obj) -> result = obj
+ 
+     save switch id false
+-      when true
++      когда true
+         'true'
+-      when false
++      когда false
          'false'
      eq result, 'false'
  
@@ -227,8 +380,32 @@ index 51faacd..8439f29 100644
        'false'
      eq result, 'true'
  
+@@ -407,7 +407,7 @@ suite 'Function Invocation', ->
+       'caught'
+     eq result, 'caught'
+ 
+-    save try doesnt(exist) catch error then 'caught2'
++    save try doesnt(exist) catch error то 'caught2'
+     eq result, 'caught2'
+ 
+   test "jashkenas/coffee-script#1420: things like `(fn() ->)`; there are no words for this one", ->
+@@ -415,12 +415,12 @@ suite 'Function Invocation', ->
+     nonce = {}
+     eq nonce, (fn() -> nonce)
+ 
+-  test "jashkenas/coffee-script#1416: don't omit one 'new' when compiling 'new new'", ->
++  test "jashkenas/coffee-script#1416: don't omit one 'new' когда compiling 'new new'", ->
+     nonce = {}
+     obj = new new -> -> {prop: nonce}
+     eq obj.prop, nonce
+ 
+-  test "jashkenas/coffee-script#1416: don't omit one 'new' when compiling 'new new fn()()'", ->
++  test "jashkenas/coffee-script#1416: don't omit one 'new' когда compiling 'new new fn()()'", ->
+     nonce = {}
+     argNonceA = {}
+     argNonceB = {}
 diff --git a/test/functions.coffee b/test/functions.coffee
-index ee1446f..a549eb0 100644
+index ee1446f..3350156 100644
 --- a/test/functions.coffee
 +++ b/test/functions.coffee
 @@ -38,7 +38,7 @@ suite 'Function Literals', ->
@@ -245,9 +422,21 @@ index ee1446f..a549eb0 100644
        (->) ->
          a = Math.random()
 -        if a then throw {}
-+        если a then throw {}
++        если a то throw {}
+diff --git a/test/objects.coffee b/test/objects.coffee
+index f8762c5..23de8e5 100644
+--- a/test/objects.coffee
++++ b/test/objects.coffee
+@@ -208,6 +208,6 @@ suite 'Object Literals', ->
+ 
+     #test 'jashkenas/coffee-script#2207: Immediate implicit closes don't close implicit objects', ->
+     #  func = ->
+-    #    key: for i in [1, 2, 3] then i
++    #    key: for i in [1, 2, 3] то i
+     #
+     #  eq func().key.join(' '), '1 2 3'
 diff --git a/test/operators.coffee b/test/operators.coffee
-index 54531e2..aab5557 100644
+index 54531e2..5f4c6d7 100644
 --- a/test/operators.coffee
 +++ b/test/operators.coffee
 @@ -105,7 +105,7 @@ suite 'Operators', ->
@@ -255,7 +444,7 @@ index 54531e2..aab5557 100644
  
      test "postfix existential operator", ->
 -      ok (if nonexistent? then false else true)
-+      ok (если nonexistent? then false иначе true)
++      ok (если nonexistent? то false иначе true)
        defined = true
        ok defined?
        defined = false
@@ -267,7 +456,7 @@ index 54531e2..aab5557 100644
 +        ok false если semaphore
          ++semaphore
 -      ok(if fn()? then true else false)
-+      ok(если fn()? then true иначе false)
++      ok(если fn()? то true иначе false)
  
      test "negated postfix existential operator", ->
        ok !nothing?.value
@@ -321,7 +510,13 @@ index 54531e2..aab5557 100644
        ok a() not in [b(),c()]
        eq 3, share
  
-@@ -193,9 +193,9 @@ suite 'Operators', ->
+@@ -188,14 +188,14 @@ suite 'Operators', ->
+       eq 1, [5 in []].length
+       eq false, do -> return 0 in []
+ 
+-    test "jashkenas/coffee-script#1354: optimized `in` checks should not happen when splats are present", ->
++    test "jashkenas/coffee-script#1354: optimized `in` checks should not happen когда splats are present", ->
+       a = [6, 9]
        eq 9 in [3, a...], true
  
      test "jashkenas/coffee-script#1100: precedence in or-test compilation of `in`", ->
@@ -361,28 +556,80 @@ index 54531e2..aab5557 100644
    test "jashkenas/coffee-script#2155: conditional assignment to a closure", ->
      x = null
 -    func = -> x ?= (-> if true then 'hi')
-+    func = -> x ?= (-> если true then 'hi')
++    func = -> x ?= (-> если true то 'hi')
      func()
      eq x(), 'hi'
  
+@@ -284,7 +284,7 @@ suite 'Operators', ->
+   test "#85: operands of ExistsOp must be coerced to expressions", ->
+     f = ->
+     f (a ? a?.b())
+-    f (a ? while 0 then)
++    f (a ? пока 0 то)
+ 
+   test "#89: extends operator has side effects and should not be optimised away", ->
+     class A
 diff --git a/test/optimisations.coffee b/test/optimisations.coffee
-index 6821390..bd791b4 100644
+index 6821390..482cb54 100644
 --- a/test/optimisations.coffee
 +++ b/test/optimisations.coffee
-@@ -11,9 +11,9 @@ suite 'Optimisations', ->
+@@ -11,22 +11,22 @@ suite 'Optimisations', ->
        delete global.thisShouldBeInTheGlobalScope
  
      test 'do not optimise away declarations in conditionals', ->
 -      if 0 then a = 0
-+      если 0 then a = 0
++      если 0 то a = 0
        eq undefined, a
 -      if 1 then 0 else b = 0
-+      если 1 then 0 иначе b = 0
++      если 1 то 0 иначе b = 0
        eq undefined, b
  
-     test 'do not optimise away declarations in while loops', ->
+-    test 'do not optimise away declarations in while loops', ->
+-      while 0 then a = 0
++    test 'do not optimise away declarations in пока loops', ->
++      пока 0 то a = 0
+       eq undefined, a
+ 
+     test 'do not optimise away declarations in for-in loops', ->
+-      for a in [] then b = 0
++      for a in [] то b = 0
+       eq undefined, a
+       eq undefined, b
+ 
+     test 'do not optimise away declarations in for-of loops', ->
+-      for own a of {} then b = 0
++      for own a of {} то b = 0
+       eq undefined, a
+       eq undefined, b
+ 
+diff --git a/test/poe.coffee b/test/poe.coffee
+index 31f66f6..0c8df48 100644
+--- a/test/poe.coffee
++++ b/test/poe.coffee
+@@ -2,7 +2,7 @@ suite 'Edgar Allan Poe', ->
+ 
+   test 'The Raven', ->
+     CoffeeScript.parse '''
+-      Once upon a mignight dreary while I pondered, weak and weary,
++      Once upon a mignight dreary пока I pondered, weak and weary,
+       Over many quaint and curious volume of forgotten lore -
+       While I nodded, nearly napping, suddenly there came a tapping,
+       As of some one gently rapping, rapping at my chamber door
+diff --git a/test/regexps.coffee b/test/regexps.coffee
+index 21a2477..40675ee 100644
+--- a/test/regexps.coffee
++++ b/test/regexps.coffee
+@@ -29,7 +29,7 @@ suite 'Regular Expressions', ->
+     eq 0, a(/b/i)
+     eq 0, a /b /i
+ 
+-  test 'regexps can start with spaces and = when unambiguous', ->
++  test 'regexps can start with spaces and = когда unambiguous', ->
+     a = -> 0
+     eq 0, a(/ b/i)
+     eq 0, a(/= b/i)
 diff --git a/test/scope.coffee b/test/scope.coffee
-index a84a1b5..19ab9a1 100644
+index a84a1b5..5dec5ff 100644
 --- a/test/scope.coffee
 +++ b/test/scope.coffee
 @@ -21,9 +21,9 @@ suite 'Scope', ->
@@ -397,11 +644,38 @@ index a84a1b5..19ab9a1 100644
        a = 0
      ok a
  
+@@ -44,7 +44,7 @@ suite 'Scope', ->
+     fn = (p) ->
+       eq nonce, p
+       a = 1
+-      while a--
++      пока a--
+         p = 0
+       ok not p
+     fn nonce
+@@ -54,7 +54,7 @@ suite 'Scope', ->
+     fn = (p) ->
+       eq nonce, p
+       a = 1
+-      b = while a--
++      b = пока a--
+         p = 0
+       ok not p
+     fn nonce
+@@ -62,7 +62,7 @@ suite 'Scope', ->
+   # DISABLED DUE TO BUG: see issue #46
+   #test 'declarations in a loop used as a value', ->
+   #  a = 1
+-  #  a = while a--
++  #  a = пока a--
+   #    b = 1
+   #  ok b
+ 
 diff --git a/test/setup.coffee b/test/setup.coffee
-index 457b518..b8bfc1a 100644
+index 457b518..9cefd04 100644
 --- a/test/setup.coffee
 +++ b/test/setup.coffee
-@@ -5,16 +5,16 @@ global[name] = func for name, func of require 'assert'
+@@ -5,24 +5,24 @@ global[name] = func for name, func of require 'assert'
  
  # See http://wiki.ecmascript.org/doku.php?id=harmony:egal
  egal = (a, b) ->
@@ -419,18 +693,45 @@ index 457b518..b8bfc1a 100644
 -  if egal a, b then yes
 -  else if a instanceof Array and b instanceof Array
 -    return no unless a.length is b.length
-+  если egal a, b then yes
+-    return no for el, idx in a when not arrayEgal el, b[idx]
++  если egal a, b то yes
 +  иначе если a instanceof Array и b instanceof Array
 +    return no еслине a.length is b.length
-     return no for el, idx in a when not arrayEgal el, b[idx]
++    return no for el, idx in a когда not arrayEgal el, b[idx]
      yes
  
-@@ -22,7 +22,7 @@ global.eq      = (a, b, msg) -> ok egal(a, b), msg ? "#{inspect a} === #{inspect
+ global.eq      = (a, b, msg) -> ok egal(a, b), msg ? "#{inspect a} === #{inspect b}"
  global.arrayEq = (a, b, msg) -> ok arrayEgal(a,b), msg ? "#{inspect a} === #{inspect b}"
  
  
 -libDir = if typeof _$jscoverage is 'undefined' then 'lib' else 'instrumented'
-+libDir = если typeof _$jscoverage is 'undefined' then 'lib' иначе 'instrumented'
++libDir = если typeof _$jscoverage is 'undefined' то 'lib' иначе 'instrumented'
  global.CoffeeScript = require '..'
  global.CS = require "../#{libDir}/coffee-script/nodes"
  global.JS = require "../#{libDir}/coffee-script/js-nodes"
+diff --git a/test/slices.coffee b/test/slices.coffee
+index 81e9239..db6f640 100644
+--- a/test/slices.coffee
++++ b/test/slices.coffee
+@@ -53,7 +53,7 @@ suite 'Slices', ->
+   #  n = 2 # some truthy number in `list`
+   #  arrayEq [0..n], list[..n]
+   #  arrayEq [0..n], list[..n or 0]
+-  #  arrayEq [0..n], list[..if n then n else 0]
++  #  arrayEq [0..n], list[..if n то n else 0]
+ 
+   #test "#2349: inclusive slicing to numeric strings", ->
+   #  arrayEq [0, 1], [0..10][.."1"]
+diff --git a/test/try-catch-finally.coffee b/test/try-catch-finally.coffee
+index ab946e6..78b8871 100644
+--- a/test/try-catch-finally.coffee
++++ b/test/try-catch-finally.coffee
+@@ -32,7 +32,7 @@ suite 'Try/Catch/Finally', ->
+   test 'catch variable is not let-scoped as in JS', ->
+     nonce = {}
+     try throw nonce
+-    catch e then
++    catch e то
+     eq nonce, e
+ 
+   test 'destructuring in catch', ->

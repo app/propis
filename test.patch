@@ -1,3 +1,34 @@
+diff --git a/test/arrays.coffee b/test/arrays.coffee
+index 9d8cd66..6722f9f 100644
+--- a/test/arrays.coffee
++++ b/test/arrays.coffee
+@@ -16,7 +16,7 @@ suite 'Arrays', ->
+       eq 3, [ 0 , 0 , 0 ].length
+       eq k, v for v, k in [0, 1, 2, 3]
+       eq k, v for v, k in [0, 1, 2, 3,]
+-      return
++      возврат
+ 
+     test 'arrays spread over many lines', ->
+       eq 0, [
+@@ -45,7 +45,7 @@ suite 'Arrays', ->
+         2
+         3
+       ]
+-      return
++      возврат
+ 
+     test 'nested arrays', ->
+       eq 1, [[]].length
+@@ -68,7 +68,7 @@ suite 'Arrays', ->
+         4, 5, 6
+         7, 8, 9,
+       ]
+-      return
++      возврат
+ 
+     test 'listed functions', ->
+       a = [
 diff --git a/test/assignment.coffee b/test/assignment.coffee
 index afadf17..e94d7c8 100644
 --- a/test/assignment.coffee
@@ -153,7 +184,7 @@ index afadf17..e94d7c8 100644
        g = -> this
        nonce = {}
 diff --git a/test/classes.coffee b/test/classes.coffee
-index be696e6..5b9da14 100644
+index be696e6..818aeae 100644
 --- a/test/classes.coffee
 +++ b/test/classes.coffee
 @@ -53,7 +53,7 @@ suite 'Classes', ->
@@ -198,9 +229,12 @@ index be696e6..5b9da14 100644
  
        eq result, A
  
-@@ -331,19 +331,19 @@ suite 'Classes', ->
+@@ -329,21 +329,21 @@ suite 'Classes', ->
  
-     test 'jashkenas/coffee-script#1966: external constructors should produce their return value', ->
+       eq result, B
+ 
+-    test 'jashkenas/coffee-script#1966: external constructors should produce their return value', ->
++    test 'jashkenas/coffee-script#1966: external constructors should produce their возврат value', ->
        ctor = -> {}
 -      class A then constructor: ctor
 +      class A то constructor: ctor
@@ -213,7 +247,7 @@ index be696e6..5b9da14 100644
      #  error = 'do -> ok this'
      #  strictTest = "do ->'use strict';#{error}"
 -    #  return unless (try CoffeeScript.run strictTest, bare: yes catch e then nonce) is nonce
-+    #  return unless (try CoffeeScript.run strictTest, bare: yes catch e то nonce) is nonce
++    #  возврат unless (try CoffeeScript.run strictTest, bare: yes catch e то nonce) is nonce
      #
 -    #  throws -> CoffeeScript.run "class then 'use strict';#{error}", bare: yes
 -    #  doesNotThrow -> CoffeeScript.run "class then #{error}", bare: yes
@@ -224,6 +258,15 @@ index be696e6..5b9da14 100644
      #
      #  # comments are ignored in the Directive Prologue
      #  comments = ["""
+@@ -448,7 +448,7 @@ suite 'Classes', ->
+       ok (new Test).prop  is 'value'
+       ok (new Test).prop2 is 'value2'
+ 
+-    #test 'ensure that constructors invoked with splats return a new object', ->
++    #test 'ensure that constructors invoked with splats возврат a new object', ->
+     #
+     #  args = [1, 2, 3]
+     #  Type = (@args) ->
 @@ -467,7 +467,7 @@ suite 'Classes', ->
      #
      #  # Ensure that constructors invoked with splats cache the function.
@@ -267,7 +310,7 @@ index f42d361..38abd5f 100644
 -    if x then debugger
 +    если x то debugger
 diff --git a/test/function-invocation.coffee b/test/function-invocation.coffee
-index 51faacd..e58c4a9 100644
+index 51faacd..87d697d 100644
 --- a/test/function-invocation.coffee
 +++ b/test/function-invocation.coffee
 @@ -4,7 +4,7 @@ suite 'Function Invocation', ->
@@ -284,10 +327,19 @@ index 51faacd..e58c4a9 100644
    test "function invocation", ->
      func = ->
 -      return if true
-+      return если true
++      возврат если true
      eq undefined, func()
      result = ("hello".slice) 3
      ok result is 'lo'
+@@ -115,7 +115,7 @@ suite 'Function Invocation', ->
+       'orange'
+     ok a is '13 apple orange'
+ 
+-  #test "Ensure that empty functions don't return mistaken values.", ->
++  #test "Ensure that empty functions don't возврат mistaken values.", ->
+   #  obj = {func: (@param, @rest...) ->}
+   #  ok obj.func(101, 102, 103, 104) is undefined
+   #  ok obj.param is 101
 @@ -134,9 +134,9 @@ suite 'Function Invocation', ->
    #    2 + 1
    #  )
@@ -309,8 +361,39 @@ index 51faacd..e58c4a9 100644
      array = []
      contextTest array
      contextTest.apply null, array
-@@ -339,9 +339,9 @@ suite 'Function Invocation', ->
-   test "implicit returns with multiple branches", ->
+@@ -314,51 +314,51 @@ suite 'Function Invocation', ->
+     eq '1011', 69.0.toString [4]...
+     eq '1011', (131.0).toString [5]...
+ 
+-  test "splats and the `new` operator: functions that return `null` should construct their instance", ->
++  test "splats and the `new` operator: functions that возврат `null` should construct their instance", ->
+     args = []
+     child = new (constructor = -> null) args...
+     ok child instanceof constructor
+ 
+-  test "splats and the `new` operator: functions that return functions should construct their return value", ->
++  test "splats and the `new` operator: functions that возврат functions should construct their возврат value", ->
+     args = []
+     fn = ->
+     child = new (constructor = -> fn) args...
+     ok child not instanceof constructor
+     eq fn, child
+ 
+-  test "implicit return", ->
++  test "implicit возврат", ->
+     eq ok, new ->
+       ok
+-      ### Should `return` implicitly   ###
++      ### Should `возврат` implicitly   ###
+       ### even with trailing comments. ###
+     eq ok, new ->
+       ok
+-      # Should `return` implicitly
++      # Should `возврат` implicitly
+       # even with trailing comments.
+ 
+-  test "implicit returns with multiple branches", ->
++  test "implicit возвратs with multiple branches", ->
      nonce = {}
      fn = ->
 -      if not nonce
@@ -321,14 +404,16 @@ index 51faacd..e58c4a9 100644
          nonce
      eq nonce, fn()
  
-@@ -349,16 +349,16 @@ suite 'Function Invocation', ->
+-  test "implicit returns with switches", ->
++  test "implicit возвратs with выборes", ->
      nonce = {}
      fn = ->
-       switch nonce
+-      switch nonce
 -        when nonce then nonce
 -        else return undefined
++      выбор nonce
 +        когда nonce то nonce
-+        иначе return undefined
++        иначе возврат undefined
      eq nonce, fn()
  
 -  test "preserve context when generating closure wrappers for expression conversions", ->
@@ -348,15 +433,17 @@ index 51faacd..e58c4a9 100644
    #  fn = (items) ->
    #    for item in items
 -  #      return item if item is nonce
-+  #      return item если item is nonce
++  #      возврат item если item is nonce
    #  eq nonce, fn items
  
    test "usage of `new` is careful about where the invocation parens end up", ->
-@@ -383,21 +383,21 @@ suite 'Function Invocation', ->
+@@ -382,22 +382,22 @@ suite 'Function Invocation', ->
+     result = null
      save   = (obj) -> result = obj
  
-     save switch id false
+-    save switch id false
 -      when true
++    save выбор id false
 +      когда true
          'true'
 -      when false
@@ -405,7 +492,7 @@ index 51faacd..e58c4a9 100644
      argNonceA = {}
      argNonceB = {}
 diff --git a/test/functions.coffee b/test/functions.coffee
-index ee1446f..3350156 100644
+index ee1446f..2a5cd1d 100644
 --- a/test/functions.coffee
 +++ b/test/functions.coffee
 @@ -38,7 +38,7 @@ suite 'Function Literals', ->
@@ -417,6 +504,21 @@ index ee1446f..3350156 100644
  
  
    suite 'Bound Function Definition', ->
+@@ -64,12 +64,12 @@ suite 'Function Literals', ->
+     #  obj = {
+     #    one: ->
+     #      do =>
+-    #        return this.two()
++    #        возврат this.two()
+     #    two: ->
+     #      do =>
+     #        do =>
+     #          do =>
+-    #            return this.three
++    #            возврат this.three
+     #    three: 3
+     #  }
+     #  eq obj.one(), 3
 @@ -207,4 +207,4 @@ suite 'Function Literals', ->
        (->) -> throw {}
        (->) ->
@@ -436,7 +538,7 @@ index f8762c5..23de8e5 100644
      #
      #  eq func().key.join(' '), '1 2 3'
 diff --git a/test/operators.coffee b/test/operators.coffee
-index 54531e2..5f4c6d7 100644
+index 54531e2..7a03a49 100644
 --- a/test/operators.coffee
 +++ b/test/operators.coffee
 @@ -105,7 +105,7 @@ suite 'Operators', ->
@@ -492,7 +594,7 @@ index 54531e2..5f4c6d7 100644
  
      test "in, of", ->
        arr = [1]
-@@ -174,13 +174,13 @@ suite 'Operators', ->
+@@ -174,28 +174,28 @@ suite 'Operators', ->
        eq 1, [Object() in Array()].length
  
      test "jashkenas/coffee-script#737: `in` should have higher precedence than logical operators", ->
@@ -510,9 +612,10 @@ index 54531e2..5f4c6d7 100644
        ok a() not in [b(),c()]
        eq 3, share
  
-@@ -188,14 +188,14 @@ suite 'Operators', ->
+     test "jashkenas/coffee-script#1099: empty array after `in` should compile to `false`", ->
        eq 1, [5 in []].length
-       eq false, do -> return 0 in []
+-      eq false, do -> return 0 in []
++      eq false, do -> возврат 0 in []
  
 -    test "jashkenas/coffee-script#1354: optimized `in` checks should not happen when splats are present", ->
 +    test "jashkenas/coffee-script#1354: optimized `in` checks should not happen когда splats are present", ->
@@ -629,7 +732,7 @@ index 21a2477..40675ee 100644
      eq 0, a(/ b/i)
      eq 0, a(/= b/i)
 diff --git a/test/scope.coffee b/test/scope.coffee
-index a84a1b5..5dec5ff 100644
+index a84a1b5..fa4a0b3 100644
 --- a/test/scope.coffee
 +++ b/test/scope.coffee
 @@ -21,9 +21,9 @@ suite 'Scope', ->
@@ -671,8 +774,17 @@ index a84a1b5..5dec5ff 100644
    #    b = 1
    #  ok b
  
+@@ -70,7 +70,7 @@ suite 'Scope', ->
+     for v, k in [1]
+       ok v
+       ok not k
+-    return
++    возврат
+ 
+   test 'loop iterators available outside the loop (ew)', ->
+     fn = ->
 diff --git a/test/setup.coffee b/test/setup.coffee
-index 457b518..9cefd04 100644
+index 457b518..888a7fe 100644
 --- a/test/setup.coffee
 +++ b/test/setup.coffee
 @@ -5,24 +5,24 @@ global[name] = func for name, func of require 'assert'
@@ -696,8 +808,8 @@ index 457b518..9cefd04 100644
 -    return no for el, idx in a when not arrayEgal el, b[idx]
 +  если egal a, b то yes
 +  иначе если a instanceof Array и b instanceof Array
-+    return no еслине a.length is b.length
-+    return no for el, idx in a когда not arrayEgal el, b[idx]
++    возврат no еслине a.length is b.length
++    возврат no for el, idx in a когда not arrayEgal el, b[idx]
      yes
  
  global.eq      = (a, b, msg) -> ok egal(a, b), msg ? "#{inspect a} === #{inspect b}"

@@ -1,5 +1,5 @@
 diff --git a/src/grammar.pegjs b/src/grammar.pegjs
-index 704518e..fd2cb9b 100644
+index 704518e..b56f0d0 100644
 --- a/src/grammar.pegjs
 +++ b/src/grammar.pegjs
 @@ -5,9 +5,9 @@ var CS = require("./nodes"),
@@ -80,15 +80,17 @@ index 704518e..fd2cb9b 100644
        }
    case
      = WHEN _ conditions:caseConditions body:caseBody {
-@@ -966,7 +966,7 @@ TERMINDENT = $(TERMINATOR INDENT)
+@@ -966,8 +966,8 @@ TERMINDENT = $(TERMINATOR INDENT)
  
  
  // keywords
 -AND = $("and" !identifierPart)
+-BREAK = $("break" !identifierPart)
 +AND = $("и" !identifierPart)
- BREAK = $("break" !identifierPart)
++BREAK = $("прервать" !identifierPart)
  BY = $("by" !identifierPart)
  CATCH = $("catch" !identifierPart)
+ CONTINUE = $("continue" !identifierPart)
 @@ -975,12 +975,12 @@ CLASS = $("class" !identifierPart)
  DELETE = $("delete" !identifierPart)
  DEBUGGER = $("debugger" !identifierPart)
@@ -111,9 +113,11 @@ index 704518e..fd2cb9b 100644
 -OR = $("or" !identifierPart)
 +OR = $("или" !identifierPart)
  OWN = $("own" !identifierPart)
- RETURN = $("return" !identifierPart)
- SWITCH = $("switch" !identifierPart)
+-RETURN = $("return" !identifierPart)
+-SWITCH = $("switch" !identifierPart)
 -THEN = $("then" !identifierPart)
++RETURN = $("возврат" !identifierPart)
++SWITCH = $("выбор" !identifierPart)
 +THEN = $("то" !identifierPart)
  THIS = $("this" !identifierPart)
  THROW = $("throw" !identifierPart)
@@ -133,9 +137,10 @@ index 704518e..fd2cb9b 100644
  
  SharedKeywords
    = ("true" / "false" / "null" / "this" / "new" / "delete" / "typeof" /
-   "instanceof" / "in" / "return" / "throw" / "break" / "continue" / "debugger" /
+-  "instanceof" / "in" / "return" / "throw" / "break" / "continue" / "debugger" /
 -  "if" / "else" / "switch" / "for" / "while" / "do" / "try" / "catch" /
-+  "если" /"иначе" / "switch" / "for" / "пока" / "do" / "try" / "catch" /
++  "instanceof" / "in" / "возврат" / "throw" / "прервать" / "continue" / "debugger" /
++  "если" /"иначе" / "выбор" / "for" / "пока" / "do" / "try" / "catch" /
    "finally" / "class" / "extends" / "super") !identifierPart
  
  JSKeywords

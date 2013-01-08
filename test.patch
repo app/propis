@@ -1,17 +1,28 @@
 diff --git a/test/arrays.coffee b/test/arrays.coffee
-index 9d8cd66..6722f9f 100644
+index 9d8cd66..4cb4d97 100644
 --- a/test/arrays.coffee
 +++ b/test/arrays.coffee
-@@ -16,7 +16,7 @@ suite 'Arrays', ->
+@@ -14,9 +14,9 @@ suite 'Arrays', ->
+       eq 3, [0,0,0].length
+       eq 3, [0, 0, 0].length
        eq 3, [ 0 , 0 , 0 ].length
-       eq k, v for v, k in [0, 1, 2, 3]
-       eq k, v for v, k in [0, 1, 2, 3,]
+-      eq k, v for v, k in [0, 1, 2, 3]
+-      eq k, v for v, k in [0, 1, 2, 3,]
 -      return
++      eq k, v для v, k в [0, 1, 2, 3]
++      eq k, v для v, k в [0, 1, 2, 3,]
 +      возврат
  
      test 'arrays spread over many lines', ->
        eq 0, [
-@@ -45,7 +45,7 @@ suite 'Arrays', ->
+@@ -39,13 +39,13 @@ suite 'Arrays', ->
+         0,
+         0,
+       ].length
+-      eq k, v for v, k in [
++      eq k, v для v, k в [
+         0
+         1
          2
          3
        ]
@@ -20,7 +31,14 @@ index 9d8cd66..6722f9f 100644
  
      test 'nested arrays', ->
        eq 1, [[]].length
-@@ -68,7 +68,7 @@ suite 'Arrays', ->
+@@ -62,13 +62,13 @@ suite 'Arrays', ->
+       ].length
+ 
+     test 'mixed newline/comma separators', ->
+-      eq k, v for v, k in [
++      eq k, v для v, k в [
+         0
+         1, 2, 3,
          4, 5, 6
          7, 8, 9,
        ]
@@ -29,16 +47,76 @@ index 9d8cd66..6722f9f 100644
  
      test 'listed functions', ->
        a = [
+@@ -76,9 +76,9 @@ suite 'Arrays', ->
+         ->
+         (x) ->  x
+       ]
+-      ok a.length is 3
++      ok a.length это 3
+       b = [(x) -> x * x, ->, (x) ->  x, ->]
+-      ok b.length is 4
++      ok b.length это 4
+ 
+     #test 'dedented comma style', ->
+     #  eq 3, [
+@@ -89,21 +89,21 @@ suite 'Arrays', ->
+     #    0
+     #  ].length
+ 
+-    #test 'jashkenas/coffee-script#1274: `[] = a()` compiles to `false` instead of `a()`', ->
++    #test 'jashkenas/coffee-script#1274: `[] = a()` compiles to `false` instead из `a()`', ->
+     #  a = false
+     #  fn = -> a = true
+     #  [] = fn()
+     #  ok a
+ 
+-    #test 'mixed shorthand objects in array lists', ->
++    #test 'mixed shorthand objects в array lists', ->
+     #
+     #  arr = [
+     #    a:1
+     #    'b'
+     #    c:1
+     #  ]
+-    #  ok arr.length is 3
+-    #  ok arr[2].c is 1
++    #  ok arr.length это 3
++    #  ok arr[2].c это 1
+     #
+     #  arr = [b: 1, a: 2, 100]
+     #  eq arr[1], 100
+@@ -149,11 +149,11 @@ suite 'Arrays', ->
+       arr = [1, 2, 3]
+       fn = -> arr
+       obj = {fn: fn}
+-      arrayEq arr, [(do fn)...]
++      arrayEq arr, [(выполнить fn)...]
+       arrayEq arr, [fn()...]
+       arrayEq arr, [(fn 0)...]
+       arrayEq arr, [fn(0)...]
+-      arrayEq arr, [(do obj.fn)...]
++      arrayEq arr, [(выполнить obj.fn)...]
+       arrayEq arr, [obj.fn()...]
+       arrayEq arr, [(obj.fn 0)...]
+       arrayEq arr, [obj.fn(0)...]
 diff --git a/test/assignment.coffee b/test/assignment.coffee
-index afadf17..e94d7c8 100644
+index afadf17..8c8d8ac 100644
 --- a/test/assignment.coffee
 +++ b/test/assignment.coffee
-@@ -19,7 +19,7 @@ suite 'Assignment', ->
+@@ -13,13 +13,13 @@ suite 'Assignment', ->
+       nonce = {}
+       addMethod = ->
+         @method = -> nonce
+-        this
++        этот
+       eq nonce, addMethod.call({}).method()
+ 
      #test "unassignable values", ->
      #  nonce = {}
-     #  for nonref in ['', '""', '0', 'f()'].concat CoffeeScript.RESERVED
+-    #  for nonref in ['', '""', '0', 'f()'].concat CoffeeScript.RESERVED
 -    #    eq nonce, (try CoffeeScript.compile "#{nonref} = v" catch e then nonce)
-+    #    eq nonce, (try CoffeeScript.compile "#{nonref} = v" catch e то nonce)
++    #  для nonref в ['', '""', '0', 'f()'].concat CoffeeScript.RESERVED
++    #    eq nonce, (проба CoffeeScript.compile "#{nonref} = v" перехват e то nonce)
  
    suite 'Compound Assignment', ->
  
@@ -65,13 +143,23 @@ index afadf17..e94d7c8 100644
 +      d и= nonce
        eq nonce, d
  
-       # ensure that RHS is treated as a group
+-      # ensure that RHS is treated as a group
++      # ensure that RHS это treated as a group
        e = f = false
 -      e and= f or true
 +      e и= f or true
        eq false, e
  
      test "compound assignment as a sub expression", ->
+@@ -54,7 +54,7 @@ suite 'Assignment', ->
+       eq 5, b
+       eq 3, c
+ 
+-    # *note: this test could still use refactoring*
++    # *неe: этот test could still use refactoring*
+     #test "compound assignment should be careful about caching variables", ->
+     #  count = 0
+     #  list = []
 @@ -67,7 +67,7 @@ suite 'Assignment', ->
      #  eq 2, list[2]
      #  eq 2, count
@@ -81,7 +169,14 @@ index afadf17..e94d7c8 100644
      #  eq 6, list[2]
      #  eq 3, count
  
-@@ -90,7 +90,7 @@ suite 'Assignment', ->
+@@ -84,16 +84,16 @@ suite 'Assignment', ->
+     #  eq 5, count
+ 
+     test "compound assignment with implicit objects", ->
+-      obj = undefined
++      obj = неизвестно
+       obj ?=
+         one: 1
  
        eq 1, obj.one
  
@@ -89,17 +184,48 @@ index afadf17..e94d7c8 100644
 +      obj и=
          two: 2
  
-       eq undefined, obj.one
+-      eq undefined, obj.one
++      eq неизвестно, obj.one
+       eq         2, obj.two
+ 
+     test "compound assignment (math operators)", ->
+@@ -112,7 +112,7 @@ suite 'Assignment', ->
+ 
+     test "more compound assignment", ->
+       a = {}
+-      val = undefined
++      val = неизвестно
+       val ||= a
+       val ||= true
+       eq a, val
+@@ -124,7 +124,7 @@ suite 'Assignment', ->
+       eq b, val
+ 
+       c = {}
+-      val = null
++      val = нуль
+       val ?= c
+       val ?= true
+       eq c, val
+@@ -133,7 +133,7 @@ suite 'Assignment', ->
+   suite 'Destructuring Assignment', ->
+ 
+     test "empty destructuring assignment", ->
+-      {} = [] = undefined
++      {} = [] = неизвестно
+ 
+     test "chained destructuring assignments", ->
+       [a] = {0: b} = {'0': c} = [nonce={}]
 @@ -141,7 +141,7 @@ suite 'Assignment', ->
        eq nonce, b
        eq nonce, c
  
 -    test "variable swapping to verify caching of RHS values when appropriate", ->
-+    test "variable swapping to verify caching of RHS values когда appropriate", ->
++    test "variable swapping to verify caching из RHS values когда appropriate", ->
        a = nonceA = {}
        b = nonceB = {}
        c = nonceC = {}
-@@ -211,11 +211,11 @@ suite 'Assignment', ->
+@@ -211,15 +211,15 @@ suite 'Assignment', ->
  
      test "destructuring assignment against an expression", ->
        a={}; b={}
@@ -113,16 +239,100 @@ index afadf17..e94d7c8 100644
        [a] = [0] ? [1]
        eq a, 0
  
-@@ -243,7 +243,7 @@ suite 'Assignment', ->
-     #  throws (-> CoffeeScript.compile "[#{disallowed.join ', '}] = x"), null, 'all disallowed'
-     #  throws (-> CoffeeScript.compile "[#{disallowed.join '..., '}...] = x"), null, 'all disallowed as splats'
-     #  t = tSplat = null
+-    # for implicit destructuring assignment in comprehensions, see the comprehension tests
++    # для implicit destructuring assignment в comprehensions, see the comprehension tests
+ 
+     test "destructuring assignment with context (@) properties", ->
+       a={}; b={}; c={}; d={}; e={}
+@@ -227,7 +227,7 @@ suite 'Assignment', ->
+         fn: ->
+           local = [a, {b, c}, d, e]
+           [@a, {b: @b, c: @c}, @d, @e] = local
+-      eq undefined, obj[key] for key in ['a','b','c','d','e']
++      eq неизвестно, obj[key] для key в ['a','b','c','d','e']
+       obj.fn()
+       eq a, obj.a
+       eq b, obj.b
+@@ -238,23 +238,23 @@ suite 'Assignment', ->
+     #test "#1024", ->
+     #  eq 2 * ([] = 3 + 5), 16
+ 
+-    #test "#1005: invalid identifiers allowed on LHS of destructuring assignment", ->
++    #test "#1005: invalid identifiers allowed on LHS из destructuring assignment", ->
+     #  disallowed = ['eval', 'arguments'].concat CoffeeScript.RESERVED
+-    #  throws (-> CoffeeScript.compile "[#{disallowed.join ', '}] = x"), null, 'all disallowed'
+-    #  throws (-> CoffeeScript.compile "[#{disallowed.join '..., '}...] = x"), null, 'all disallowed as splats'
+-    #  t = tSplat = null
 -    #  for v in disallowed when v isnt 'class' # `class` by itself is an expression
-+    #  for v in disallowed когда v isnt 'class' # `class` by itself is an expression
-     #    throws (-> CoffeeScript.compile t), null, t = "[#{v}] = x"
-     #    throws (-> CoffeeScript.compile tSplat), null, tSplat = "[#{v}...] = x"
+-    #    throws (-> CoffeeScript.compile t), null, t = "[#{v}] = x"
+-    #    throws (-> CoffeeScript.compile tSplat), null, tSplat = "[#{v}...] = x"
++    #  throws (-> CoffeeScript.compile "[#{disallowed.join ', '}] = x"), нуль, 'all disallowed'
++    #  throws (-> CoffeeScript.compile "[#{disallowed.join '..., '}...] = x"), нуль, 'all disallowed as splats'
++    #  t = tSplat = нуль
++    #  для v в disallowed когда v этоне 'класс' # `класс` by itself это an expression
++    #    throws (-> CoffeeScript.compile t), нуль, t = "[#{v}] = x"
++    #    throws (-> CoffeeScript.compile tSplat), нуль, tSplat = "[#{v}...] = x"
      #  doesNotThrow ->
-@@ -293,7 +293,7 @@ suite 'Assignment', ->
+-    #    for v in disallowed
++    #    для v в disallowed
+     #      CoffeeScript.compile "[a.#{v}] = x"
+     #      CoffeeScript.compile "[a.#{v}...] = x"
+     #      CoffeeScript.compile "[@#{v}] = x"
+     #      CoffeeScript.compile "[@#{v}...] = x"
+ 
+     test "#2055: destructuring assignment with `new`", ->
+-      {length} = new Array
++      {length} = новый Array
+       eq 0, length
+ 
+ 
+@@ -265,35 +265,35 @@ suite 'Assignment', ->
+       a = false
+       a ?= nonce
+       eq false, a
+-      b = undefined
++      b = неизвестно
+       b ?= nonce
+       eq nonce, b
+-      c = null
++      c = нуль
+       c ?= nonce
+       eq nonce, c
+ 
+-    #test "#1627: prohibit conditional assignment of undefined variables", ->
+-    #  throws (-> CoffeeScript.compile "x ?= 10"),        null, "prohibit (x ?= 10)"
+-    #  throws (-> CoffeeScript.compile "x ||= 10"),       null, "prohibit (x ||= 10)"
+-    #  throws (-> CoffeeScript.compile "x or= 10"),       null, "prohibit (x or= 10)"
+-    #  throws (-> CoffeeScript.compile "do -> x ?= 10"),  null, "prohibit (do -> x ?= 10)"
+-    #  throws (-> CoffeeScript.compile "do -> x ||= 10"), null, "prohibit (do -> x ||= 10)"
+-    #  throws (-> CoffeeScript.compile "do -> x or= 10"), null, "prohibit (do -> x or= 10)"
+-    #  doesNotThrow (-> CoffeeScript.compile "x = null; x ?= 10"),        "allow (x = null; x ?= 10)"
+-    #  doesNotThrow (-> CoffeeScript.compile "x = null; x ||= 10"),       "allow (x = null; x ||= 10)"
+-    #  doesNotThrow (-> CoffeeScript.compile "x = null; x or= 10"),       "allow (x = null; x or= 10)"
+-    #  doesNotThrow (-> CoffeeScript.compile "x = null; do -> x ?= 10"),  "allow (x = null; do -> x ?= 10)"
+-    #  doesNotThrow (-> CoffeeScript.compile "x = null; do -> x ||= 10"), "allow (x = null; do -> x ||= 10)"
+-    #  doesNotThrow (-> CoffeeScript.compile "x = null; do -> x or= 10"), "allow (x = null; do -> x or= 10)"
+-
+-    #  throws (-> CoffeeScript.compile "-> -> -> x ?= 10"), null, "prohibit (-> -> -> x ?= 10)"
+-    #  doesNotThrow (-> CoffeeScript.compile "x = null; -> -> -> x ?= 10"), "allow (x = null; -> -> -> x ?= 10)"
++    #test "#1627: prohibit conditional assignment из неизвестно variables", ->
++    #  throws (-> CoffeeScript.compile "x ?= 10"),        нуль, "prohibit (x ?= 10)"
++    #  throws (-> CoffeeScript.compile "x ||= 10"),       нуль, "prohibit (x ||= 10)"
++    #  throws (-> CoffeeScript.compile "x or= 10"),       нуль, "prohibit (x or= 10)"
++    #  throws (-> CoffeeScript.compile "выполнить -> x ?= 10"),  нуль, "prohibit (выполнить -> x ?= 10)"
++    #  throws (-> CoffeeScript.compile "выполнить -> x ||= 10"), нуль, "prohibit (выполнить -> x ||= 10)"
++    #  throws (-> CoffeeScript.compile "выполнить -> x or= 10"), нуль, "prohibit (выполнить -> x or= 10)"
++    #  doesNotThrow (-> CoffeeScript.compile "x = нуль; x ?= 10"),        "allow (x = нуль; x ?= 10)"
++    #  doesNotThrow (-> CoffeeScript.compile "x = нуль; x ||= 10"),       "allow (x = нуль; x ||= 10)"
++    #  doesNotThrow (-> CoffeeScript.compile "x = нуль; x or= 10"),       "allow (x = нуль; x or= 10)"
++    #  doesNotThrow (-> CoffeeScript.compile "x = нуль; выполнить -> x ?= 10"),  "allow (x = нуль; выполнить -> x ?= 10)"
++    #  doesNotThrow (-> CoffeeScript.compile "x = нуль; выполнить -> x ||= 10"), "allow (x = нуль; выполнить -> x ||= 10)"
++    #  doesNotThrow (-> CoffeeScript.compile "x = нуль; выполнить -> x or= 10"), "allow (x = нуль; выполнить -> x or= 10)"
++
++    #  throws (-> CoffeeScript.compile "-> -> -> x ?= 10"), нуль, "prohibit (-> -> -> x ?= 10)"
++    #  doesNotThrow (-> CoffeeScript.compile "x = нуль; -> -> -> x ?= 10"), "allow (x = нуль; -> -> -> x ?= 10)"
+ 
+     test "more existential assignment", ->
        obj = {}
        obj.temp ?= 0
        eq obj.temp, 0
@@ -131,7 +341,7 @@ index afadf17..e94d7c8 100644
        eq obj.temp, 100
  
      test "#1348, #1216: existential assignment compilation", ->
-@@ -304,13 +304,13 @@ suite 'Assignment', ->
+@@ -304,38 +304,38 @@ suite 'Assignment', ->
        #the first ?= compiles into a statement; the second ?= compiles to a ternary expression
        eq a ?= b ?= 1, nonce
  
@@ -139,77 +349,334 @@ index afadf17..e94d7c8 100644
 +      если a то a ?= 2 иначе a = 3
        eq a, nonce
  
-     #test "#1591, #1101: splatted expressions in destructuring assignment must be assignable", ->
+-    #test "#1591, #1101: splatted expressions in destructuring assignment must be assignable", ->
++    #test "#1591, #1101: splatted expressions в destructuring assignment must be assignable", ->
      #  nonce = {}
-     #  for nonref in ['', '""', '0', 'f()', '(->)'].concat CoffeeScript.RESERVED
+-    #  for nonref in ['', '""', '0', 'f()', '(->)'].concat CoffeeScript.RESERVED
 -    #    eq nonce, (try CoffeeScript.compile "[#{nonref}...] = v" catch e then nonce)
-+    #    eq nonce, (try CoffeeScript.compile "[#{nonref}...] = v" catch e то nonce)
++    #  для nonref в ['', '""', '0', 'f()', '(->)'].concat CoffeeScript.RESERVED
++    #    eq nonce, (проба CoffeeScript.compile "[#{nonref}...] = v" перехват e то nonce)
  
-     #test "#1643: splatted accesses in destructuring assignments should not be declared as variables", ->
+-    #test "#1643: splatted accesses in destructuring assignments should not be declared as variables", ->
++    #test "#1643: splatted accesses в destructuring assignments should не be declared as variables", ->
      #  nonce = {}
-@@ -320,11 +320,11 @@ suite 'Assignment', ->
+     #  accesses = ['o.a', 'o["a"]', '(o.a)', '(o.a).a', '@o.a', 'C::a', 'C::', 'f().a', 'o?.a', 'o?.a.b', 'f?().a']
+-    #  for access in accesses
+-    #    for i,j in [1,2,3] #position can matter
++    #  для access в accesses
++    #    для i,j в [1,2,3] #position can matter
      #      code =
      #        """
      #        nonce = {}; nonce2 = {}; nonce3 = {};
 -    #        @o = o = new (class C then a:{}); f = -> o
-+    #        @o = o = new (class C то a:{}); f = -> o
-     #        [#{new Array(i).join('x,')}#{access}...] = [#{new Array(i).join('0,')}nonce, nonce2, nonce3]
+-    #        [#{new Array(i).join('x,')}#{access}...] = [#{new Array(i).join('0,')}nonce, nonce2, nonce3]
 -    #        unless #{access}[0] is nonce and #{access}[1] is nonce2 and #{access}[2] is nonce3 then throw new Error('[...]')
-+    #        unless #{access}[0] is nonce and #{access}[1] is nonce2 and #{access}[2] is nonce3 то throw new Error('[...]')
++    #        @o = o = новый (класс C то a:{}); f = -> o
++    #        [#{новый Array(i).join('x,')}#{access}...] = [#{новый Array(i).join('0,')}nonce, nonce2, nonce3]
++    #        unless #{access}[0] это nonce and #{access}[1] это nonce2 and #{access}[2] это nonce3 то выдать новый Error('[...]')
      #        """
 -    #      eq nonce, unless (try CoffeeScript.run code, bare: true catch e then true) then nonce
-+    #      eq nonce, unless (try CoffeeScript.run code, bare: true catch e то true) то nonce
++    #      eq nonce, unless (проба CoffeeScript.run code, bare: true перехват e то true) то nonce
      #  # subpatterns like `[[a]...]` and `[{a}...]`
      #  subpatterns = ['[sub, sub2, sub3]', '{0: sub, 1: sub2, 2: sub3}']
-     #  for subpattern in subpatterns
-@@ -333,9 +333,9 @@ suite 'Assignment', ->
+-    #  for subpattern in subpatterns
+-    #    for i,j in [1,2,3]
++    #  для subpattern в subpatterns
++    #    для i,j в [1,2,3]
+     #      code =
      #        """
      #        nonce = {}; nonce2 = {}; nonce3 = {};
-     #        [#{new Array(i).join('x,')}#{subpattern}...] = [#{new Array(i).join('0,')}nonce, nonce2, nonce3]
+-    #        [#{new Array(i).join('x,')}#{subpattern}...] = [#{new Array(i).join('0,')}nonce, nonce2, nonce3]
 -    #        unless sub is nonce and sub2 is nonce2 and sub3 is nonce3 then throw new Error('[sub...]')
-+    #        unless sub is nonce and sub2 is nonce2 and sub3 is nonce3 то throw new Error('[sub...]')
++    #        [#{новый Array(i).join('x,')}#{subpattern}...] = [#{новый Array(i).join('0,')}nonce, nonce2, nonce3]
++    #        unless sub это nonce and sub2 это nonce2 and sub3 это nonce3 то выдать новый Error('[sub...]')
      #        """
 -    #      eq nonce, unless (try CoffeeScript.run code, bare: true catch e then true) then nonce
-+    #      eq nonce, unless (try CoffeeScript.run code, bare: true catch e то true) то nonce
++    #      eq nonce, unless (проба CoffeeScript.run code, bare: true перехват e то true) то nonce
  
      test "#1838: Regression with variable assignment", ->
        name =
-@@ -358,7 +358,7 @@ suite 'Assignment', ->
+@@ -343,7 +343,7 @@ suite 'Assignment', ->
+ 
+       eq name, 'dave'
+ 
+-    #test 'jashkenas/coffee-script#2211: splats in destructured parameters', ->
++    #test 'jashkenas/coffee-script#2211: splats в destructured parameters', ->
+     #  doesNotThrow -> CoffeeScript.compile '([a...]) ->'
+     #  doesNotThrow -> CoffeeScript.compile '([a...],b) ->'
+     #  doesNotThrow -> CoffeeScript.compile '([a...],[b...]) ->'
+@@ -358,9 +358,9 @@ suite 'Assignment', ->
      #  throws -> CoffeeScript.compile '({a:b()})->'
      #  throws -> CoffeeScript.compile '({a:b.c()})->'
  
 -    test '#72: parsing assignment fails when the assignee is member access of a result of a call', ->
-+    test '#72: parsing assignment fails когда the assignee is member access of a result of a call', ->
++    test '#72: parsing assignment fails когда the assignee это member access из a result из a call', ->
        f = (o) -> o
-       g = -> this
+-      g = -> this
++      g = -> этот
        nonce = {}
+ 
+       obj = {}
+diff --git a/test/booleans.coffee b/test/booleans.coffee
+index 6425c5c..9545e66 100644
+--- a/test/booleans.coffee
++++ b/test/booleans.coffee
+@@ -1,20 +1,20 @@
+ suite 'Boolean Literals', ->
+ 
+-  # TODO: add method invocation tests: true.toString() is "true"
++  # TODO: add method invocation tests: true.toString() это "true"
+ 
+   test "#764 Booleans should be indexable", ->
+     toString = Boolean::toString
+ 
+-    eq toString, true['toString']
+-    eq toString, false['toString']
+-    eq toString, yes['toString']
+-    eq toString, no['toString']
+-    eq toString, on['toString']
+-    eq toString, off['toString']
++    eq toString, истина['toString']
++    eq toString, ложь['toString']
++    eq toString, да['toString']
++    eq toString, нет['toString']
++    eq toString, вкл['toString']
++    eq toString, выкл['toString']
+ 
+-    eq toString, true.toString
+-    eq toString, false.toString
+-    eq toString, yes.toString
+-    eq toString, no.toString
+-    eq toString, on.toString
+-    eq toString, off.toString
++    eq toString, истина.toString
++    eq toString, ложь.toString
++    eq toString, да.toString
++    eq toString, нет.toString
++    eq toString, вкл.toString
++    eq toString, выкл.toString
 diff --git a/test/classes.coffee b/test/classes.coffee
-index be696e6..818aeae 100644
+index be696e6..b4f428b 100644
 --- a/test/classes.coffee
 +++ b/test/classes.coffee
-@@ -53,7 +53,7 @@ suite 'Classes', ->
+@@ -2,25 +2,25 @@ suite 'Classes', ->
+ 
+   suite 'Class Definition', ->
+ 
+-    #test 'Overriding the static property new doesn't clobber Function::new', ->
++    #test 'Overriding the static property новый doesn't clobber Function::new', ->
+     #
+-    #  class OneClass
++    #  класс OneClass
+     #    @new: 'new'
+     #    function: 'function'
+     #    constructor: (name) -> @name = name
+     #
+-    #  class TwoClass extends OneClass
++    #  класс TwoClass наследует OneClass
+     #  delete TwoClass.new
+     #
+-    #  Function.prototype.new = -> new this arguments...
++    #  Function.prototype.новый = -> новый этот arguments...
+     #
+-    #  ok (TwoClass.new('three')).name is 'three'
+-    #  ok (new OneClass).function is 'function'
+-    #  ok OneClass.new is 'new'
++    #  ok (TwoClass.new('three')).name это 'three'
++    #  ok (новый OneClass).function это 'function'
++    #  ok OneClass.новый это 'new'
+     #
+     #  delete Function.prototype.new
+ 
+-    #test 'basic classes, again, but in the manual prototype style', ->
++    #test 'basic классes, again, but в the manual prototype style', ->
+     #
+     #  Base = ->
+     #  Base::func = (string) ->
+@@ -32,9 +32,9 @@ suite 'Classes', ->
+     #  SecondChild = ->
+     #  ThirdChild = ->
+     #    @array = [1, 2, 3]
+-    #    this
++    #    этот
+     #
+-    #  ThirdChild extends SecondChild extends FirstChild extends Base
++    #  ThirdChild наследует SecondChild наследует FirstChild наследует Base
+     #
+     #  FirstChild::func = (string) ->
+     #    super('one/') + string
+@@ -45,35 +45,35 @@ suite 'Classes', ->
+     #  ThirdChild::func = (string) ->
+     #    super('three/') + string
+     #
+-    #  result = (new ThirdChild).func 'four'
++    #  result = (новый ThirdChild).func 'four'
+     #
+-    #  ok result is 'zero/one/two/three/four'
++    #  ok result это 'zero/one/two/three/four'
+     #
+-    #  ok (new ThirdChild)['func-func']('thing') is 'dynamic-thing'
++    #  ok (новый ThirdChild)['func-func']('thing') это 'dynamic-thing'
  
      test 'static assignment via colon', ->
        nonce = {}
 -      class A then @b: nonce
-+      class A то @b: nonce
++      класс A то @b: nonce
        eq nonce, A.b
  
-     test 'classes with JS-keyword properties', ->
-@@ -151,9 +151,9 @@ suite 'Classes', ->
-     #test 'exectuable class bodies', ->
+-    test 'classes with JS-keyword properties', ->
++    test 'классes with JS-keyword properties', ->
+ 
+-      class Class
+-        class: 'class'
+-        name: -> @class
++      класс Class
++        класс: 'класс'
++        name: -> @класс
+ 
+-      instance = new Class
+-      ok instance.class is 'class'
+-      ok instance.name() is 'class'
++      instance = новый Class
++      ok instance.класс это 'класс'
++      ok instance.name() это 'класс'
+ 
+-    test 'nothing classes', ->
++    test 'неhing классes', ->
+ 
+-      c = class
+-      ok c instanceof Function
++      c = класс
++      ok c экземпляр Function
+ 
+     test 'instance-bound methods and statically-bound methods', ->
+ 
+-      class Dog
++      класс Dog
+         constructor: (name) ->
+           @name = name
+ 
+@@ -81,103 +81,103 @@ suite 'Classes', ->
+           "#{@name} woofs!"
+ 
+         @static = =>
+-          new this('Dog')
++          новый этот('Dog')
+ 
+-      spark = new Dog('Spark')
+-      fido  = new Dog('Fido')
++      spark = новый Dog('Spark')
++      fido  = новый Dog('Fido')
+       fido.bark = spark.bark
+ 
+-      ok fido.bark() is 'Spark woofs!'
++      ok fido.bark() это 'Spark woofs!'
+ 
+       obj = {func: Dog.static}
+ 
+-      ok obj.func().name is 'Dog'
++      ok obj.func().name это 'Dog'
+ 
+-    test 'anonymous classes', ->
++    test 'anonymous классes', ->
+ 
+-      obj = klass: class
++      obj = klass: класс
+         method: -> 'value'
+ 
+-      instance = new obj.klass
+-      ok instance.method() is 'value'
++      instance = новый obj.klass
++      ok instance.method() это 'value'
+ 
+     #test 'Implicit objects as static properties', ->
      #
-     #  class A
+-    #  class Static
++    #  класс Static
+     #    @static =
+     #      one: 1
+     #      two: 2
+     #
+-    #  ok Static.static.one is 1
+-    #  ok Static.static.two is 2
++    #  ok Static.static.one это 1
++    #  ok Static.static.two это 2
+ 
+-    #test 'classes with static-level implicit objects', ->
++    #test 'классes with static-level implicit objects', ->
+     #
+-    #  class A
++    #  класс A
+     #    @static = one: 1
+     #    two: 2
+     #
+-    #  class B
++    #  класс B
+     #    @static = one: 1,
+     #    two: 2
+     #
+     #  eq A.static.one, 1
+-    #  eq A.static.two, undefined
+-    #  eq (new A).two, 2
++    #  eq A.static.two, неизвестно
++    #  eq (новый A).two, 2
+     #
+     #  eq B.static.one, 1
+     #  eq B.static.two, 2
+-    #  eq (new B).two, undefined
++    #  eq (новый B).two, неизвестно
+ 
+     test 'external constructors', ->
+ 
+       counter = 0
+-      classMaker = ->
++      классMaker = ->
+         inner = ++counter
+         ->
+           @value = inner
+ 
+-      class One
+-        constructor: classMaker()
++      класс One
++        constructor: классMaker()
+ 
+-      class Two
+-        constructor: classMaker()
++      класс Two
++        constructor: классMaker()
+ 
+-      eq (new One).value, 1
+-      eq (new Two).value, 2
+-      eq (new One).value, 1
+-      eq (new Two).value, 2
++      eq (новый One).value, 1
++      eq (новый Two).value, 2
++      eq (новый One).value, 1
++      eq (новый Two).value, 2
+ 
+-    #test 'exectuable class bodies', ->
++    #test 'exectuable класс bodies', ->
+     #
+-    #  class A
 -    #    if true
++    #  класс A
 +    #    если true
      #      b: 'b'
 -    #    else
 +    #    иначе
      #      c: 'c'
      #
-     #  a = new A
-@@ -166,9 +166,9 @@ suite 'Classes', ->
-       class Base
+-    #  a = new A
++    #  a = новый A
+     #
+     #  eq a.b, 'b'
+-    #  eq a.c, undefined
++    #  eq a.c, неизвестно
+ 
+     test 'mild metaprogramming', ->
+ 
+-      class Base
++      класс Base
          @attr = (name) ->
            @::[name] = (val) ->
 -            if arguments.length > 0
@@ -219,17 +686,212 @@ index be696e6..818aeae 100644
 +            иначе
                @["_#{name}"]
  
-       class Robot extends Base
-@@ -320,7 +320,7 @@ suite 'Classes', ->
-     test 'jashkenas/coffee-script#1813: Passing class definitions as expressions', ->
+-      class Robot extends Base
++      класс Robot наследует Base
+         @attr 'power'
+         @attr 'speed'
+ 
+-      robby = new Robot
++      robby = новый Robot
+ 
+-      ok robby.power() is undefined
++      ok robby.power() это неизвестно
+ 
+       robby.power 11
+       robby.speed Infinity
+@@ -185,37 +185,37 @@ suite 'Classes', ->
+       eq robby.power(), 11
+       eq robby.speed(), Infinity
+ 
+-    test 'namespaced classes do not reserve their function name in outside scope', ->
++    test 'namespaced классes выполнить не reserve their function name в outside scope', ->
+ 
+       one = {}
+       two = {}
+ 
+-      class one.Klass
++      класс one.Klass
+         @label = "one"
+ 
+-      class two.Klass
++      класс two.Klass
+         @label = "two"
+ 
+       eq typeof Klass, 'undefined'
+       eq one.Klass.label, 'one'
+       eq two.Klass.label, 'two'
+ 
+-    test 'nested classes', ->
++    test 'nested классes', ->
+ 
+-      class Outer
++      класс Outer
+         constructor: ->
+           @label = 'outer'
+ 
+-        class @Inner
++        класс @Inner
+           constructor: ->
+             @label = 'inner'
+ 
+-      eq (new Outer).label, 'outer'
+-      eq (new Outer.Inner).label, 'inner'
++      eq (новый Outer).label, 'outer'
++      eq (новый Outer.Inner).label, 'inner'
+ 
+-    test 'variables in constructor bodies are correctly scoped', ->
++    test 'variables в constructor bodies are correctly scoped', ->
+ 
+-      class A
++      класс A
+         x = 1
+         constructor: ->
+           x = 10
+@@ -224,30 +224,30 @@ suite 'Classes', ->
+         captured: ->
+           {x, y}
+ 
+-      a = new A
++      a = новый A
+       eq a.captured().x, 10
+       eq a.captured().y, 2
+ 
+-    test 'Issue #924: Static methods in nested classes', ->
++    test 'Issue #924: Static methods в nested классes', ->
+ 
+-      class A
+-        @B = class
++      класс A
++        @B = класс
+           @c = -> 5
+ 
+       eq A.B.c(), 5
+ 
+-    test 'jashkenas/coffee-script#1182: a subclass should be able to set its constructor to an external function', ->
++    test 'jashkenas/coffee-script#1182: a subкласс should be able to set its constructor to an external function', ->
+       ctor = ->
+         @val = 1
+-      class A
+-      class B extends A
++      класс A
++      класс B наследует A
+         constructor: ctor
+-      eq (new B).val, 1
++      eq (новый B).val, 1
+ 
+     test 'jashkenas/coffee-script#1182: external constructors continued', ->
+       ctor = ->
+-      class A
+-      class B extends A
++      класс A
++      класс B наследует A
+         method: ->
+         constructor: ctor
+       ok B::method
+@@ -255,176 +255,176 @@ suite 'Classes', ->
+     test 'jashkenas/coffee-script#1182: execution order needs to be considered as well', ->
+       counter = 0
+       makeFn = (n) -> eq n, ++counter; ->
+-      class B extends (makeFn 1)
++      класс B наследует (makeFn 1)
+         @B = makeFn 2
+         constructor: makeFn 3
+ 
+     test 'jashkenas/coffee-script#1182: external constructors with bound functions', ->
+       fn = ->
+         {one: 1}
+-        this
+-      class B
+-      class A
++        этот
++      класс B
++      класс A
+         constructor: fn
+-        method: => this instanceof A
+-      ok (new A).method.call(new B)
++        method: => этот экземпляр A
++      ok (новый A).method.call(новый B)
+ 
+-    test 'jashkenas/coffee-script#1372: bound class methods with reserved names', ->
+-      class C
++    test 'jashkenas/coffee-script#1372: bound класс methods with reserved names', ->
++      класс C
+         delete: =>
+       ok C::delete
+ 
+-    test 'jashkenas/coffee-script#1464: bound class methods should keep context', ->
++    test 'jashkenas/coffee-script#1464: bound класс methods should keep context', ->
+       nonce  = {}
+-      class C
++      класс C
+         constructor: (id) -> @id = id
+-        @boundStatic = => new this(nonce)
++        @boundStatic = => новый этот(nonce)
+       eq nonce, C.boundStatic().id
+ 
+-    test 'jashkenas/coffee-script#1009: classes with reserved words as determined names', ->
++    test 'jashkenas/coffee-script#1009: классes with reserved words as determined names', ->
+       fn = ->
+-        eq 'function', typeof (class @for)
+-        ok not /\seval\s?\(/.test (class @eval).toString()
+-        ok not /\sarguments\s\(/.test (class @arguments).toString()
++        eq 'function', typeof (класс @для)
++        ok не /\seval\s?\(/.test (класс @eval).toString()
++        ok не /\sarguments\s\(/.test (класс @arguments).toString()
+       fn.call {}
+ 
+-    test 'jashkenas/coffee-script#1842: Regression with bound functions within bound class methods', ->
++    test 'jashkenas/coffee-script#1842: Regression with bound functions within bound класс methods', ->
+ 
+-      class Store
++      класс Store
+         @bound = =>
+-          do =>
+-            eq this, Store
++          выполнить =>
++            eq этот, Store
+ 
+       Store.bound()
+ 
+       # And a fancier case:
+ 
+-      class Store
++      класс Store
+ 
+-        eq this, Store
++        eq этот, Store
+ 
+         @bound = =>
+-          do =>
+-            eq this, Store
++          выполнить =>
++            eq этот, Store
+ 
+         @unbound = ->
+-          eq this, Store
++          eq этот, Store
+ 
+         instance: =>
+-          ok this instanceof Store
++          ok этот экземпляр Store
+ 
+       Store.bound()
+       Store.unbound()
+-      (new Store).instance()
++      (новый Store).instance()
+ 
+-    test 'jashkenas/coffee-script#1813: Passing class definitions as expressions', ->
++    test 'jashkenas/coffee-script#1813: Passing класс definitions as expressions', ->
        ident = (x) -> x
  
 -      result = ident class A then x = 1
-+      result = ident class A то x = 1
++      result = ident класс A то x = 1
  
        eq result, A
  
-@@ -329,21 +329,21 @@ suite 'Classes', ->
+-      result = ident class B extends A
++      result = ident класс B наследует A
+         x = 1
  
        eq result, B
  
@@ -237,72 +899,528 @@ index be696e6..818aeae 100644
 +    test 'jashkenas/coffee-script#1966: external constructors should produce their возврат value', ->
        ctor = -> {}
 -      class A then constructor: ctor
-+      class A то constructor: ctor
-       ok (new A) not instanceof A
+-      ok (new A) not instanceof A
++      класс A то constructor: ctor
++      ok (новый A) не экземпляр A
  
 -    #test 'jashkenas/coffee-script#1534: class then 'use strict'', ->
-+    #test 'jashkenas/coffee-script#1534: class то 'use strict'', ->
++    #test 'jashkenas/coffee-script#1534: класс то 'use strict'', ->
      #  # [14.1 Directive Prologues and the Use Strict Directive](http://es5.github.com/#x14.1)
      #  nonce = {}
-     #  error = 'do -> ok this'
-     #  strictTest = "do ->'use strict';#{error}"
+-    #  error = 'do -> ok this'
+-    #  strictTest = "do ->'use strict';#{error}"
 -    #  return unless (try CoffeeScript.run strictTest, bare: yes catch e then nonce) is nonce
-+    #  возврат unless (try CoffeeScript.run strictTest, bare: yes catch e то nonce) is nonce
++    #  error = 'выполнить -> ok этот'
++    #  strictTest = "выполнить ->'use strict';#{error}"
++    #  возврат unless (проба CoffeeScript.run strictTest, bare: yes перехват e то nonce) это nonce
      #
 -    #  throws -> CoffeeScript.run "class then 'use strict';#{error}", bare: yes
 -    #  doesNotThrow -> CoffeeScript.run "class then #{error}", bare: yes
 -    #  doesNotThrow -> CoffeeScript.run "class then #{error};'use strict'", bare: yes
-+    #  throws -> CoffeeScript.run "class то 'use strict';#{error}", bare: yes
-+    #  doesNotThrow -> CoffeeScript.run "class то #{error}", bare: yes
-+    #  doesNotThrow -> CoffeeScript.run "class то #{error};'use strict'", bare: yes
++    #  throws -> CoffeeScript.run "класс то 'use strict';#{error}", bare: yes
++    #  doesNotThrow -> CoffeeScript.run "класс то #{error}", bare: yes
++    #  doesNotThrow -> CoffeeScript.run "класс то #{error};'use strict'", bare: yes
      #
-     #  # comments are ignored in the Directive Prologue
+-    #  # comments are ignored in the Directive Prologue
++    #  # comments are ignored в the Directive Prologue
      #  comments = ["""
-@@ -448,7 +448,7 @@ suite 'Classes', ->
-       ok (new Test).prop  is 'value'
-       ok (new Test).prop2 is 'value2'
+-    #  class
++    #  класс
+     #    ### comment ###
+     #    'use strict'
+     #    #{error}""",
+     #  """
+-    #  class
++    #  класс
+     #    ### comment 1 ###
+     #    ### comment 2 ###
+     #    'use strict'
+     #    #{error}""",
+     #  """
+-    #  class
++    #  класс
+     #    ### comment 1 ###
+     #    ### comment 2 ###
+     #    'use strict'
+     #    #{error}
+     #    ### comment 3 ###"""
+     #  ]
+-    #  throws (-> CoffeeScript.run comment, bare: yes) for comment in comments
++    #  throws (-> CoffeeScript.run comment, bare: yes) для comment в comments
+     #
+-    #  # [ES5 §14.1](http://es5.github.com/#x14.1) allows for other directives
++    #  # [ES5 §14.1](http://es5.github.com/#x14.1) allows для other directives
+     #  directives = ["""
+-    #  class
++    #  класс
+     #    'directive 1'
+     #    'use strict'
+     #    #{error}""",
+     #  """
+-    #  class
++    #  класс
+     #    'use strict'
+     #    'directive 2'
+     #    #{error}""",
+     #  """
+-    #  class
++    #  класс
+     #    ### comment 1 ###
+     #    'directive 1'
+     #    'use strict'
+     #    #{error}""",
+     #  """
+-    #  class
++    #  класс
+     #    ### comment 1 ###
+     #    'directive 1'
+     #    ### comment 2 ###
+     #    'use strict'
+     #    #{error}"""
+     #  ]
+-    #  throws (-> CoffeeScript.run directive, bare: yes) for directive in directives
++    #  throws (-> CoffeeScript.run directive, bare: yes) для directive в directives
+ 
+-    test 'jashkenas/coffee-script#2052: classes should work in strict mode', ->
+-      do ->
++    test 'jashkenas/coffee-script#2052: классes should work в strict mode', ->
++      выполнить ->
+         'use strict'
+-        class A
++        класс A
+ 
+ 
+   suite 'Class Instantiation', ->
+ 
+-    test '"@" referring to the current instance, and not being coerced into a call', ->
++    test '"@" referring to the current instance, and не being coerced into a call', ->
+ 
+-      class ClassName
++      класс ClassName
+         amI: ->
+-          @ instanceof ClassName
++          @ экземпляр ClassName
+ 
+-      obj = new ClassName
++      obj = новый ClassName
+       ok obj.amI()
+ 
+-    test 'a bound function in a bound function', ->
++    test 'a bound function в a bound function', ->
+ 
+-      class Mini
++      класс Mini
+         num: 10
+         generate: =>
+-          for i in [0, 0, 0]
++          для i в [0, 0, 0]
+             => @num
+ 
+-      m = new Mini
+-      eq (func() for func in m.generate()).join(' '), '10 10 10'
++      m = новый Mini
++      eq (func() для func в m.generate()).join(' '), '10 10 10'
+ 
+     #test 'contructor called with varargs', ->
+     #
+-    #  class Connection
++    #  класс Connection
+     #    constructor: (one, two, three) ->
+     #      [@one, @two, @three] = [one, two, three]
+     #
+@@ -432,231 +432,231 @@ suite 'Classes', ->
+     #      "#{@one}-#{@two}-#{@three}"
+     #
+     #  list = [3, 2, 1]
+-    #  conn = new Connection list...
+-    #  ok conn instanceof Connection
+-    #  ok conn.out() is '3-2-1'
++    #  conn = новый Connection list...
++    #  ok conn экземпляр Connection
++    #  ok conn.out() это '3-2-1'
+ 
+-    test 'classes wrapped in decorators', ->
++    test 'классes wrapped в decorators', ->
+ 
+       func = (klass) ->
+         klass::prop = 'value'
+         klass
+ 
+-      func class Test
++      func класс Test
+         prop2: 'value2'
+ 
+-      ok (new Test).prop  is 'value'
+-      ok (new Test).prop2 is 'value2'
++      ok (новый Test).prop  это 'value'
++      ok (новый Test).prop2 это 'value2'
  
 -    #test 'ensure that constructors invoked with splats return a new object', ->
-+    #test 'ensure that constructors invoked with splats возврат a new object', ->
++    #test 'ensure that constructors invoked with splats возврат a новый object', ->
      #
      #  args = [1, 2, 3]
      #  Type = (@args) ->
-@@ -467,7 +467,7 @@ suite 'Classes', ->
+-    #  type = new Type args
++    #  type = новый Type args
+     #
+-    #  ok type and type instanceof Type
+-    #  ok type.args and type.args instanceof Array
+-    #  ok v is args[i] for v, i in type.args
++    #  ok type and type экземпляр Type
++    #  ok type.args and type.args экземпляр Array
++    #  ok v это args[i] для v, i в type.args
+     #
+     #  Type1 = (@a, @b, @c) ->
+-    #  type1 = new Type1 args...
++    #  type1 = новый Type1 args...
+     #
+-    #  ok type1 instanceof   Type1
++    #  ok type1 экземпляр   Type1
+     #  eq type1.constructor, Type1
+-    #  ok type1.a is args[0] and type1.b is args[1] and type1.c is args[2]
++    #  ok type1.a это args[0] and type1.b это args[1] and type1.c это args[2]
      #
      #  # Ensure that constructors invoked with splats cache the function.
      #  called = 0
 -    #  get = -> if called++ then false else class Type
-+    #  get = -> если called++ то false иначе class Type
-     #  new get() args...
+-    #  new get() args...
++    #  get = -> если called++ то false иначе класс Type
++    #  новый get() args...
  
      test '`new` shouldn\'t add extra parens', ->
-@@ -619,7 +619,7 @@ suite 'Classes', ->
-     test 'jashkenas/coffee-script#1482: classes can extend expressions', ->
+ 
+-      ok new Date().constructor is Date
++      ok новый Date().constructor это Date
+ 
+-    # TODO: this test belongs with the operator tests
++    # TODO: этот test belongs with the operator tests
+     #test '`new` works against bare function', ->
+     #
+-    #  eq Date, new ->
+-    #    eq this, new => this
++    #  eq Date, новый ->
++    #    eq этот, новый => этот
+     #    Date
+ 
+ 
+   suite 'Inheritance and Super', ->
+ 
+-    #test 'classes with a four-level inheritance chain', ->
++    #test 'классes with a four-level inheritance chain', ->
+     #
+-    #  class Base
++    #  класс Base
+     #    func: (string) ->
+     #      "zero/#{string}"
+     #
+     #    @static: (string) ->
+     #      "static/#{string}"
+     #
+-    #  class FirstChild extends Base
++    #  класс FirstChild наследует Base
+     #    func: (string) ->
+     #      super('one/') + string
+     #
+-    #  SecondChild = class extends FirstChild
++    #  SecondChild = класс наследует FirstChild
+     #    func: (string) ->
+     #      super('two/') + string
+     #
+     #  thirdCtor = ->
+     #    @array = [1, 2, 3]
+     #
+-    #  class ThirdChild extends SecondChild
+-    #    constructor: -> thirdCtor.call this
++    #  класс ThirdChild наследует SecondChild
++    #    constructor: -> thirdCtor.call этот
+     #
+-    #    # Gratuitous comment for testing.
++    #    # Gratuitous comment для testing.
+     #    func: (string) ->
+     #      super('three/') + string
+     #
+-    #  result = (new ThirdChild).func 'four'
++    #  result = (новый ThirdChild).func 'four'
+     #
+-    #  ok result is 'zero/one/two/three/four'
+-    #  ok Base.static('word') is 'static/word'
++    #  ok result это 'zero/one/two/three/four'
++    #  ok Base.static('word') это 'static/word'
+     #
+     #  FirstChild::func = (string) ->
+     #    super('one/').length + string
+     #
+-    #  result = (new ThirdChild).func 'four'
++    #  result = (новый ThirdChild).func 'four'
+     #
+-    #  ok result is '9two/three/four'
++    #  ok result это '9two/three/four'
+     #
+-    #  ok (new ThirdChild).array.join(' ') is '1 2 3'
++    #  ok (новый ThirdChild).array.join(' ') это '1 2 3'
+ 
+     #test 'constructors with inheritance and super', ->
+     #
+     #  identity = (f) -> f
+     #
+-    #  class TopClass
++    #  класс TopClass
+     #    constructor: (arg) ->
+     #      @prop = 'top-' + arg
+     #
+-    #  class SuperClass extends TopClass
++    #  класс SuperClass наследует TopClass
+     #    constructor: (arg) ->
+     #      identity super 'super-' + arg
+     #
+-    #  class SubClass extends SuperClass
++    #  класс SubClass наследует SuperClass
+     #    constructor: ->
+     #      identity super 'sub'
+     #
+-    #  ok (new SubClass).prop is 'top-super-sub'
++    #  ok (новый SubClass).prop это 'top-super-sub'
+ 
+     #test 'super with plain ol' functions as the original constructors', ->
+     #
+     #  TopClass = (arg) ->
+     #    @prop = 'top-' + arg
+-    #    this
++    #    этот
+     #
+     #  SuperClass = (arg) ->
+     #    super 'super-' + arg
+-    #    this
++    #    этот
+     #
+     #  SubClass = ->
+     #    super 'sub'
+-    #    this
++    #    этот
+     #
+-    #  SuperClass extends TopClass
+-    #  SubClass extends SuperClass
++    #  SuperClass наследует TopClass
++    #  SubClass наследует SuperClass
+     #
+-    #  ok (new SubClass).prop is 'top-super-sub'
++    #  ok (новый SubClass).prop это 'top-super-sub'
+ 
+-    #test 'super() calls in constructors of classes that are defined as object properties', ->
++    #test 'super() calls в constructors из классes that are defined as object properties', ->
+     #
+-    #  class Hive
++    #  класс Hive
+     #    constructor: (name) -> @name = name
+     #
+-    #  class Hive.Bee extends Hive
++    #  класс Hive.Bee наследует Hive
+     #    constructor: (name) -> super
+     #
+-    #  maya = new Hive.Bee 'Maya'
+-    #  ok maya.name is 'Maya'
++    #  maya = новый Hive.Bee 'Maya'
++    #  ok maya.name это 'Maya'
+ 
+     #test 'calling super and passing along all arguments', ->
+     #
+-    #  class Parent
++    #  класс Parent
+     #    method: (args...) -> @args = args
+     #
+-    #  class Child extends Parent
++    #  класс Child наследует Parent
+     #    method: -> super
+     #
+-    #  c = new Child
++    #  c = новый Child
+     #  c.method 1, 2, 3, 4
+-    #  ok c.args.join(' ') is '1 2 3 4'
++    #  ok c.args.join(' ') это '1 2 3 4'
+ 
+-    #test '`class extends this`', ->
++    #test '`класс наследует этот`', ->
+     #
+-    #  class A
++    #  класс A
+     #    func: -> 'A'
+     #
+-    #  B = null
++    #  B = нуль
+     #  makeClass = ->
+-    #    B = class extends this
++    #    B = класс наследует этот
+     #      func: -> super + ' B'
+     #
+     #  makeClass.call A
+     #
+-    #  eq (new B()).func(), 'A B'
++    #  eq (новый B()).func(), 'A B'
+ 
+-    test 'jashkenas/coffee-script#1313: misplaced __extends', ->
++    test 'jashkenas/coffee-script#1313: misplaced __наследует', ->
+       nonce = {}
+-      class A
+-      class B extends A
++      класс A
++      класс B наследует A
+         prop: nonce
+         constructor: ->
+       eq nonce, B::prop
+ 
+     #test 'jashkenas/coffee-script#1380: `super` with reserved names', ->
+-    #  class C
++    #  класс C
+     #    do: -> super
+     #  ok C::do
+     #
+-    #  class B
++    #  класс B
+     #    0: -> super
+     #  ok B::[0]
+ 
+-    test 'jashkenas/coffee-script#1482: classes can extend expressions', ->
++    test 'jashkenas/coffee-script#1482: классes can extend expressions', ->
        id = (x) -> x
        nonce = {}
 -      class A then nonce: nonce
-+      class A то nonce: nonce
-       class B extends id A
-       eq nonce, (new B).nonce
+-      class B extends id A
+-      eq nonce, (new B).nonce
++      класс A то nonce: nonce
++      класс B наследует id A
++      eq nonce, (новый B).nonce
  
+-    #test 'jashkenas/coffee-script#1598: super works for static methods too', ->
++    #test 'jashkenas/coffee-script#1598: super works для static methods too', ->
+     #
+-    #  class Parent
++    #  класс Parent
+     #    method: ->
+     #      'NO'
+     #    @method: ->
+     #      'yes'
+     #
+-    #  class Child extends Parent
++    #  класс Child наследует Parent
+     #    @method: ->
+     #      'pass? ' + super
+     #
+     #  eq Child.method(), 'pass? yes'
+ 
+-    test 'jashkenas/coffee-script#1876: Class @A extends A', ->
+-      class A
+-      class @A extends A
++    test 'jashkenas/coffee-script#1876: Class @A наследует A', ->
++      класс A
++      класс @A наследует A
+ 
+-      ok (new @A) instanceof A
++      ok (новый @A) экземпляр A
+ 
+-    test 'jashkenas/coffee-script#1980: regression with an inherited class with static function members', ->
++    test 'jashkenas/coffee-script#1980: regression with an inherited класс with static function members', ->
+ 
+-      class A
++      класс A
+ 
+-      class B extends A
++      класс B наследует A
+         @static = => 'value'
+ 
+       eq B.static(), 'value'
+ 
+     test 'bound function literals as constructors should be treated as unbound', ->
+       nonce = {}
+-      class A
++      класс A
+         constructor: =>
+           @nonce = nonce
+-      a = new A
+-      ok a instanceof A
++      a = новый A
++      ok a экземпляр A
+       eq nonce, a.nonce
+diff --git a/test/cli-eval-errors-files/0.coffee b/test/cli-eval-errors-files/0.coffee
+index 9c746af..5a81787 100644
+--- a/test/cli-eval-errors-files/0.coffee
++++ b/test/cli-eval-errors-files/0.coffee
+@@ -1,4 +1,4 @@
+-console.log "0 is main", module is require.main
++console.log "0 это main", module это require.main
+ 
+ exports.error = ->
+-  throw new Error("Test Error")
++  выдать новый Error("Test Error")
+diff --git a/test/cli-eval-errors-files/1.coffee b/test/cli-eval-errors-files/1.coffee
+index 96ca7aa..fdd33a7 100644
+--- a/test/cli-eval-errors-files/1.coffee
++++ b/test/cli-eval-errors-files/1.coffee
+@@ -1,4 +1,4 @@
+-console.log "1 is main", module is require.main
++console.log "1 это main", module это require.main
+ 
+ test1 = require './0.coffee'
+ test1.error()
+diff --git a/test/cli-eval-errors.coffee b/test/cli-eval-errors.coffee
+index 316aab3..086908b 100644
+--- a/test/cli-eval-errors.coffee
++++ b/test/cli-eval-errors.coffee
+@@ -3,18 +3,18 @@ child_process = require 'child_process'
+ suite 'Command line execution', ->
+   test "--eval -i", (done) ->
+     child_process.exec 'bin/coffee --eval -i test/cli-eval-errors-files/1.coffee', (error, stdout, stderr) ->
+-      # Executed module is require.main
+-      # Module path is relative to the file
+-      # Can include another CS module
+-      # Other module is not requires.main
+-      eq stdout, "1 is main true\n0 is main false\n"
+-
+-      ok stderr.indexOf("cli-eval-errors-files/0.coffee:4:10, <js>:4:9)") > 0
++      # Executed module это require.main
++      # Module path это relative to the file
++      # Can include aнеher CS module
++      # Other module это не requires.main
++      eq stdout, "1 это main true\n0 это main false\n"
++      # console.log stderr
++      ok stderr.indexOf("cli-eval-errors-files/0.coffee:4:11, <js>:4:9)") > 0
+       ok stderr.indexOf("cli-eval-errors-files/1.coffee:4:6, <js>:6:9)") > 0
+ 
+       done()
+ 
+   test "--eval --cli", (done) ->
+     child_process.exec 'bin/coffee --eval --cli "require \'./test/cli-eval-errors-files/1.coffee\'"', (error, stdout, stderr) ->
+-      eq stdout, "1 is main false\n0 is main false\n"
++      eq stdout, "1 это main false\n0 это main false\n"
+       done()
 diff --git a/test/comprehensions.coffee b/test/comprehensions.coffee
-index 2c76f64..f706ac2 100644
+index 2c76f64..c54190a 100644
 --- a/test/comprehensions.coffee
 +++ b/test/comprehensions.coffee
 @@ -1,7 +1,7 @@
  suite 'Comprehensions', ->
  
-   test 'comprehensions with no body produce `undefined` for each entry', ->
+-  test 'comprehensions with no body produce `undefined` for each entry', ->
 -    arrayEq (undefined for a in [0..9]), for b in [0..9] then
-+    arrayEq (undefined for a in [0..9]), for b in [0..9] то
++  test 'comprehensions with no body produce `undefined` для each enпроба', ->
++    arrayEq (undefined для a в [0..9]), для b в [0..9] то
  
-   test '#66: `throw` as the final expression in the body of a comprehension', ->
+-  test '#66: `throw` as the final expression in the body of a comprehension', ->
 -    (->) -> for a in [0..9] then throw {}
-+    (->) -> for a in [0..9] то throw {}
++  test '#66: `throw` as the final expression в the body из a comprehension', ->
++    (->) -> для a в [0..9] то выдать {}
 diff --git a/test/debugger.coffee b/test/debugger.coffee
-index f42d361..38abd5f 100644
+index f42d361..f0cf146 100644
 --- a/test/debugger.coffee
 +++ b/test/debugger.coffee
+@@ -7,7 +7,7 @@ suite 'Debugger', ->
+   test 'should parse', ->
+     @shouldParse 'debugger'
+ 
+-  test 'cannot be used as value', ->
++  test 'canне be used as value', ->
+     @shouldNotParse 'x = debugger'
+ 
+   test 'function with debugger as last statement', ->
 @@ -15,4 +15,4 @@ suite 'Debugger', ->
  
    test 'function with conditional debugger as last statement', ->
@@ -310,37 +1428,132 @@ index f42d361..38abd5f 100644
 -    if x then debugger
 +    если x то debugger
 diff --git a/test/function-invocation.coffee b/test/function-invocation.coffee
-index 51faacd..87d697d 100644
+index 51faacd..ec6dc16 100644
 --- a/test/function-invocation.coffee
 +++ b/test/function-invocation.coffee
-@@ -4,7 +4,7 @@ suite 'Function Invocation', ->
- # * Splats in Function Invocations
+@@ -1,10 +1,10 @@
+ suite 'Function Invocation', ->
+ 
+ # * Function Invocation
+-# * Splats in Function Invocations
++# * Splats в Function Invocations
  # * Implicit Returns
  # * Explicit Returns
 -  id = (_) -> if arguments.length is 1 then _ else [].slice.call arguments
-+  id = (_) -> если arguments.length is 1 то _ иначе [].slice.call arguments
++  id = (_) -> если arguments.length это 1 то _ иначе [].slice.call arguments
  
    test "basic argument passing", ->
      a = {}
-@@ -51,7 +51,7 @@ suite 'Function Invocation', ->
+@@ -23,7 +23,7 @@ suite 'Function Invocation', ->
+   #    a
+   #    b
+   #    c
+-  #  )[1] is b)
++  #  )[1] это b)
+   #  eq(0, id(
+   #    0
+   #    10
+@@ -34,15 +34,15 @@ suite 'Function Invocation', ->
+   #  eq b,
+   #  (id b)
+ 
+-  test "optional parens can be used in a nested fashion", ->
++  test "optional parens can be used в a nested fashion", ->
+     call = (func) -> func()
+     add = (a,b) -> a + b
+     result = call ->
+       inner = call ->
+         add 5, 5
+-    ok result is 10
++    ok result это 10
+ 
+-  test "hanging commas and semicolons in argument list", ->
++  test "hanging commas and semicolons в argument list", ->
+     fn = -> arguments.length
+     eq 2, fn(0,1,)
+     eq 3, fn 0, 1,
+@@ -51,12 +51,12 @@ suite 'Function Invocation', ->
  
    test "function invocation", ->
      func = ->
 -      return if true
+-    eq undefined, func()
 +      возврат если true
-     eq undefined, func()
++    eq неизвестно, func()
      result = ("hello".slice) 3
-     ok result is 'lo'
-@@ -115,7 +115,7 @@ suite 'Function Invocation', ->
+-    ok result is 'lo'
++    ok result это 'lo'
+ 
+-  test "And even with strange things like this:", ->
++  test "And even with strange things like этот:", ->
+     funcs  = [((x) -> x), ((x) -> x * x)]
+     result = funcs[1] 5
+     eq 25, result
+@@ -80,10 +80,10 @@ suite 'Function Invocation', ->
+   #    fn ->
+   #      "Wrapped"
+   #  )
+-  #  ok result()() is 'Wrapped'
++  #  ok result()() это 'Wrapped'
+ 
+   test "method calls", ->
+-    fnId = (fn) -> -> fn.apply this, arguments
++    fnId = (fn) -> -> fn.apply этот, arguments
+     obj = {}
+     obj.add = (a, b) -> a + b
+     obj.anonymousAdd = (a, b) -> a + b
+@@ -92,36 +92,36 @@ suite 'Function Invocation', ->
+     eq 20, obj.anonymousAdd 10, 10
+     eq 40, obj.fastAdd (20), 20
+ 
+-  #test "Ensure that functions can have a trailing comma in their argument list", ->
++  #test "Ensure that functions can have a trailing comma в their argument list", ->
+   #  mult = (x, mids..., y) ->
+-  #    x *= n for n in mids
++  #    x *= n для n в mids
+   #    x *= y
+-  #  ok mult(1, 2,) is 2
+-  #  ok mult(1, 2, 3,) is 6
+-  #  ok mult(10, (i for i in [1..6])...) is 7200
++  #  ok mult(1, 2,) это 2
++  #  ok mult(1, 2, 3,) это 6
++  #  ok mult(10, (i для i в [1..6])...) это 7200
+ 
+-  test "`@` and `this` should both be able to invoke a function", ->
++  test "`@` and `этот` should both be able to invoke a function", ->
+     nonce = {}
+     fn          = (arg) -> eq nonce, arg
+     fn.withAt   = -> @ nonce
+-    fn.withThis = -> this nonce
++    fn.withThis = -> этот nonce
+     fn.withAt()
+     fn.withThis()
+ 
+   test "Trying an implicit object call with a trailing function.", ->
+-    a = null
++    a = нуль
+     meth = (arg, obj, func) -> a = [obj.a, arg, func()].join ' '
+     meth 'apple', b: 1, a: 13, ->
        'orange'
-     ok a is '13 apple orange'
+-    ok a is '13 apple orange'
++    ok a это '13 apple orange'
  
 -  #test "Ensure that empty functions don't return mistaken values.", ->
 +  #test "Ensure that empty functions don't возврат mistaken values.", ->
    #  obj = {func: (@param, @rest...) ->}
-   #  ok obj.func(101, 102, 103, 104) is undefined
-   #  ok obj.param is 101
-@@ -134,9 +134,9 @@ suite 'Function Invocation', ->
+-  #  ok obj.func(101, 102, 103, 104) is undefined
+-  #  ok obj.param is 101
+-  #  ok obj.rest.join(' ') is '102 103 104'
++  #  ok obj.func(101, 102, 103, 104) это неизвестно
++  #  ok obj.param это 101
++  #  ok obj.rest.join(' ') это '102 103 104'
+ 
+-  #test "Passing multiple functions without paren-wrapping is legal, and should compile.", ->
++  #test "Passing multiple functions without paren-wrapping это legal, and should compile.", ->
+   #  sum = (one, two) -> one() + two()
+   #  eq 20, sum ->
+   #    7 + 9
+@@ -134,10 +134,10 @@ suite 'Function Invocation', ->
    #    2 + 1
    #  )
  
@@ -348,45 +1561,216 @@ index 51faacd..87d697d 100644
 +  test "Implicit call with a trailing если statement as a param.", ->
      func = -> arguments[1]
 -    result = func 'one', if false then 100 else 13
+-    ok result is 13
 +    result = func 'one', если false то 100 иначе 13
-     ok result is 13
++    ok result это 13
  
    #test "Test more function passing:", ->
-@@ -243,7 +243,7 @@ suite 'Function Invocation', ->
-     ok (func --val) is 5
+   #  sum = (one, two) -> one() + two()
+@@ -147,19 +147,19 @@ suite 'Function Invocation', ->
+   #  , ->
+   #    2 + 1
+   #  )
+-  #  ok result is 6
++  #  ok result это 6
+   #
+   #  sum = (a, b) -> a + b
+   #  result = sum(1
+   #  , 2)
+-  #  ok result is 3
++  #  ok result это 3
  
-   test "jashkenas/coffee-script#855: execution context for `func arr...` should be `null`", ->
+   #test "Chained blocks, with proper indentation levels:", ->
+   #  counter =
+   #    results: []
+   #    tick: (func) ->
+   #      @results.push func()
+-  #      this
++  #      этот
+   #  counter
+   #    .tick ->
+   #      3
+@@ -169,40 +169,40 @@ suite 'Function Invocation', ->
+   #      1
+   #  arrayEq [3,2,1], counter.results
+ 
+-  test "TODO: find out what this test case is testing and rename it", ->
++  test "TODO: find out what этот test case это testing and rename it", ->
+     x = (obj, func) -> func obj
+     ident = (x) -> x
+     result = x {one: ident 1}, (obj) ->
+       inner = ident(obj)
+       ident inner
+-    ok result.one is 1
++    ok result.one это 1
+ 
+   test "More paren compilation tests:", ->
+     reverse = (obj) -> obj.reverse()
+-    ok reverse([1, 2].concat 3).join(' ') is '3 2 1'
++    ok reverse([1, 2].concat 3).join(' ') это '3 2 1'
+ 
+-  test "Test for inline functions with parentheses and implicit calls.", ->
++  test "Test для inline functions with parentheses and implicit calls.", ->
+     combine = (func, num) -> func() * num
+     result  = combine (-> 1 + 2), 3
+-    ok result is 9
++    ok result это 9
+ 
+-  #test "Test for calls/parens/multiline-chains.", ->
++  #test "Test для calls/parens/multiline-chains.", ->
+   #  f = (x) -> x
+   #  result = (f 1).toString()
+   #    .length
+-  #  ok result is 1
++  #  ok result это 1
+ 
+-  test "Test implicit calls in functions in parens:", ->
++  test "Test implicit calls в functions в parens:", ->
+     result = ((val) ->
+       [].push val
+       val
+     )(10)
+-    ok result is 10
++    ok result это 10
+ 
+   #test "Ensure that chained calls with indented implicit object literals below are alright.", ->
+-  #  result = null
++  #  result = нуль
+   #  obj =
+-  #    method: (val)  -> this
++  #    method: (val)  -> этот
+   #    second: (hash) -> result = hash.three
+   #  obj
+   #    .method(
+@@ -216,7 +216,7 @@ suite 'Function Invocation', ->
+ 
+   #test "Test newline-supressed call chains with nested functions.", ->
+   #  obj  =
+-  #    call: -> this
++  #    call: -> этот
+   #  func = ->
+   #    obj
+   #      .call ->
+@@ -230,26 +230,26 @@ suite 'Function Invocation', ->
+   #  func = (x, y) -> y
+   #  obj =
+   #    prop: func "a", 1
+-  #  ok obj.prop is 1
++  #  ok obj.prop это 1
+ 
+   test "Non-spaced unary and binary operators should cause a function call.", ->
+     func = (val) -> val + 1
+-    ok (func +5) is 6
+-    ok (func -5) is -4
++    ok (func +5) это 6
++    ok (func -5) это -4
+ 
+-  test "Prefix unary assignment operators are allowed in parenless calls.", ->
++  test "Prefix unary assignment operators are allowed в parenless calls.", ->
+     func = (val) -> val + 1
+     val = 5
+-    ok (func --val) is 5
++    ok (func --val) это 5
+ 
+-  test "jashkenas/coffee-script#855: execution context for `func arr...` should be `null`", ->
 -    contextTest = -> eq @, if window? then window else global
++  test "jashkenas/coffee-script#855: execution context для `func arr...` should be `нуль`", ->
 +    contextTest = -> eq @, если window? то window иначе global
      array = []
      contextTest array
-     contextTest.apply null, array
-@@ -314,51 +314,51 @@ suite 'Function Invocation', ->
+-    contextTest.apply null, array
++    contextTest.apply нуль, array
+     contextTest array...
+ 
+-  #test "jashkenas/coffee-script#904: Destructuring function arguments with same-named variables in scope", ->
++  #test "jashkenas/coffee-script#904: Destructuring function arguments with same-named variables в scope", ->
+   #  a = b = nonce = {}
+   #  fn = ([a,b]) -> {a:a,b:b}
+   #  result = fn([c={},d={}])
+@@ -258,14 +258,14 @@ suite 'Function Invocation', ->
+   #  eq nonce, a
+   #  eq nonce, b
+ 
+-  #test "Simple Destructuring function arguments with same-named variables in scope", ->
++  #test "Simple Destructuring function arguments with same-named variables в scope", ->
+   #  x = 1
+   #  f = ([x]) -> x
+   #  eq f([2]), 2
+   #  eq x, 1
+ 
+   test "caching base value", ->
+-    obj = {index: 0, 0: {method: -> this is obj[0]}}
++    obj = {index: 0, 0: {method: -> этот это obj[0]}}
+     ok obj[obj.index++].method([]...)
+ 
+   test "passing splats to functions", ->
+@@ -285,10 +285,10 @@ suite 'Function Invocation', ->
+     eq "x", outer
+ 
+   test "Issue 894: Splatting against constructor-chained functions.", ->
+-    x = null
+-    class Foo
++    x = нуль
++    класс Foo
+       bar: (y) -> x = y
+-    new Foo().bar([101]...)
++    новый Foo().bar([101]...)
+     eq x, 101
+ 
+   test "Functions with splats being called with too few arguments.", ->
+@@ -298,134 +298,134 @@ suite 'Function Invocation', ->
+     eq 2, method 1, 2, 3
+     eq 2, method 1, 2
+ 
+-  #test "splats with super() within classes.", ->
+-  #  class Parent
++  #test "splats with super() within классes.", ->
++  #  класс Parent
+   #    meth: (args...) ->
+   #      args
+-  #  class Child extends Parent
++  #  класс Child наследует Parent
+   #    meth: ->
+   #      nums = [3, 2, 1]
+   #      super nums...
+-  #  ok (new Child).meth().join(' ') is '3 2 1'
++  #  ok (новый Child).meth().join(' ') это '3 2 1'
+ 
+-  test "jashkenas/coffee-script#1011: passing a splat to a method of a number", ->
++  test "jashkenas/coffee-script#1011: passing a splat to a method из a number", ->
+     eq '1011', 11.toString [2]...
+     eq '1011', (31).toString [3]...
      eq '1011', 69.0.toString [4]...
      eq '1011', (131.0).toString [5]...
  
 -  test "splats and the `new` operator: functions that return `null` should construct their instance", ->
-+  test "splats and the `new` operator: functions that возврат `null` should construct their instance", ->
++  test "splats and the `new` operator: functions that возврат `нуль` should construct their instance", ->
      args = []
-     child = new (constructor = -> null) args...
-     ok child instanceof constructor
+-    child = new (constructor = -> null) args...
+-    ok child instanceof constructor
++    child = новый (constructor = -> нуль) args...
++    ok child экземпляр constructor
  
 -  test "splats and the `new` operator: functions that return functions should construct their return value", ->
 +  test "splats and the `new` operator: functions that возврат functions should construct their возврат value", ->
      args = []
      fn = ->
-     child = new (constructor = -> fn) args...
-     ok child not instanceof constructor
+-    child = new (constructor = -> fn) args...
+-    ok child not instanceof constructor
++    child = новый (constructor = -> fn) args...
++    ok child не экземпляр constructor
      eq fn, child
  
 -  test "implicit return", ->
+-    eq ok, new ->
 +  test "implicit возврат", ->
-     eq ok, new ->
++    eq ok, новый ->
        ok
 -      ### Should `return` implicitly   ###
 +      ### Should `возврат` implicitly   ###
        ### even with trailing comments. ###
-     eq ok, new ->
+-    eq ok, new ->
++    eq ok, новый ->
        ok
 -      # Should `return` implicitly
 +      # Should `возврат` implicitly
@@ -397,9 +1781,10 @@ index 51faacd..87d697d 100644
      nonce = {}
      fn = ->
 -      if not nonce
-+      если not nonce
-         null
+-        null
 -      else
++      если не nonce
++        нуль
 +      иначе
          nonce
      eq nonce, fn()
@@ -413,32 +1798,47 @@ index 51faacd..87d697d 100644
 -        else return undefined
 +      выбор nonce
 +        когда nonce то nonce
-+        иначе возврат undefined
++        иначе возврат неизвестно
      eq nonce, fn()
  
 -  test "preserve context when generating closure wrappers for expression conversions", ->
-+  test "preserve context когда generating closure wrappers for expression conversions", ->
++  test "preserve context когда generating closure wrappers для expression conversions", ->
      nonce = {}
      obj = {property: nonce, method: ->
 -      this.result = if false
-+      this.result = если false
++      этот.result = если false
          10
 -      else
 +      иначе
          "a"
          "b"
-         this.property
-@@ -371,7 +371,7 @@ suite 'Function Invocation', ->
+-        this.property
++        этот.property
+     }
+     eq nonce, obj.method()
+     eq nonce, obj.property
+ 
+-  #test "don't wrap 'pure' statements in a closure", ->
++  #test "don't wrap 'pure' statements в a closure", ->
+   #  nonce = {}
    #  items = [0, 1, 2, 3, nonce, 4, 5]
    #  fn = (items) ->
-   #    for item in items
+-  #    for item in items
 -  #      return item if item is nonce
-+  #      возврат item если item is nonce
++  #    для item в items
++  #      возврат item если item это nonce
    #  eq nonce, fn items
  
-   test "usage of `new` is careful about where the invocation parens end up", ->
-@@ -382,22 +382,22 @@ suite 'Function Invocation', ->
-     result = null
+-  test "usage of `new` is careful about where the invocation parens end up", ->
+-    #eq 'object', typeof new try Array
+-    eq 'object', typeof new do -> ->
++  test "usage из `new` это careful about where the invocation parens end up", ->
++    #eq 'object', typeof новый проба Array
++    eq 'object', typeof новый выполнить -> ->
+ 
+   test "implicit call against control structures", ->
+-    result = null
++    result = нуль
      save   = (obj) -> result = obj
  
 -    save switch id false
@@ -467,257 +1867,977 @@ index 51faacd..87d697d 100644
        'false'
      eq result, 'true'
  
-@@ -407,7 +407,7 @@ suite 'Function Invocation', ->
+-    save try
++    save проба
+       doesnt exist
+-    catch error
++    перехват error
        'caught'
      eq result, 'caught'
  
 -    save try doesnt(exist) catch error then 'caught2'
-+    save try doesnt(exist) catch error то 'caught2'
++    save проба doesnt(exist) перехват error то 'caught2'
      eq result, 'caught2'
  
-   test "jashkenas/coffee-script#1420: things like `(fn() ->)`; there are no words for this one", ->
-@@ -415,12 +415,12 @@ suite 'Function Invocation', ->
+-  test "jashkenas/coffee-script#1420: things like `(fn() ->)`; there are no words for this one", ->
++  test "jashkenas/coffee-script#1420: things like `(fn() ->)`; there are no words для этот one", ->
+     fn = -> (f) -> f()
      nonce = {}
      eq nonce, (fn() -> nonce)
  
 -  test "jashkenas/coffee-script#1416: don't omit one 'new' when compiling 'new new'", ->
-+  test "jashkenas/coffee-script#1416: don't omit one 'new' когда compiling 'new new'", ->
++  test "jashkenas/coffee-script#1416: don't omit one 'new' когда compiling 'новый new'", ->
      nonce = {}
-     obj = new new -> -> {prop: nonce}
+-    obj = new new -> -> {prop: nonce}
++    obj = новый новый -> -> {prop: nonce}
      eq obj.prop, nonce
  
 -  test "jashkenas/coffee-script#1416: don't omit one 'new' when compiling 'new new fn()()'", ->
-+  test "jashkenas/coffee-script#1416: don't omit one 'new' когда compiling 'new new fn()()'", ->
++  test "jashkenas/coffee-script#1416: don't omit one 'new' когда compiling 'новый новый fn()()'", ->
      nonce = {}
      argNonceA = {}
      argNonceB = {}
+     fn = (a) -> (b) -> {a, b, prop: nonce}
+-    obj = new new fn(argNonceA)(argNonceB)
++    obj = новый новый fn(argNonceA)(argNonceB)
+     eq obj.prop, nonce
+     eq obj.a, argNonceA
+     eq obj.b, argNonceB
+@@ -440,31 +440,31 @@ suite 'Function Invocation', ->
+ 
+   test "jashkenas/coffee-script#960: improved 'do'", ->
+ 
+-    do (nonExistent = 'one') ->
++    выполнить (nonExistent = 'one') ->
+       eq nonExistent, 'one'
+ 
+     overridden = 1
+-    do (overridden = 2) ->
++    выполнить (overridden = 2) ->
+       eq overridden, 2
+ 
+     two = 2
+-    do (one = 1, two, three = 3) ->
++    выполнить (one = 1, two, three = 3) ->
+       eq one, 1
+       eq two, 2
+       eq three, 3
+ 
+-    ret = do func = (two) ->
++    ret = выполнить func = (two) ->
+       eq two, 2
+       func
+     eq ret, func
+ 
+   test "soaked function application", ->
+     nonce = {}
+-    eq undefined, f?(0, 1)
+-    eq undefined, f? 0, 1
+-    eq undefined, f?
++    eq неизвестно, f?(0, 1)
++    eq неизвестно, f? 0, 1
++    eq неизвестно, f?
+       a: 0
+-    eq undefined, f? 0,
++    eq неизвестно, f? 0,
+       a: 1
+     f = -> nonce
+     eq nonce, f?(0, 1)
 diff --git a/test/functions.coffee b/test/functions.coffee
-index ee1446f..2a5cd1d 100644
+index ee1446f..15e1576 100644
 --- a/test/functions.coffee
 +++ b/test/functions.coffee
+@@ -6,20 +6,20 @@ suite 'Function Literals', ->
+ 
+       fn = -> 3
+       eq 'function', typeof fn
+-      ok fn instanceof Function
++      ok fn экземпляр Function
+       eq 3, fn()
+ 
+     test 'empty functions', ->
+       fn = ->
+       eq 'function', typeof fn
+-      eq undefined, fn()
++      eq неизвестно, fn()
+       fn = () ->
+       eq 'function', typeof fn
+-      eq undefined, fn()
++      eq неизвестно, fn()
+       fn = (->
+       )
+       eq 'function', typeof fn
+-      eq undefined, fn()
++      eq неизвестно, fn()
+ 
+     test 'multiple nested single-line functions', ->
+       func = (x) -> (x) -> (x) -> x
 @@ -38,7 +38,7 @@ suite 'Function Literals', ->
  
      test "#1859: inline function bodies shouldn't modify prior postfix ifs", ->
        list = [1, 2, 3]
 -      ok true if list.some (x) -> x is 2
-+      ok true если list.some (x) -> x is 2
++      ok true если list.some (x) -> x это 2
  
  
    suite 'Bound Function Definition', ->
-@@ -64,12 +64,12 @@ suite 'Function Literals', ->
+@@ -46,36 +46,36 @@ suite 'Function Literals', ->
+     #test 'basic bound functions', ->
+     #  obj = {
+     #    bound: ->
+-    #      (=> this)()
++    #      (=> этот)()
+     #    unbound: ->
+-    #      (-> this)()
++    #      (-> этот)()
+     #    nested: ->
+     #      (=>
+     #        (=>
+-    #          (=> this)()
++    #          (=> этот)()
+     #        )()
+     #      )()
+     #  }
+     #  eq obj, obj.bound()
+-    #  ok obj isnt obj.unbound()
++    #  ok obj этоне obj.unbound()
+     #  eq obj, obj.nested()
+ 
+     #test "fancy bound functions", ->
      #  obj = {
      #    one: ->
-     #      do =>
+-    #      do =>
 -    #        return this.two()
-+    #        возврат this.two()
++    #      выполнить =>
++    #        возврат этот.two()
      #    two: ->
-     #      do =>
-     #        do =>
-     #          do =>
+-    #      do =>
+-    #        do =>
+-    #          do =>
 -    #            return this.three
-+    #            возврат this.three
++    #      выполнить =>
++    #        выполнить =>
++    #          выполнить =>
++    #            возврат этот.three
      #    three: 3
      #  }
      #  eq obj.one(), 3
-@@ -207,4 +207,4 @@ suite 'Function Literals', ->
-       (->) -> throw {}
+ 
+-    test "#1844: bound functions in nested comprehensions causing empty var statements", ->
+-      a = ((=>) for a in [0] for b in [0])
++    test "#1844: bound functions в nested comprehensions causing empty var statements", ->
++      a = ((=>) для a в [0] для b в [0])
+       eq 1, a.length
+ 
+ 
+@@ -94,7 +94,7 @@ suite 'Function Literals', ->
+     #  arrayEq splatArray(arr), arr
+     #  arrayEq splatArrayRest(arr,0,1,2), arr
+ 
+-    test "@-parameters: automatically assign an argument's value to a property of the context", ->
++    test "@-parameters: automatically assign an argument's value to a property из the context", ->
+       nonce = {}
+ 
+       ((@prop) ->).call context = {}, nonce
+@@ -112,10 +112,10 @@ suite 'Function Literals', ->
+     #test "@-parameters and splats with constructors", ->
+     #  a = {}
+     #  b = {}
+-    #  class Klass
++    #  класс Klass
+     #    constructor: (@first, splat..., @last) ->
+     #
+-    #  obj = new Klass a, 0, 0, b
++    #  obj = новый Klass a, 0, 0, b
+     #  eq a, obj.first
+     #  eq b, obj.last
+ 
+@@ -133,7 +133,7 @@ suite 'Function Literals', ->
+       eq nonceA, a(0)
+       eq nonceB, a(0,0,nonceB)
+       eq nonceA, a(0,0,undefined)
+-      eq nonceA, a(0,0,null)
++      eq nonceA, a(0,0,нуль)
+       eq false , a(0,0,false)
+       eq nonceB, a(undefined,undefined,nonceB,undefined)
+       b = (_,arg=nonceA,_1,_2) -> arg
+@@ -141,7 +141,7 @@ suite 'Function Literals', ->
+       eq nonceA, b(0)
+       eq nonceB, b(0,nonceB)
+       eq nonceA, b(0,undefined)
+-      eq nonceA, b(0,null)
++      eq nonceA, b(0,нуль)
+       eq false , b(0,false)
+       eq nonceB, b(undefined,nonceB,undefined)
+       c = (arg=nonceA,_,_1) -> arg
+@@ -149,7 +149,7 @@ suite 'Function Literals', ->
+       eq      0, c(0)
+       eq nonceB, c(nonceB)
+       eq nonceA, c(undefined)
+-      eq nonceA, c(null)
++      eq nonceA, c(нуль)
+       eq false , c(false)
+       eq nonceB, c(nonceB,undefined,undefined)
+ 
+@@ -185,7 +185,7 @@ suite 'Function Literals', ->
+       g = -> f
+       eq nonce, g(f) -> nonce
+ 
+-    test "#2258: allow whitespace-style parameter lists in function definitions", ->
++    test "#2258: allow whitespace-style parameter lists в function definitions", ->
+       func = (
+         a, b, c
+       ) -> c
+@@ -203,8 +203,8 @@ suite 'Function Literals', ->
+       ) -> b
+       eq func(1, 2, 3), 2
+ 
+-    test '#66: functions whose final expression is `throw` should compile', ->
+-      (->) -> throw {}
++    test '#66: functions whose final expression это `throw` should compile', ->
++      (->) -> выдать {}
        (->) ->
          a = Math.random()
 -        if a then throw {}
-+        если a то throw {}
++        если a то выдать {}
+diff --git a/test/macros.coffee b/test/macros.coffee
+index 2d25bf1..90f131e 100644
+--- a/test/macros.coffee
++++ b/test/macros.coffee
+@@ -4,11 +4,11 @@ suite 'Macros', ->
+     eq 4, __LINE__
+ 
+   test '__DATE__', ->
+-    eq (new Date).toDateString()[4..], __DATE__
++    eq (новый Date).toDateString()[4..], __DATE__
+ 
+   test '__TIME__', ->
+     ok /^(\d\d:){2}\d\d$/.test __TIME__
+ 
+   test '__DATETIMEMS__', ->
+-    ok (-6e4 < (__DATETIMEMS__ - new Date) < 6e4)
++    ok (-6e4 < (__DATETIMEMS__ - новый Date) < 6e4)
+     ok 1e12 < __DATETIMEMS__ < 1e13
+diff --git a/test/member-access.coffee b/test/member-access.coffee
+index f449973..729f3e6 100644
+--- a/test/member-access.coffee
++++ b/test/member-access.coffee
+@@ -1,12 +1,12 @@
+ suite 'Member Access', ->
+ 
+-  # TODO: all of the things
++  # TODO: all из the things
+ 
+   test 'various basic member accesses', ->
+     nonceA = {}
+     nonceB = {a: nonceA}
+     nonceA.b = nonceB
+-    nil = null
++    nil = нуль
+     obj = {a: nonceA, prototype: {b: nonceB}}
+     a = 'a'
+     b = 'b'
+@@ -16,38 +16,38 @@ suite 'Member Access', ->
+     eq nonceB, obj?.a.b
+     eq nonceB, obj?.a[b]
+     throws -> nil.a
+-    eq undefined, nil?.a
+-    eq undefined, nil?.a.b
+-    eq undefined, nil?.a[b]
++    eq неизвестно, nil?.a
++    eq неизвестно, nil?.a.b
++    eq неизвестно, nil?.a[b]
+     # dynamic member access
+     eq nonceA, obj[a]
+     eq nonceA, obj?[a]
+     eq nonceB, obj?[a].b
+     eq nonceB, obj?[a][b]
+     throws -> nil[a]
+-    eq undefined, nil?[a]
+-    eq undefined, nil?[a].b
+-    eq undefined, nil?[a][b]
++    eq неизвестно, nil?[a]
++    eq неизвестно, nil?[a].b
++    eq неизвестно, nil?[a][b]
+     # proto-member access
+     eq nonceB, obj::b
+     eq nonceB, obj?::b
+     eq nonceA, obj?::b.a
+     eq nonceA, obj?::b[a]
+     throws -> nil::b
+-    eq undefined, nil?::b
+-    eq undefined, nil?::b.a
+-    eq undefined, nil?::b[a]
++    eq неизвестно, nil?::b
++    eq неизвестно, nil?::b.a
++    eq неизвестно, nil?::b[a]
+     # dynamic proto-member access
+     eq nonceB, obj::[b]
+     eq nonceB, obj?::[b]
+     eq nonceA, obj?::[b].a
+     eq nonceA, obj?::[b][a]
+     throws -> nil::[b]
+-    eq undefined, nil?::[b]
+-    eq undefined, nil?::[b].a
+-    eq undefined, nil?::[b][a]
++    eq неизвестно, nil?::[b]
++    eq неизвестно, nil?::[b].a
++    eq неизвестно, nil?::[b][a]
+ 
+-  # TODO: combinations of soaked member accesses
++  # TODO: combinations из soaked member accesses
+ 
+   test 'dynamically accessing non-identifierNames', ->
+     nonceA = {}
 diff --git a/test/objects.coffee b/test/objects.coffee
-index f8762c5..23de8e5 100644
+index f8762c5..63d929a 100644
 --- a/test/objects.coffee
 +++ b/test/objects.coffee
+@@ -1,7 +1,7 @@
+ suite 'Object Literals', ->
+ 
+ # TODO: refactor object literal tests
+-# TODO: add indexing and method invocation tests: {a}['a'] is a, {a}.a()
++# TODO: add indexing and method invocation tests: {a}['a'] это a, {a}.a()
+ 
+   suite 'Basic Objects', ->
+ 
+@@ -26,8 +26,8 @@ suite 'Object Literals', ->
+       nonce = {}
+ 
+       # CS reserved words
+-      obj = {not: nonce}
+-      eq nonce, obj.not
++      obj = {не: nonce}
++      eq nonce, obj.не
+ 
+       # JS reserved words
+       obj = {default: nonce}
+@@ -48,7 +48,7 @@ suite 'Object Literals', ->
+       eq nonce, { nonce }.nonce
+       (-> eq nonce, { @nonce }.nonce).call { nonce }
+ 
+-    test 'function calls in object literals', ->
++    test 'function calls в object literals', ->
+       fn = (a, b, c) -> c
+       nonce = {}
+       eq nonce, { a: fn 0, 1, nonce, 2 }.a
+@@ -59,7 +59,7 @@ suite 'Object Literals', ->
+       {f: -> a = true}.f() + 1
+       ok a
+ 
+-    #test 'jashkenas/coffee-script#1274: `{} = a()` should not optimise away a()', ->
++    #test 'jashkenas/coffee-script#1274: `{} = a()` should не optimise away a()', ->
+     #  a = false
+     #  fn = -> a = true
+     #  {} = fn()
+@@ -67,11 +67,11 @@ suite 'Object Literals', ->
+ 
+     test 'jashkenas/coffee-script#1436: `for` etc. work as normal property names', ->
+       obj = {}
+-      ok 'for' not of obj
+-      obj.for = 'for' of obj
+-      ok 'for' of obj
++      ok 'for' не из obj
++      obj.for = 'for' из obj
++      ok 'for' из obj
+ 
+-    #test 'jashkenas/coffee-script#1513: Top level bare objects need to be wrapped in parens for unary and existence ops', ->
++    #test 'jashkenas/coffee-script#1513: Top level bare objects need to be wrapped в parens для unary and existence ops', ->
+     #  doesNotThrow -> CoffeeScript.run '{}?', bare: true
+     #  doesNotThrow -> CoffeeScript.run '{}.a++', bare: true
+ 
+@@ -82,8 +82,8 @@ suite 'Object Literals', ->
+     #  obj =
+     #    a: 1,
+     #    b: 2,
+-    #  ok obj.a is 1
+-    #  ok obj.b is 2
++    #  ok obj.a это 1
++    #  ok obj.b это 2
+     #
+     #  config =
+     #    development:
+@@ -92,12 +92,12 @@ suite 'Object Literals', ->
+     #    production:
+     #      server: 'dreamboat'
+     #      timeout: 1000
+-    #  ok config.development.server  is 'localhost'
+-    #  ok config.production.server   is 'dreamboat'
+-    #  ok config.development.timeout is 10
+-    #  ok config.production.timeout  is 1000
++    #  ok config.development.server  это 'localhost'
++    #  ok config.production.server   это 'dreamboat'
++    #  ok config.development.timeout это 10
++    #  ok config.production.timeout  это 1000
+ 
+-    #test 'implicit objects as part of chained calls', ->
++    #test 'implicit objects as part из chained calls', ->
+     #  pluck = (x) -> x.a
+     #  eq 100, pluck pluck pluck a: a: a: 100
+ 
+@@ -119,7 +119,7 @@ suite 'Object Literals', ->
+     #
+     #  result = getA a,
+     #    b:1
+-    #  eq undefined, result
++    #  eq неизвестно, result
+     #
+     #  result = getA b:1,
+     #  a:43
+@@ -127,12 +127,12 @@ suite 'Object Literals', ->
+     #
+     #  result = getA b:1,
+     #    a:62
+-    #  eq undefined, result
++    #  eq неизвестно, result
+     #
+     #  result = getA
+     #    b:1
+     #    a
+-    #  eq undefined, result
++    #  eq неизвестно, result
+     #
+     #  result = getA
+     #    a:
+@@ -144,26 +144,26 @@ suite 'Object Literals', ->
+     #    a:1
+     #    b
+     #    c:1
+-    #  ok result.length is 3
+-    #  ok result[2].c is 1
++    #  ok result.length это 3
++    #  ok result[2].c это 1
+     #
+     #  result = getA b: 13, a: 42, 2
+     #  eq 42, result
+     #
+     #  result = getArgs a:1, (1 + 1)
+-    #  ok result[1] is 2
++    #  ok result[1] это 2
+     #
+     #  result = getArgs a:1, b
+-    #  ok result.length is 2
+-    #  ok result[1] is 30
++    #  ok result.length это 2
++    #  ok result[1] это 30
+     #
+     #  result = getArgs a:1, b, b:1, a
+-    #  ok result.length is 4
+-    #  ok result[2].b is 1
++    #  ok result.length это 4
++    #  ok result[2].b это 1
+     #
+     #  throws -> CoffeeScript.compile 'a = b:1, c'
+ 
+-    #test 'multiple dedentations in implicit object literals', ->
++    #test 'multiple dedentations в implicit object literals', ->
+     #  nonce0 = {}
+     #  nonce1 = {}
+     #  obj =
+@@ -174,7 +174,7 @@ suite 'Object Literals', ->
+     #  eq nonce0, obj.a.b().c
+     #  eq nonce1, obj.d
+ 
+-    #test 'jashkenas/coffee-script#1871: Special case for IMPLICIT_END in the middle of an implicit object', ->
++    #test 'jashkenas/coffee-script#1871: Special case для IMPLICIT_END в the middle из an implicit object', ->
+     #  result = 'result'
+     #  ident = (x) -> x
+     #
+@@ -184,13 +184,13 @@ suite 'Object Literals', ->
+     #
+     #  result = ident
+     #    one: 1
+-    #    two: 2 for i in [1..3]
++    #    two: 2 для i в [1..3]
+     #
+     #  eq result.two.join(' '), '2 2 2'
+ 
+     #test 'jashkenas/coffee-script#1961, jashkenas/coffee-script#1974, regression with compound assigning to an implicit object', ->
+     #
+-    #  obj = null
++    #  obj = нуль
+     #
+     #  obj ?=
+     #    one: 1
+@@ -198,7 +198,7 @@ suite 'Object Literals', ->
+     #
+     #  eq obj.two, 2
+     #
+-    #  obj = null
++    #  obj = нуль
+     #
+     #  obj or=
+     #    three: 3
 @@ -208,6 +208,6 @@ suite 'Object Literals', ->
  
      #test 'jashkenas/coffee-script#2207: Immediate implicit closes don't close implicit objects', ->
      #  func = ->
 -    #    key: for i in [1, 2, 3] then i
-+    #    key: for i in [1, 2, 3] то i
++    #    key: для i в [1, 2, 3] то i
      #
      #  eq func().key.join(' '), '1 2 3'
 diff --git a/test/operators.coffee b/test/operators.coffee
-index 54531e2..7a03a49 100644
+index 54531e2..0ca2997 100644
 --- a/test/operators.coffee
 +++ b/test/operators.coffee
-@@ -105,7 +105,7 @@ suite 'Operators', ->
+@@ -4,13 +4,13 @@ suite 'Operators', ->
+   # * Existential Operator (Binary)
+   # * Existential Operator (Unary)
+   # * Aliased Operators
+-  # * [not] in/of
++  # * [не] in/of
+   # * Chained Comparison
+ 
+   # TODO: sort these
+-  # TODO: basic functionality of all binary and unary operators
++  # TODO: basic functionality из all binary and unary operators
+ 
+-  test 'binary maths operators do not require spaces', ->
++  test 'binary maths operators выполнить не require spaces', ->
+     a = 1
+     b = -1
+     eq 1, a*-b
+@@ -18,7 +18,7 @@ suite 'Operators', ->
+     eq 1, a/-b
+     eq -1, a/b
+ 
+-  test 'operators should respect new lines as spaced', ->
++  test 'operators should respect новый lines as spaced', ->
+     a = 123 +
+     456
+     eq 579, a
+@@ -44,18 +44,18 @@ suite 'Operators', ->
+     num = 10; eq  1, (num >>=  3)
+     num = 10; eq  1, (num >>>= 3)
+ 
+-  test 'instanceof', ->
+-    ok new String instanceof String
+-    ok new Boolean instanceof Boolean
++  test 'экземпляр', ->
++    ok новый String экземпляр String
++    ok новый Boolean экземпляр Boolean
+ 
+-  test 'not instanceof', ->
+-    ok new Number not instanceof String
+-    ok new Array not instanceof Boolean
++  test 'не экземпляр', ->
++    ok новый Number не экземпляр String
++    ok новый Array не экземпляр Boolean
+ 
+-  test "use `::` operator on keywords `this` and `@`", ->
++  test "use `::` operator on keywords `этот` and `@`", ->
+     obj = prototype: prop: nonce = {}
+     eq nonce, (-> @::prop).call obj
+-    eq nonce, (-> this::prop).call obj
++    eq nonce, (-> этот::prop).call obj
+ 
+ 
+   suite 'Existential Operator (Binary)', ->
+@@ -66,14 +66,14 @@ suite 'Operators', ->
+       b = a ? nonce
+       eq nonce, b
+ 
+-      a = null
+-      b = undefined
++      a = нуль
++      b = неизвестно
+       b = a ? nonce
+       eq nonce, b
+ 
+-      a = false
++      a = ложь
+       b = a ? nonce
+-      eq false, b
++      eq ложь, b
+ 
+       a = 0
+       b = a ? nonce
+@@ -86,7 +86,7 @@ suite 'Operators', ->
+       eq result, 0
+ 
+     test "binary existential operator with negative number", ->
+-      a = null ? - 1
++      a = нуль ? - 1
+       eq -1, a
+ 
+     test 'jashkenas/coffee-script#2026: exponentiation operator via `**`', ->
+@@ -105,112 +105,112 @@ suite 'Operators', ->
    suite 'Existential Operator (Unary)', ->
  
      test "postfix existential operator", ->
 -      ok (if nonexistent? then false else true)
-+      ok (если nonexistent? то false иначе true)
-       defined = true
+-      defined = true
++      ok (если nonexistent? то ложь иначе истина)
++      defined = истина
        ok defined?
-       defined = false
-@@ -114,36 +114,36 @@ suite 'Operators', ->
+-      defined = false
++      defined = ложь
+       ok defined?
+ 
      test "postfix existential operator only evaluates its operand once", ->
        semaphore = 0
        fn = ->
 -        ok false if semaphore
-+        ok false если semaphore
++        ok ложь если semaphore
          ++semaphore
 -      ok(if fn()? then true else false)
-+      ok(если fn()? то true иначе false)
++      ok(если fn()? то истина иначе ложь)
  
      test "negated postfix existential operator", ->
-       ok !nothing?.value
+-      ok !nothing?.value
++      ok !неhing?.value
  
      test "postfix existential operator on expressions", ->
 -      eq true, (1 or 0)?, true
-+      eq true, (1 или 0)?, true
++      eq истина, (1 или 0)?, истина
  
  
-   suite '`is`,`isnt`,`==`,`!=`', ->
+-  suite '`is`,`isnt`,`==`,`!=`', ->
++  suite '`это`,`этоне`,`==`,`!=`', ->
  
-     test "`==` and `is` should be interchangeable", ->
+-    test "`==` and `is` should be interchangeable", ->
++    test "`==` and `это` should be interchangeable", ->
        a = b = 1
 -      ok a is 1 and b == 1
-+      ok a is 1 и b == 1
++      ok a это 1 и b == 1
        ok a == b
-       ok a is b
+-      ok a is b
++      ok a это b
  
-     test "`!=` and `isnt` should be interchangeable", ->
+-    test "`!=` and `isnt` should be interchangeable", ->
++    test "`!=` and `этоне` should be interchangeable", ->
        a = 0
        b = 1
 -      ok a isnt 1 and b != 0
-+      ok a isnt 1 и b != 0
++      ok a этоне 1 и b != 0
        ok a != b
-       ok a isnt b
+-      ok a isnt b
++      ok a этоне b
  
  
-   suite '[not] in/of', ->
+-  suite '[not] in/of', ->
 -    # - `in` should check if an array contains a value using `indexOf`
 -    # - `of` should check if a property is defined on an object using `in`
++  suite '[не] in/of', ->
 +    # - `in` should check если an array contains a value using `indexOf`
-+    # - `of` should check если a property is defined on an object using `in`
++    # - `of` should check если a property это defined on an object using `in`
  
      test "in, of", ->
        arr = [1]
-@@ -174,28 +174,28 @@ suite 'Operators', ->
-       eq 1, [Object() in Array()].length
+-      ok 0 of arr
+-      ok 1 in arr
++      ok 0 из arr
++      ok 1 в arr
+ 
+-    test 'not in, not of', ->
++    test 'не in, не of', ->
+       arr = [1]
+-      ok 1 not of arr
+-      ok 0 not in arr
++      ok 1 не из arr
++      ok 0 не в arr
+ 
+     test "`in` should be able to operate on an array literal", ->
+-      ok 2 in [0, 1, 2, 3]
+-      ok 4 not in [0, 1, 2, 3]
++      ok 2 в [0, 1, 2, 3]
++      ok 4 не в [0, 1, 2, 3]
+       arr = [0, 1, 2, 3]
+-      ok 2 in arr
+-      ok 4 not in arr
++      ok 2 в arr
++      ok 4 не в arr
+       # should cache the value used to test the array
+       arr = [0]
+       val = 0
+-      ok val++ in arr
+-      ok val++ not in arr
++      ok val++ в arr
++      ok val++ не в arr
+       val = 0
+-      ok val++ of arr
+-      ok val++ not of arr
++      ok val++ из arr
++      ok val++ не из arr
+ 
+-    test "`in` with cache and `__indexOf` should work in argument lists", ->
+-      eq 1, [Object() in Array()].length
++    test "`in` with cache and `__indexOf` should work в argument lists", ->
++      eq 1, [Object() в Array()].length
  
      test "jashkenas/coffee-script#737: `in` should have higher precedence than logical operators", ->
 -      eq 1, 1 in [1] and 1
-+      eq 1, 1 in [1] и 1
++      eq 1, 1 в [1] и 1
  
      test "jashkenas/coffee-script#768: `in` should preserve evaluation order", ->
        share = 0
 -      a = -> share++ if share is 0
 -      b = -> share++ if share is 1
 -      c = -> share++ if share is 2
-+      a = -> share++ если share is 0
-+      b = -> share++ если share is 1
-+      c = -> share++ если share is 2
-       ok a() not in [b(),c()]
+-      ok a() not in [b(),c()]
++      a = -> share++ если share это 0
++      b = -> share++ если share это 1
++      c = -> share++ если share это 2
++      ok a() не в [b(),c()]
        eq 3, share
  
-     test "jashkenas/coffee-script#1099: empty array after `in` should compile to `false`", ->
-       eq 1, [5 in []].length
+-    test "jashkenas/coffee-script#1099: empty array after `in` should compile to `false`", ->
+-      eq 1, [5 in []].length
 -      eq false, do -> return 0 in []
-+      eq false, do -> возврат 0 in []
++    test "jashkenas/coffee-script#1099: empty array after `in` should compile to `ложь`", ->
++      eq 1, [5 в []].length
++      eq ложь, выполнить -> возврат 0 в []
  
 -    test "jashkenas/coffee-script#1354: optimized `in` checks should not happen when splats are present", ->
-+    test "jashkenas/coffee-script#1354: optimized `in` checks should not happen когда splats are present", ->
++    test "jashkenas/coffee-script#1354: optimized `in` checks should не happen когда splats are present", ->
        a = [6, 9]
-       eq 9 in [3, a...], true
+-      eq 9 in [3, a...], true
++      eq 9 в [3, a...], истина
  
-     test "jashkenas/coffee-script#1100: precedence in or-test compilation of `in`", ->
+-    test "jashkenas/coffee-script#1100: precedence in or-test compilation of `in`", ->
 -      ok 0 in [1 and 0]
 -      ok 0 in [1, 1 and 0]
 -      ok not (0 in [1, 0 or 1])
-+      ok 0 in [1 и 0]
-+      ok 0 in [1, 1 и 0]
-+      ok not (0 in [1, 0 или 1])
++    test "jashkenas/coffee-script#1100: precedence в or-test compilation из `in`", ->
++      ok 0 в [1 и 0]
++      ok 0 в [1, 1 и 0]
++      ok не (0 в [1, 0 или 1])
  
      test "jashkenas/coffee-script#1630: `in` should check `hasOwnProperty`", ->
-       ok undefined not in {length: 1}
-@@ -227,8 +227,8 @@ suite 'Operators', ->
+-      ok undefined not in {length: 1}
++      ok неизвестно не в {length: 1}
+ 
+-    #test "jashkenas/coffee-script#1714: lexer bug with raw range `for` followed by `in`", ->
+-    #  0 for [1..2]
+-    #  ok not ('a' in ['b'])
++    #test "jashkenas/coffee-script#1714: lexer bug with raw range `для` followed by `in`", ->
++    #  0 для [1..2]
++    #  ok не ('a' в ['b'])
+     #
+-    #  0 for [1..2]; ok not ('a' in ['b'])
++    #  0 для [1..2]; ok не ('a' в ['b'])
+     #
+-    #  0 for [1..10] # comment ending
+-    #  ok not ('a' in ['b'])
++    #  0 для [1..10] # comment ending
++    #  ok не ('a' в ['b'])
+ 
+-    test "jashkenas/coffee-script#1099: statically determined `not in []` reporting incorrect result", ->
+-      ok 0 not in []
++    test "jashkenas/coffee-script#1099: statically determined `не в []` reporting incorrect result", ->
++      ok 0 не в []
+ 
+ 
+   # Chained Comparison
+@@ -219,16 +219,16 @@ suite 'Operators', ->
+     ok 100 > 10 > 1 > 0 > -1
+     ok -1 < 0 < 1 < 10 < 100
+ 
+-  test "`is` and `isnt` may be chained", ->
+-    ok true is not false is true is not false
+-    ok 0 is 0 isnt 1 is 1
++  test "`это` and `этоне` may be chained", ->
++    ok истина это не ложь это истина это не ложь
++    ok 0 это 0 этоне 1 это 1
+ 
+-  test "different comparison operators (`>`,`<`,`is`,etc.) may be combined", ->
++  test "different comparison operators (`>`,`<`,`это`,etc.) may be combined", ->
      ok 1 < 2 > 1
-     ok 10 < 20 > 2+3 is 5
+-    ok 10 < 20 > 2+3 is 5
++    ok 10 < 20 > 2+3 это 5
  
 -  test "some chainable operators can be negated by `unless`", ->
 -    ok (true unless 0==10!=100)
 +  test "some chainable operators can be negated by `еслине`", ->
-+    ok (true еслине 0==10!=100)
++    ok (истина еслине 0==10!=100)
  
    test "operator precedence: `|` lower than `<`", ->
      eq 1, 1 | 2 < 3 < 4
-@@ -244,8 +244,8 @@ suite 'Operators', ->
+@@ -236,20 +236,20 @@ suite 'Operators', ->
+   test "preserve references", ->
+     a = b = c = 1
+     # `a == b <= c` should become `a === b && b <= c`
+-    # (this test does not seem to test for this)
++    # (этот test does не seem to test для этот)
+     ok a == b <= c
+ 
+   test "chained operations should evaluate each value only once", ->
+     a = 0
      ok 1 > a++ < 1
  
-   #test "jashkenas/coffee-script#891: incorrect inversion of chained comparisons", ->
+-  #test "jashkenas/coffee-script#891: incorrect inversion of chained comparisons", ->
 -  #  ok (true unless 0 > 1 > 2)
 -  #  ok (true unless (NaN = 0/0) < 0/0 < NaN)
-+  #  ok (true еслине 0 > 1 > 2)
-+  #  ok (true еслине (NaN = 0/0) < 0/0 < NaN)
++  #test "jashkenas/coffee-script#891: incorrect inversion из chained comparisons", ->
++  #  ok (истина еслине 0 > 1 > 2)
++  #  ok (истина еслине (NaN = 0/0) < 0/0 < NaN)
  
    test "jashkenas/coffee-script#1234: Applying a splat to :: applies the splat to the wrong object", ->
      nonce = {}
-@@ -271,7 +271,7 @@ suite 'Operators', ->
+-    class C
++    класс C
+       method: -> @nonce
+       nonce: nonce
+ 
+@@ -260,7 +260,7 @@ suite 'Operators', ->
+     eq "': '", '' +
+     "': '"
+ 
+-  test "jashkenas/coffee-script#1703, ---x is invalid JS", ->
++  test "jashkenas/coffee-script#1703, ---x это invalid JS", ->
+     x = 2
+     eq (- --x), -1
+ 
+@@ -270,8 +270,8 @@ suite 'Operators', ->
+   #  eq a, 1
  
    test "jashkenas/coffee-script#2155: conditional assignment to a closure", ->
-     x = null
+-    x = null
 -    func = -> x ?= (-> if true then 'hi')
-+    func = -> x ?= (-> если true то 'hi')
++    x = нуль
++    func = -> x ?= (-> если истина то 'hi')
      func()
      eq x(), 'hi'
  
-@@ -284,7 +284,7 @@ suite 'Operators', ->
-   test "#85: operands of ExistsOp must be coerced to expressions", ->
+@@ -281,13 +281,13 @@ suite 'Operators', ->
+     func()? ? 100
+     eq counter, 1
+ 
+-  test "#85: operands of ExistsOp must be coerced to expressions", ->
++  test "#85: operands из ExistsOp must be coerced to expressions", ->
      f = ->
      f (a ? a?.b())
 -    f (a ? while 0 then)
 +    f (a ? пока 0 то)
  
-   test "#89: extends operator has side effects and should not be optimised away", ->
-     class A
+-  test "#89: extends operator has side effects and should not be optimised away", ->
+-    class A
+-    class B
+-    B extends A
+-    ok new B instanceof A
++  test "#89: наследует operator has side effects and should не be optimised away", ->
++    класс A
++    класс B
++    B наследует A
++    ok новый B экземпляр A
 diff --git a/test/optimisations.coffee b/test/optimisations.coffee
-index 6821390..482cb54 100644
+index 6821390..061b7de 100644
 --- a/test/optimisations.coffee
 +++ b/test/optimisations.coffee
-@@ -11,22 +11,22 @@ suite 'Optimisations', ->
-       delete global.thisShouldBeInTheGlobalScope
+@@ -1,41 +1,41 @@
+ suite 'Optimisations', ->
  
-     test 'do not optimise away declarations in conditionals', ->
+-  # by definition, anything that is optimised away will not be detectable at
+-  # runtime, so we will have to do tests on the AST structure
++  # by definition, anything that это optimised away will не be detectable at
++  # runtime, so we will have to выполнить tests on the AST structure
+ 
+   suite 'Non-optimisations', ->
+ 
+-    test 'do not optimise away indirect eval', ->
+-      do -> (1; eval) 'var thisShouldBeInTheGlobalScope = 0'
+-      eq 'number', typeof thisShouldBeInTheGlobalScope
+-      delete global.thisShouldBeInTheGlobalScope
+-
+-    test 'do not optimise away declarations in conditionals', ->
 -      if 0 then a = 0
-+      если 0 то a = 0
-       eq undefined, a
+-      eq undefined, a
 -      if 1 then 0 else b = 0
-+      если 1 то 0 иначе b = 0
-       eq undefined, b
- 
+-      eq undefined, b
+-
 -    test 'do not optimise away declarations in while loops', ->
 -      while 0 then a = 0
-+    test 'do not optimise away declarations in пока loops', ->
-+      пока 0 то a = 0
-       eq undefined, a
- 
-     test 'do not optimise away declarations in for-in loops', ->
+-      eq undefined, a
+-
+-    test 'do not optimise away declarations in for-in loops', ->
 -      for a in [] then b = 0
-+      for a in [] то b = 0
-       eq undefined, a
-       eq undefined, b
- 
-     test 'do not optimise away declarations in for-of loops', ->
+-      eq undefined, a
+-      eq undefined, b
+-
+-    test 'do not optimise away declarations in for-of loops', ->
 -      for own a of {} then b = 0
-+      for own a of {} то b = 0
-       eq undefined, a
-       eq undefined, b
+-      eq undefined, a
+-      eq undefined, b
+-
+-    test 'do not optimise away declarations in logical not ops', ->
+-      not (a = 0)
++    test 'выполнить не optimise away indirect eval', ->
++      выполнить -> (1; eval) 'var этотShouldBeInTheGlobalScope = 0'
++      eq 'number', typeof этотShouldBeInTheGlobalScope
++      delete global.этотShouldBeInTheGlobalScope
++
++    test 'выполнить не optimise away declarations в conditionals', ->
++      если 0 то a = 0
++      eq неизвестно, a
++      если 1 то 0 иначе b = 0
++      eq неизвестно, b
++
++    test 'выполнить не optimise away declarations в пока loops', ->
++      пока 0 то a = 0
++      eq неизвестно, a
++
++    test 'выполнить не optimise away declarations в для-in loops', ->
++      для a в [] то b = 0
++      eq неизвестно, a
++      eq неизвестно, b
++
++    test 'выполнить не optimise away declarations в для-of loops', ->
++      для свой a из {} то b = 0
++      eq неизвестно, a
++      eq неизвестно, b
++
++    test 'выполнить не optimise away declarations в logical не ops', ->
++      не (a = 0)
+       eq 0, a
  
+-    test '#71: assume JS literals have side effects, do not eliminate them', ->
++    test '#71: assume JS literals have side effects, выполнить не eliminate them', ->
+       nonce = {}
+-      a = null
++      a = нуль
+       `a = nonce`
+       eq nonce, a
 diff --git a/test/poe.coffee b/test/poe.coffee
-index 31f66f6..0c8df48 100644
+index 31f66f6..6a62fc4 100644
 --- a/test/poe.coffee
 +++ b/test/poe.coffee
-@@ -2,7 +2,7 @@ suite 'Edgar Allan Poe', ->
+@@ -2,17 +2,17 @@ suite 'Edgar Allan Poe', ->
  
    test 'The Raven', ->
      CoffeeScript.parse '''
 -      Once upon a mignight dreary while I pondered, weak and weary,
+-      Over many quaint and curious volume of forgotten lore -
 +      Once upon a mignight dreary пока I pondered, weak and weary,
-       Over many quaint and curious volume of forgotten lore -
++      Over many quaint and curious volume из дляgotten lore -
        While I nodded, nearly napping, suddenly there came a tapping,
-       As of some one gently rapping, rapping at my chamber door
+-      As of some one gently rapping, rapping at my chamber door
++      As из some one gently rapping, rapping at my chamber door
+       "'Tis some visiter". I muttered, "tapping at my chamber door" -
+-      "only this and nothing more."
++      "only этот and неhing more."
+ 
+-      Ah distinctly I remember it was in the bleak December;
++      Ah distinctly I remember it was в the bleak December;
+       And each separate dying ember wrought its ghost upon the floor.
+       Eagerly I wished the morrow - vainly I had sought to borrow,
+-      From my books surcease of sorrow - sorrow For the lost Lenore -
++      From my books surcease из sorrow - sorrow For the lost Lenore -
+       For the rare and radiant maiden whom the angels name Lenore -
+       Nameless here For evermore
+     '''
+diff --git a/test/ranges.coffee b/test/ranges.coffee
+index 193e16f..062caa2 100644
+--- a/test/ranges.coffee
++++ b/test/ranges.coffee
+@@ -1,6 +1,6 @@
+ suite 'Range Literals', ->
+ 
+-# TODO: add indexing and method invocation tests: [1..4][0] is 1, [0...3].toString()
++# TODO: add indexing and method invocation tests: [1..4][0] это 1, [0...3].toString()
+ 
+   test "basic inclusive ranges", ->
+     arrayEq [1, 2, 3] , [1..3]
 diff --git a/test/regexps.coffee b/test/regexps.coffee
 index 21a2477..40675ee 100644
 --- a/test/regexps.coffee
@@ -732,12 +2852,31 @@ index 21a2477..40675ee 100644
      eq 0, a(/ b/i)
      eq 0, a(/= b/i)
 diff --git a/test/scope.coffee b/test/scope.coffee
-index a84a1b5..fa4a0b3 100644
+index a84a1b5..3a49bc1 100644
 --- a/test/scope.coffee
 +++ b/test/scope.coffee
-@@ -21,9 +21,9 @@ suite 'Scope', ->
+@@ -7,23 +7,23 @@ suite 'Scope', ->
+     throws -> b
+     eq 'undefined', typeof b
  
-   test 'vars are function-scoped, not block-scoped', ->
+-  test 'reassignments in a closure', ->
++  test 'reassignments в a closure', ->
+     a = false
+-    ok not a
+-    do -> a = true
++    ok не a
++    выполнить -> a = true
+     ok a
+ 
+     b = false
+     fn = -> b = true
+-    ok not b
++    ok не b
+     ok fn()
+     ok b
+ 
+-  test 'vars are function-scoped, not block-scoped', ->
++  test 'vars are function-scoped, не block-scoped', ->
      fn = -> true
 -    if fn()
 +    если fn()
@@ -747,47 +2886,91 @@ index a84a1b5..fa4a0b3 100644
        a = 0
      ok a
  
-@@ -44,7 +44,7 @@ suite 'Scope', ->
+@@ -31,57 +31,57 @@ suite 'Scope', ->
+     fn = (p) -> ok p
+     fn true
+ 
+-  test 're-assignments of function params', ->
++  test 're-assignments из function params', ->
+     nonce = {}
+     fn = (p) ->
+       eq nonce, p
+       p = 0
+-      ok not p
++      ok не p
+     fn nonce
+ 
+-  test 're-assignments of function params in a loop', ->
++  test 're-assignments из function params в a loop', ->
+     nonce = {}
      fn = (p) ->
        eq nonce, p
        a = 1
 -      while a--
 +      пока a--
          p = 0
-       ok not p
+-      ok not p
++      ok не p
      fn nonce
-@@ -54,7 +54,7 @@ suite 'Scope', ->
+ 
+-  test 're-assignments of function params in a loop used as a value', ->
++  test 're-assignments из function params в a loop used as a value', ->
+     nonce = {}
      fn = (p) ->
        eq nonce, p
        a = 1
 -      b = while a--
 +      b = пока a--
          p = 0
-       ok not p
+-      ok not p
++      ok не p
      fn nonce
-@@ -62,7 +62,7 @@ suite 'Scope', ->
+ 
    # DISABLED DUE TO BUG: see issue #46
-   #test 'declarations in a loop used as a value', ->
+-  #test 'declarations in a loop used as a value', ->
++  #test 'declarations в a loop used as a value', ->
    #  a = 1
 -  #  a = while a--
 +  #  a = пока a--
    #    b = 1
    #  ok b
  
-@@ -70,7 +70,7 @@ suite 'Scope', ->
-     for v, k in [1]
+   test 'loop iterators available within the loop', ->
+-    for v, k in [1]
++    для v, k в [1]
        ok v
-       ok not k
+-      ok not k
 -    return
++      ok не k
 +    возврат
  
    test 'loop iterators available outside the loop (ew)', ->
      fn = ->
+-    for v, k in [1]
++    для v, k в [1]
+       fn()
+     ok v
+-    ok not k
++    ok не k
+ 
+   test '`do` acts as `let`', ->
+     outerNonce = nonce = {}
+-    do (nonce) ->
++    выполнить (nonce) ->
+       eq outerNonce, nonce
+       nonce = {}
+     eq outerNonce, nonce
 diff --git a/test/setup.coffee b/test/setup.coffee
-index 457b518..888a7fe 100644
+index 457b518..0c10520 100644
 --- a/test/setup.coffee
 +++ b/test/setup.coffee
-@@ -5,24 +5,24 @@ global[name] = func for name, func of require 'assert'
+@@ -1,28 +1,28 @@
+ util = require 'util'
+-inspect = (o) -> util.inspect o, no, 2, yes
++inspect = (o) -> util.inspect o, нет, 2, да
+ 
+-global[name] = func for name, func of require 'assert'
++global[name] = func для name, func из require 'assert'
  
  # See http://wiki.ecmascript.org/doku.php?id=harmony:egal
  egal = (a, b) ->
@@ -795,38 +2978,99 @@ index 457b518..888a7fe 100644
 -    a isnt 0 or 1/a is 1/b
 -  else
 -    a isnt a and b isnt b
-+  если a is b
-+    a isnt 0 или 1/a is 1/b
++  если a это b
++    a этоне 0 или 1/a это 1/b
 +  иначе
-+    a isnt a и b isnt b
++    a этоне a и b этоне b
  
- # A recursive functional equivalence helper; uses egal for testing equivalence.
+-# A recursive functional equivalence helper; uses egal for testing equivalence.
++# A recursive functional equivalence helper; uses egal для testing equivalence.
  arrayEgal = (a, b) ->
 -  if egal a, b then yes
 -  else if a instanceof Array and b instanceof Array
 -    return no unless a.length is b.length
 -    return no for el, idx in a when not arrayEgal el, b[idx]
-+  если egal a, b то yes
-+  иначе если a instanceof Array и b instanceof Array
-+    возврат no еслине a.length is b.length
-+    возврат no for el, idx in a когда not arrayEgal el, b[idx]
-     yes
+-    yes
++  если egal a, b то да
++  иначе если a экземпляр Array и b экземпляр Array
++    возврат нет еслине a.length это b.length
++    возврат нет для el, idx в a когда не arrayEgal el, b[idx]
++    да
  
  global.eq      = (a, b, msg) -> ok egal(a, b), msg ? "#{inspect a} === #{inspect b}"
  global.arrayEq = (a, b, msg) -> ok arrayEgal(a,b), msg ? "#{inspect a} === #{inspect b}"
  
  
 -libDir = if typeof _$jscoverage is 'undefined' then 'lib' else 'instrumented'
-+libDir = если typeof _$jscoverage is 'undefined' то 'lib' иначе 'instrumented'
++libDir = если typeof _$jscoverage это 'undefined' то 'lib' иначе 'instrumented'
  global.CoffeeScript = require '..'
  global.CS = require "../#{libDir}/coffee-script/nodes"
  global.JS = require "../#{libDir}/coffee-script/js-nodes"
+@@ -31,5 +31,5 @@ global.Parser = require "../#{libDir}/coffee-script/parser"
+ {Preprocessor} = require "../#{libDir}/coffee-script/preprocessor"
+ 
+ global.parse = (input) -> Parser.parse Preprocessor.processSync input
+-optimiser = new Optimiser
++optimiser = новый Optimiser
+ global.optimise = (ast) -> optimiser.optimise ast
+diff --git a/test/shakespeare.coffee b/test/shakespeare.coffee
+index 24f4958..8510e79 100644
+--- a/test/shakespeare.coffee
++++ b/test/shakespeare.coffee
+@@ -2,12 +2,12 @@ suite 'William Shakespeare', ->
+ 
+   test 'Hamlet', ->
+     CoffeeScript.parse '''
+-      To be or not to be, that is the question
+-      Whether tis Nobler in the mind to suffer
+-      The Slings and Arrows of outrageous Fortune,
+-      Or to take Arms against a Sea of troubles,
++      To be or не to be, that это the question
++      Whether tis Nobler в the mind to suffer
++      The Slings and Arrows из outrageous Fortune,
++      Or to take Arms against a Sea из troubles,
+       And By opposing end them, to die, to sleep
+       No more. and By a sleep, to say we end
+       The heart-ache and the thousand Natural shocks
+-      That Flesh is heir to?
++      That Flesh это heir to?
+     '''
 diff --git a/test/slices.coffee b/test/slices.coffee
-index 81e9239..db6f640 100644
+index 81e9239..e43c476 100644
 --- a/test/slices.coffee
 +++ b/test/slices.coffee
-@@ -53,7 +53,7 @@ suite 'Slices', ->
-   #  n = 2 # some truthy number in `list`
+@@ -28,9 +28,9 @@ suite 'Slices', ->
+     arrayEq @shared      , @shared[..-1]
+     arrayEq @shared[0..8], @shared[...-1]
+ 
+-    #for a in [-@shared.length..@shared.length]
++    #для a в [-@shared.length..@shared.length]
+     #  arrayEq @shared[a..] , @shared[a...]
+-    #for a in [-@shared.length+1...@shared.length]
++    #для a в [-@shared.length+1...@shared.length]
+     #  arrayEq @shared[..a][...-1] , @shared[...a]
+ 
+     arrayEq [1, 2, 3], [1, 2, 3][..]
+@@ -42,18 +42,18 @@ suite 'Slices', ->
+ 
+   test "string slicing", ->
+     str = "abcdefghijklmnopqrstuvwxyz"
+-    ok str[1...1] is ""
+-    ok str[1..1] is "b"
+-    ok str[1...5] is "bcde"
+-    ok str[0..4] is "abcde"
+-    ok str[-5..] is "vwxyz"
++    ok str[1...1] это ""
++    ok str[1..1] это "b"
++    ok str[1...5] это "bcde"
++    ok str[0..4] это "abcde"
++    ok str[-5..] это "vwxyz"
+ 
+-  #test "#1722: operator precedence in unbounded slice compilation", ->
++  #test "#1722: operator precedence в unbounded slice compilation", ->
+   #  list = [0..9]
+-  #  n = 2 # some truthy number in `list`
++  #  n = 2 # some truthy number в `list`
    #  arrayEq [0..n], list[..n]
    #  arrayEq [0..n], list[..n or 0]
 -  #  arrayEq [0..n], list[..if n then n else 0]
@@ -834,16 +3078,149 @@ index 81e9239..db6f640 100644
  
    #test "#2349: inclusive slicing to numeric strings", ->
    #  arrayEq [0, 1], [0..10][.."1"]
+diff --git a/test/string-interpolation.coffee b/test/string-interpolation.coffee
+index dc02e23..8fa6f00 100644
+--- a/test/string-interpolation.coffee
++++ b/test/string-interpolation.coffee
+@@ -9,15 +9,15 @@ suite 'String Interpolation', ->
+     c = 'c'
+     eq 'abcd', "a#{b}#{c}d"
+ 
+-  test 'interpolate one numeric variable in the middle of the string', ->
++  test 'interpolate one numeric variable в the middle из the string', ->
+     b = 0
+     eq 'a0c', "a#{b}c"
+ 
+-  test 'interpolate one numeric variable at the start of the string', ->
++  test 'interpolate one numeric variable at the start из the string', ->
+     a = 0
+     eq '0bc', "#{a}bc"
+ 
+-  test 'interpolate one numeric variable at the end of the string', ->
++  test 'interpolate one numeric variable at the end из the string', ->
+     c = 0
+     eq 'ab0', "ab#{c}"
+ 
+@@ -47,7 +47,7 @@ suite 'String Interpolation', ->
+     c = 'c'
+     eq 'abcd', "a#{b + "#{c}"}d"
+ 
+-  test 'nested interpolation with single quotes (should not interpolate)', ->
++  test 'nested interpolation with single quotes (should не interpolate)', ->
+     b = 'b'
+     c = 'c'
+     eq 'ab#{c}d', "a#{b + '#{c}'}d"
+diff --git a/test/truthiness.coffee b/test/truthiness.coffee
+index 553d436..f5013c0 100644
+--- a/test/truthiness.coffee
++++ b/test/truthiness.coffee
+@@ -3,29 +3,29 @@ suite 'Truthiness', ->
+   setup ->
+     @truthy = (ast) ->
+       ok Optimiser.isTruthy ast
+-      ok not Optimiser.isFalsey ast
++      ok не Optimiser.isFalsey ast
+     @falsey = (ast) ->
+       ok Optimiser.isFalsey ast
+-      ok not Optimiser.isTruthy ast
++      ok не Optimiser.isTruthy ast
+     @neither = (ast) ->
+-      ok not Optimiser.isTruthy ast
+-      ok not Optimiser.isFalsey ast
++      ok не Optimiser.isTruthy ast
++      ok не Optimiser.isFalsey ast
+ 
+   test 'ints', ->
+-    @falsey new CS.Int 0
+-    @truthy new CS.Int 1
+-    @truthy new CS.Int 9e9
++    @falsey новый CS.Int 0
++    @truthy новый CS.Int 1
++    @truthy новый CS.Int 9e9
+ 
+   test 'floats', ->
+-    @falsey new CS.Float 0.0
+-    @truthy new CS.Float 0.1
+-    @truthy new CS.Float 1.1
+-    @truthy new CS.Float 1.2e+3
++    @falsey новый CS.Float 0.0
++    @truthy новый CS.Float 0.1
++    @truthy новый CS.Float 1.1
++    @truthy новый CS.Float 1.2e+3
+ 
+   test 'strings', ->
+-    @falsey new CS.String ''
+-    @truthy new CS.String '0'
++    @falsey новый CS.String ''
++    @truthy новый CS.String '0'
+ 
+   test 'assignment', ->
+-    @truthy new CS.AssignOp (new CS.Identifier 'a'), new CS.Int 1
+-    @falsey new CS.AssignOp (new CS.Identifier 'a'), new CS.Int 0
++    @truthy новый CS.AssignOp (новый CS.Identifier 'a'), новый CS.Int 1
++    @falsey новый CS.AssignOp (новый CS.Identifier 'a'), новый CS.Int 0
 diff --git a/test/try-catch-finally.coffee b/test/try-catch-finally.coffee
-index ab946e6..78b8871 100644
+index ab946e6..ed0642d 100644
 --- a/test/try-catch-finally.coffee
 +++ b/test/try-catch-finally.coffee
-@@ -32,7 +32,7 @@ suite 'Try/Catch/Finally', ->
-   test 'catch variable is not let-scoped as in JS', ->
+@@ -1,42 +1,42 @@
+ suite 'Try/Catch/Finally', ->
+ 
+-  test 'simple try-catch-finally', ->
++  test 'simple проба-перехват-завершение', ->
+     t = c = f = 0
+-    try
++    проба
+       ++t
+-      throw {}
+-    catch e
++      выдать {}
++    перехват e
+       ++c
+-    finally
++    завершение
+       ++f
+     eq 1, t
+     eq 1, c
+     eq 1, f
+ 
+     t = c = f = 0
+-    try
++    проба
+       ++t
+-    catch e
+-      # catch should not be executed if nothing is thrown
++    перехват e
++      # перехват should не be executed if неhing это thrown
+       ++c
+-    finally
+-      # but finally should always be executed
++    завершение
++      # but завершение should always be executed
+       ++f
+     eq 1, t
+     eq 0, c
+     eq 1, f
+ 
+-  test 'try without catch just suppresses thrown errors', ->
+-    try throw {}
++  test 'проба without перехват just suppresses thrown errors', ->
++    проба выдать {}
+ 
+-  test 'catch variable is not let-scoped as in JS', ->
++  test 'перехват variable это не let-scoped as в JS', ->
      nonce = {}
-     try throw nonce
+-    try throw nonce
 -    catch e then
-+    catch e то
++    проба выдать nonce
++    перехват e то
      eq nonce, e
  
-   test 'destructuring in catch', ->
+-  test 'destructuring in catch', ->
++  test 'destructuring в перехват', ->
+     nonce = {}
+-    try throw {nonce}
+-    catch {nonce: a}
++    проба выдать {nonce}
++    перехват {nonce: a}
+       eq nonce, a

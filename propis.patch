@@ -1,19 +1,41 @@
 diff --git a/src/grammar.pegjs b/src/grammar.pegjs
-index 704518e..b56f0d0 100644
+index 704518e..ac7127e 100644
 --- a/src/grammar.pegjs
 +++ b/src/grammar.pegjs
-@@ -5,9 +5,9 @@ var CS = require("./nodes"),
+@@ -5,25 +5,25 @@ var CS = require("./nodes"),
      { ';': CS.SeqOp
      , '=': CS.AssignOp
      , '&&': CS.LogicalAndOp
 -    , and: CS.LogicalAndOp
-+    , и: CS.LogicalAndOp
++    , 'и': CS.LogicalAndOp
      , '||': CS.LogicalOrOp
 -    , or: CS.LogicalOrOp
 +    , 'или': CS.LogicalOrOp
      , '|': CS.BitOrOp
      , '^': CS.BitXorOp
      , '&': CS.BitAndOp
+     , '?': CS.ExistsOp
+     , '==': CS.EQOp
+-    , is: CS.EQOp
++    , 'это': CS.EQOp
+     , '!=': CS.NEQOp
+-    , isnt: CS.NEQOp
++    , 'этоне': CS.NEQOp
+     , '<=': CS.LTEOp
+     , '>=': CS.GTEOp
+     , '<': CS.LTOp
+     , '>': CS.GTOp
+-    , extends: CS.ExtendsOp
+-    , instanceof: CS.InstanceofOp
+-    , in: CS.InOp
+-    , of: CS.OfOp
++    , 'наследует': CS.ExtendsOp
++    , 'экземпляр': CS.InstanceofOp
++    , 'в': CS.InOp
++    , 'из': CS.OfOp
+     , '<<': CS.LeftShiftOp
+     , '>>': CS.SignedRightShiftOp
+     , '>>>': CS.UnsignedRightShiftOp
 @@ -195,15 +195,15 @@ postfixControlFlowExpression
              postfix = postfixContainer[1],
              indicator = postfix.type;
@@ -80,78 +102,114 @@ index 704518e..b56f0d0 100644
        }
    case
      = WHEN _ conditions:caseConditions body:caseBody {
-@@ -966,8 +966,8 @@ TERMINDENT = $(TERMINATOR INDENT)
+@@ -966,55 +966,55 @@ TERMINDENT = $(TERMINATOR INDENT)
  
  
  // keywords
 -AND = $("and" !identifierPart)
 -BREAK = $("break" !identifierPart)
+-BY = $("by" !identifierPart)
+-CATCH = $("catch" !identifierPart)
+-CONTINUE = $("continue" !identifierPart)
+-CLASS = $("class" !identifierPart)
 +AND = $("и" !identifierPart)
 +BREAK = $("прервать" !identifierPart)
- BY = $("by" !identifierPart)
- CATCH = $("catch" !identifierPart)
- CONTINUE = $("continue" !identifierPart)
-@@ -975,12 +975,12 @@ CLASS = $("class" !identifierPart)
++BY = $("шаг" !identifierPart)
++CATCH = $("перехват" !identifierPart)
++CONTINUE = $("продолжить" !identifierPart)
++CLASS = $("класс" !identifierPart)
  DELETE = $("delete" !identifierPart)
  DEBUGGER = $("debugger" !identifierPart)
- DO = $("do" !identifierPart)
+-DO = $("do" !identifierPart)
 -ELSE = $("else" !identifierPart)
-+ELSE = $("иначе" !identifierPart)
- EXTENDS = $("extends" !identifierPart)
- FALSE = $("false" !identifierPart)
- FINALLY = $("finally" !identifierPart)
- FOR = $("for" !identifierPart)
+-EXTENDS = $("extends" !identifierPart)
+-FALSE = $("false" !identifierPart)
+-FINALLY = $("finally" !identifierPart)
+-FOR = $("for" !identifierPart)
 -IF = $("if" !identifierPart)
-+IF = $("если" !identifierPart)
- IN = $("in" !identifierPart)
- INSTANCEOF = $("instanceof" !identifierPart)
- IS = $("is" !identifierPart)
-@@ -993,27 +993,27 @@ NULL = $("null" !identifierPart)
- OF = $("of" !identifierPart)
- OFF = $("off" !identifierPart)
- ON = $("on" !identifierPart)
+-IN = $("in" !identifierPart)
+-INSTANCEOF = $("instanceof" !identifierPart)
+-IS = $("is" !identifierPart)
+-ISNT = $("isnt" !identifierPart)
+-LOOP = $("loop" !identifierPart)
+-NEW = $("new" !identifierPart)
+-NO = $("no" !identifierPart)
+-NOT = $("not" !identifierPart)
+-NULL = $("null" !identifierPart)
+-OF = $("of" !identifierPart)
+-OFF = $("off" !identifierPart)
+-ON = $("on" !identifierPart)
 -OR = $("or" !identifierPart)
-+OR = $("или" !identifierPart)
- OWN = $("own" !identifierPart)
+-OWN = $("own" !identifierPart)
 -RETURN = $("return" !identifierPart)
 -SWITCH = $("switch" !identifierPart)
 -THEN = $("then" !identifierPart)
+-THIS = $("this" !identifierPart)
+-THROW = $("throw" !identifierPart)
+-TRUE = $("true" !identifierPart)
+-TRY = $("try" !identifierPart)
++DO = $("выполнить" !identifierPart)
++ELSE = $("иначе" !identifierPart)
++EXTENDS = $("наследует" !identifierPart)
++FALSE = $("ложь" !identifierPart)
++FINALLY = $("завершение" !identifierPart)
++FOR = $("для" !identifierPart)
++IF = $("если" !identifierPart)
++IN = $("в" !identifierPart)
++INSTANCEOF = $("экземпляр" !identifierPart)
++IS = $("это" !identifierPart)
++ISNT = $("этоне" !identifierPart)
++LOOP = $("цикл" !identifierPart)
++NEW = $("новый" !identifierPart)
++NO = $("нет" !identifierPart)
++NOT = $("не" !identifierPart)
++NULL = $("нуль" !identifierPart)
++OF = $("из" !identifierPart)
++OFF = $("выкл" !identifierPart)
++ON = $("вкл" !identifierPart)
++OR = $("или" !identifierPart)
++OWN = $("свой" !identifierPart)
 +RETURN = $("возврат" !identifierPart)
 +SWITCH = $("выбор" !identifierPart)
 +THEN = $("то" !identifierPart)
- THIS = $("this" !identifierPart)
- THROW = $("throw" !identifierPart)
- TRUE = $("true" !identifierPart)
- TRY = $("try" !identifierPart)
++THIS = $("этот" !identifierPart)
++THROW = $("выдать" !identifierPart)
++TRUE = $("истина" !identifierPart)
++TRY = $("проба" !identifierPart)
  TYPEOF = $("typeof" !identifierPart)
- UNDEFINED = $("undefined" !identifierPart)
+-UNDEFINED = $("undefined" !identifierPart)
 -UNLESS = $("unless" !identifierPart)
 -UNTIL = $("until" !identifierPart)
 -WHEN = $("when" !identifierPart)
 -WHILE = $("while" !identifierPart)
+-YES = $("yes" !identifierPart)
++UNDEFINED = $("неизвестно" !identifierPart)
 +UNLESS = $("еслине" !identifierPart)
 +UNTIL = $("покане" !identifierPart)
 +WHEN = $("когда" !identifierPart)
 +WHILE = $("пока" !identifierPart)
- YES = $("yes" !identifierPart)
++YES = $("да" !identifierPart)
  
  SharedKeywords
-   = ("true" / "false" / "null" / "this" / "new" / "delete" / "typeof" /
+-  = ("true" / "false" / "null" / "this" / "new" / "delete" / "typeof" /
 -  "instanceof" / "in" / "return" / "throw" / "break" / "continue" / "debugger" /
 -  "if" / "else" / "switch" / "for" / "while" / "do" / "try" / "catch" /
-+  "instanceof" / "in" / "возврат" / "throw" / "прервать" / "continue" / "debugger" /
-+  "если" /"иначе" / "выбор" / "for" / "пока" / "do" / "try" / "catch" /
-   "finally" / "class" / "extends" / "super") !identifierPart
+-  "finally" / "class" / "extends" / "super") !identifierPart
++  = ("истина" / "ложь" / "нуль" / "этот" / "новый" / "delete" / "typeof" /
++  "экземпляр" / "возврат" / "выдать" / "прервать" / "продолжить" / "debugger" /
++  "если" /"иначе" / "выбор" / "для" / "пока" / "выполнить" / "проба" / "перехват" /
++  "завершение" / "класс" / "наследует" / "super" / "в") !identifierPart
  
  JSKeywords
+   = ("case" / "default" / "function" / "var" / "void" / "with" / "const" /
 @@ -1022,8 +1022,8 @@ JSKeywords
    "package" / "private" / "protected" / "public" / "static" / "yield") !identifierPart
  
  CSKeywords
 -  = ("undefined" / "then" / "unless" / "until" / "loop" / "off" / "by" / "when" /
 -  "and" / "or" / "isnt" / "is" / "not" / "yes" / "no" / "on" / "of") !identifierPart
-+  = ("undefined" / "то" / "еслине" / "покане" / "loop" / "off" / "by" / "когда" /
-+  "или" / "и" / "isnt" / "is" / "not" / "yes" / "no" / "on" / "of") !identifierPart
++  = ("неизвестно" / "еслине" / "покане" / "цикл" / "выкл" / "шаг" / "когда" /
++  "или" / "этоне" / "это" / "нет" / "да" / "не" / "вкл" / "из" / "то" / "и") !identifierPart
  
  StandardPredefinedMacros
    = "__" ("FILENAME" / "LINE" / "DATETIMEMS" / "DATE" / "TIME") "__"

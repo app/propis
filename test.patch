@@ -456,7 +456,7 @@ index 6425c5c..9545e66 100644
 +    eq toString, вкл.toString
 +    eq toString, выкл.toString
 diff --git a/test/classes.coffee b/test/classes.coffee
-index be696e6..b4f428b 100644
+index be696e6..a41954b 100644
 --- a/test/classes.coffee
 +++ b/test/classes.coffee
 @@ -2,25 +2,25 @@ suite 'Classes', ->
@@ -489,7 +489,7 @@ index be696e6..b4f428b 100644
      #  delete Function.prototype.new
  
 -    #test 'basic classes, again, but in the manual prototype style', ->
-+    #test 'basic классes, again, but в the manual prototype style', ->
++    #test 'basic classes, again, but в the manual prototype style', ->
      #
      #  Base = ->
      #  Base::func = (string) ->
@@ -524,8 +524,7 @@ index be696e6..b4f428b 100644
 +      класс A то @b: nonce
        eq nonce, A.b
  
--    test 'classes with JS-keyword properties', ->
-+    test 'классes with JS-keyword properties', ->
+     test 'classes with JS-keyword properties', ->
  
 -      class Class
 -        class: 'class'
@@ -541,8 +540,7 @@ index be696e6..b4f428b 100644
 +      ok instance.класс это 'класс'
 +      ok instance.name() это 'класс'
  
--    test 'nothing classes', ->
-+    test 'неhing классes', ->
+     test 'nothing classes', ->
  
 -      c = class
 -      ok c instanceof Function
@@ -577,8 +575,7 @@ index be696e6..b4f428b 100644
 -      ok obj.func().name is 'Dog'
 +      ok obj.func().name это 'Dog'
  
--    test 'anonymous classes', ->
-+    test 'anonymous классes', ->
+     test 'anonymous classes', ->
  
 -      obj = klass: class
 +      obj = klass: класс
@@ -602,8 +599,7 @@ index be696e6..b4f428b 100644
 +    #  ok Static.static.one это 1
 +    #  ok Static.static.two это 2
  
--    #test 'classes with static-level implicit objects', ->
-+    #test 'классes with static-level implicit objects', ->
+     #test 'classes with static-level implicit objects', ->
      #
 -    #  class A
 +    #  класс A
@@ -699,12 +695,12 @@ index be696e6..b4f428b 100644
  
        robby.power 11
        robby.speed Infinity
-@@ -185,37 +185,37 @@ suite 'Classes', ->
+@@ -185,15 +185,15 @@ suite 'Classes', ->
        eq robby.power(), 11
        eq robby.speed(), Infinity
  
 -    test 'namespaced classes do not reserve their function name in outside scope', ->
-+    test 'namespaced классes выполнить не reserve their function name в outside scope', ->
++    test 'namespaced classes выполнить не reserve their function name в outside scope', ->
  
        one = {}
        two = {}
@@ -718,11 +714,9 @@ index be696e6..b4f428b 100644
          @label = "two"
  
        eq typeof Klass, 'undefined'
-       eq one.Klass.label, 'one'
-       eq two.Klass.label, 'two'
+@@ -202,20 +202,20 @@ suite 'Classes', ->
  
--    test 'nested classes', ->
-+    test 'nested классes', ->
+     test 'nested classes', ->
  
 -      class Outer
 +      класс Outer
@@ -757,7 +751,7 @@ index be696e6..b4f428b 100644
        eq a.captured().y, 2
  
 -    test 'Issue #924: Static methods in nested classes', ->
-+    test 'Issue #924: Static methods в nested классes', ->
++    test 'Issue #924: Static methods в nested classes', ->
  
 -      class A
 -        @B = class
@@ -829,8 +823,7 @@ index be696e6..b4f428b 100644
 +        @boundStatic = => новый этот(nonce)
        eq nonce, C.boundStatic().id
  
--    test 'jashkenas/coffee-script#1009: classes with reserved words as determined names', ->
-+    test 'jashkenas/coffee-script#1009: классes with reserved words as determined names', ->
+     test 'jashkenas/coffee-script#1009: classes with reserved words as determined names', ->
        fn = ->
 -        eq 'function', typeof (class @for)
 -        ok not /\seval\s?\(/.test (class @eval).toString()
@@ -983,7 +976,7 @@ index be696e6..b4f428b 100644
  
 -    test 'jashkenas/coffee-script#2052: classes should work in strict mode', ->
 -      do ->
-+    test 'jashkenas/coffee-script#2052: классes should work в strict mode', ->
++    test 'jashkenas/coffee-script#2052: classes should work в strict mode', ->
 +      выполнить ->
          'use strict'
 -        class A
@@ -1028,7 +1021,7 @@ index be696e6..b4f428b 100644
      #    constructor: (one, two, three) ->
      #      [@one, @two, @three] = [one, two, three]
      #
-@@ -432,231 +432,231 @@ suite 'Classes', ->
+@@ -432,53 +432,53 @@ suite 'Classes', ->
      #      "#{@one}-#{@two}-#{@three}"
      #
      #  list = [3, 2, 1]
@@ -1040,7 +1033,7 @@ index be696e6..b4f428b 100644
 +    #  ok conn.out() это '3-2-1'
  
 -    test 'classes wrapped in decorators', ->
-+    test 'классes wrapped в decorators', ->
++    test 'classes wrapped в decorators', ->
  
        func = (klass) ->
          klass::prop = 'value'
@@ -1103,10 +1096,9 @@ index be696e6..b4f428b 100644
      #    Date
  
  
-   suite 'Inheritance and Super', ->
+@@ -486,177 +486,177 @@ suite 'Classes', ->
  
--    #test 'classes with a four-level inheritance chain', ->
-+    #test 'классes with a four-level inheritance chain', ->
+     #test 'classes with a four-level inheritance chain', ->
      #
 -    #  class Base
 +    #  класс Base
@@ -1207,7 +1199,7 @@ index be696e6..b4f428b 100644
 +    #  ok (новый SubClass).prop это 'top-super-sub'
  
 -    #test 'super() calls in constructors of classes that are defined as object properties', ->
-+    #test 'super() calls в constructors из классes that are defined as object properties', ->
++    #test 'super() calls в constructors из classes that are defined as object properties', ->
      #
 -    #  class Hive
 +    #  класс Hive
@@ -1279,8 +1271,7 @@ index be696e6..b4f428b 100644
      #    0: -> super
      #  ok B::[0]
  
--    test 'jashkenas/coffee-script#1482: classes can extend expressions', ->
-+    test 'jashkenas/coffee-script#1482: классes can extend expressions', ->
+     test 'jashkenas/coffee-script#1482: classes can extend expressions', ->
        id = (x) -> x
        nonce = {}
 -      class A then nonce: nonce
@@ -2190,7 +2181,7 @@ index f449973..729f3e6 100644
    test 'dynamically accessing non-identifierNames', ->
      nonceA = {}
 diff --git a/test/objects.coffee b/test/objects.coffee
-index f8762c5..63d929a 100644
+index 49d3c3c..5b70c43 100644
 --- a/test/objects.coffee
 +++ b/test/objects.coffee
 @@ -1,7 +1,7 @@
@@ -2369,7 +2360,7 @@ index f8762c5..63d929a 100644
      #
      #  obj or=
      #    three: 3
-@@ -208,6 +208,6 @@ suite 'Object Literals', ->
+@@ -208,64 +208,64 @@ suite 'Object Literals', ->
  
      #test 'jashkenas/coffee-script#2207: Immediate implicit closes don't close implicit objects', ->
      #  func = ->
@@ -2377,6 +2368,86 @@ index f8762c5..63d929a 100644
 +    #    key: для i в [1, 2, 3] то i
      #
      #  eq func().key.join(' '), '1 2 3'
+ 
+     test '#122 implicit object literal in conditional body', ->
+-      a = yes
++      a = да
+ 
+-      b = switch a
+-        when yes
+-          result: yes
+-        when no, 10
+-          result: no
++      b = выбор a
++        когда да
++          result: да
++        когда нет, 10
++          result: нет
+ 
+       ok b.result
+ 
+-      c = if a
+-        result: yes
++      c = если a
++        result: да
+ 
+       ok c.result
+ 
+       d = 42
+-      e = if 2 + 40 is d
+-        result: yes
++      e = если 2 + 40 это d
++        result: да
+ 
+       ok e.result
+ 
+-      f = unless a
+-        result: no
+-      else
+-        result: yes
++      f = еслине a
++        result: нет
++      иначе
++        result: да
+ 
+       ok f.result
+ 
+       g = 0
+       h = 1
+-      while g < h
+-        result: yes
++      пока g < h
++        result: да
+         g += 1
+ 
+       eq g, 1
+ 
+       i = 0
+       j = 1
+-      unless i > j
+-        result: yes
++      еслине i > j
++        result: да
+         i += 1
+ 
+       eq i, 1
+ 
+       k = [0..3]
+-      for l in k
+-        result: yes
++      для l в k
++        result: да
+ 
+       eq l, 3
+ 
+       m = [0..3]
+-      for n of m
+-        result: yes
++      для n из m
++        result: да
+ 
+       eq n, '3'
+ 
 diff --git a/test/operators.coffee b/test/operators.coffee
 index 54531e2..0ca2997 100644
 --- a/test/operators.coffee

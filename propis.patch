@@ -1,5 +1,5 @@
 diff --git a/src/grammar.pegjs b/src/grammar.pegjs
-index 704518e..ac7127e 100644
+index 73020d7..434a3c6 100644
 --- a/src/grammar.pegjs
 +++ b/src/grammar.pegjs
 @@ -5,25 +5,25 @@ var CS = require("./nodes"),
@@ -36,7 +36,7 @@ index 704518e..ac7127e 100644
      , '<<': CS.LeftShiftOp
      , '>>': CS.SignedRightShiftOp
      , '>>>': CS.UnsignedRightShiftOp
-@@ -195,15 +195,15 @@ postfixControlFlowExpression
+@@ -196,15 +196,15 @@ postfixControlFlowExpression
              postfix = postfixContainer[1],
              indicator = postfix.type;
          switch(indicator){
@@ -60,10 +60,10 @@ index 704518e..ac7127e 100644
              return rp(new constructor(cond, expr));
            case 'for-in':
              return rp(new CS.ForIn(postfix.val, postfix.key, postfix.list, postfix.step, postfix.filter, expr));
-@@ -501,8 +501,8 @@ spread
+@@ -669,8 +669,8 @@ spreadNoImplicitObjectCall
  
  conditional
-   = kw:(IF / UNLESS) _ cond:assignmentExpression body:conditionalBody elseClause:elseClause? {
+   = kw:(IF / UNLESS) _ cond:assignmentExpressionNoImplicitObjectCall body:conditionalBody elseClause:elseClause? {
 -      var constructor = 'unless' === kw ? CS.NegatedConditional : CS.Conditional;
 -      if('unless' === kw) cond = new CS.LogicalNotOp(cond).g();
 +      var constructor = 'еслине' === kw ? CS.NegatedConditional : CS.Conditional;
@@ -71,10 +71,10 @@ index 704518e..ac7127e 100644
        return rp(new constructor(cond, body.block, elseClause || null));
      }
    conditionalBody
-@@ -515,8 +515,8 @@ conditional
+@@ -683,8 +683,8 @@ conditional
  
  while
-   = kw:(WHILE / UNTIL) _ cond:assignmentExpression body:whileBody {
+   = kw:(WHILE / UNTIL) _ cond:assignmentExpressionNoImplicitObjectCall body:whileBody {
 -      var constructor = 'until' === kw ? CS.NegatedWhile : CS.While;
 -      if('until' === kw) cond = new CS.LogicalNotOp(cond).g();
 +      var constructor = 'покане' === kw ? CS.NegatedWhile : CS.While;
@@ -82,7 +82,7 @@ index 704518e..ac7127e 100644
        return rp(new constructor(cond, body.block));
      }
    whileBody = conditionalBody
-@@ -624,16 +624,16 @@ forIn
+@@ -784,16 +784,16 @@ forIn
  
  switch
    = SWITCH _ e:(expressionworthy / assignmentExpression)? body:switchBody {
@@ -102,7 +102,7 @@ index 704518e..ac7127e 100644
        }
    case
      = WHEN _ conditions:caseConditions body:caseBody {
-@@ -966,55 +966,55 @@ TERMINDENT = $(TERMINATOR INDENT)
+@@ -1126,55 +1126,55 @@ TERMINDENT = $(TERMINATOR INDENT)
  
  
  // keywords
@@ -202,7 +202,7 @@ index 704518e..ac7127e 100644
  
  JSKeywords
    = ("case" / "default" / "function" / "var" / "void" / "with" / "const" /
-@@ -1022,8 +1022,8 @@ JSKeywords
+@@ -1182,8 +1182,8 @@ JSKeywords
    "package" / "private" / "protected" / "public" / "static" / "yield") !identifierPart
  
  CSKeywords

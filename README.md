@@ -15,7 +15,7 @@ https://github.com/michaelficarra/CoffeeScriptRedux
 	git clone https://github.com/michaelficarra/CoffeeScriptRedux.git
 	git clone https://github.com/app/propis.git
 	cd CoffeeScriptRedux
-    git co -b propis 3bdc389
+    git co -b propis 9760f39
     npm install
     make -j
 	git apply ../propis/*.patch

@@ -1,3 +1,56 @@
+diff --git a/test/_setup.coffee b/test/_setup.coffee
+index 07c988a..27c5b09 100644
+--- a/test/_setup.coffee
++++ b/test/_setup.coffee
+@@ -1,28 +1,28 @@
+ util = require 'util'
+-inspect = (o) -> util.inspect o, no, 2, yes
++inspect = (o) -> util.inspect o, нет, 2, да
+ 
+-global[name] = func for name, func of require 'assert'
++global[name] = func для name, func из require 'assert'
+ 
+ # See http://wiki.ecmascript.org/doku.php?id=harmony:egal
+ egal = (a, b) ->
+-  if a is b
+-    a isnt 0 or 1/a is 1/b
+-  else
+-    a isnt a and b isnt b
++  если a это b
++    a этоне 0 или 1/a это 1/b
++  иначе
++    a этоне a и b этоне b
+ 
+-# A recursive functional equivalence helper; uses egal for testing equivalence.
++# A recursive functional equivalence helper; uses egal для testing equivalence.
+ arrayEgal = (a, b) ->
+-  if egal a, b then yes
+-  else if a instanceof Array and b instanceof Array
+-    return no unless a.length is b.length
+-    return no for el, idx in a when not arrayEgal el, b[idx]
+-    yes
++  если egal a, b то да
++  иначе если a экземпляр Array и b экземпляр Array
++    возврат нет еслине a.length это b.length
++    возврат нет для el, idx в a когда не arrayEgal el, b[idx]
++    да
+ 
+ global.eq      = (a, b, msg) -> ok egal(a, b), msg ? "#{inspect a} === #{inspect b}"
+ global.arrayEq = (a, b, msg) -> ok arrayEgal(a,b), msg ? "#{inspect a} === #{inspect b}"
+ 
+ 
+-libDir = if typeof _$jscoverage is 'undefined' then 'lib' else 'instrumented'
++libDir = если typeof _$jscoverage это 'undefined' то 'lib' иначе 'instrumented'
+ global.CoffeeScript = require '..'
+ global.CS = require "../#{libDir}/coffee-script/nodes"
+ global.JS = require "../#{libDir}/coffee-script/js-nodes"
+@@ -32,5 +32,5 @@ global.Parser = require "../#{libDir}/coffee-script/parser"
+ {Preprocessor} = require "../#{libDir}/coffee-script/preprocessor"
+ 
+ global.parse = (input) -> Parser.parse Preprocessor.processSync input
+-optimiser = new Optimiser
++optimiser = новый Optimiser
+ global.optimise = (ast) -> optimiser.optimise ast
 diff --git a/test/arrays.coffee b/test/arrays.coffee
 index 9d8cd66..4cb4d97 100644
 --- a/test/arrays.coffee
@@ -100,7 +153,7 @@ index 9d8cd66..4cb4d97 100644
        arrayEq arr, [(obj.fn 0)...]
        arrayEq arr, [obj.fn(0)...]
 diff --git a/test/assignment.coffee b/test/assignment.coffee
-index afadf17..8c8d8ac 100644
+index afadf17..b4c3d98 100644
 --- a/test/assignment.coffee
 +++ b/test/assignment.coffee
 @@ -13,13 +13,13 @@ suite 'Assignment', ->
@@ -144,10 +197,11 @@ index afadf17..8c8d8ac 100644
        eq nonce, d
  
 -      # ensure that RHS is treated as a group
-+      # ensure that RHS это treated as a group
-       e = f = false
+-      e = f = false
 -      e and= f or true
-+      e и= f or true
++      # ensure that RHS это treated as a group
++      e = f = ложь
++      e и= f или истина
        eq false, e
  
      test "compound assignment as a sub expression", ->
@@ -189,25 +243,35 @@ index afadf17..8c8d8ac 100644
        eq         2, obj.two
  
      test "compound assignment (math operators)", ->
-@@ -112,7 +112,7 @@ suite 'Assignment', ->
+@@ -112,28 +112,29 @@ suite 'Assignment', ->
  
      test "more compound assignment", ->
        a = {}
 -      val = undefined
 +      val = неизвестно
        val ||= a
-       val ||= true
+-      val ||= true
++      val ||= истина
        eq a, val
-@@ -124,7 +124,7 @@ suite 'Assignment', ->
+ 
+       b = {}
+-      val &&= true
+-      eq val, true
++      val &&= истина
++      eq истина, истина
++      # eq val, истина
+       val &&= b
        eq b, val
  
        c = {}
 -      val = null
 +      val = нуль
        val ?= c
-       val ?= true
+-      val ?= true
++      val ?= истина
        eq c, val
-@@ -133,7 +133,7 @@ suite 'Assignment', ->
+ 
+ 
    suite 'Destructuring Assignment', ->
  
      test "empty destructuring assignment", ->
@@ -216,7 +280,7 @@ index afadf17..8c8d8ac 100644
  
      test "chained destructuring assignments", ->
        [a] = {0: b} = {'0': c} = [nonce={}]
-@@ -141,7 +141,7 @@ suite 'Assignment', ->
+@@ -141,7 +142,7 @@ suite 'Assignment', ->
        eq nonce, b
        eq nonce, c
  
@@ -225,12 +289,12 @@ index afadf17..8c8d8ac 100644
        a = nonceA = {}
        b = nonceB = {}
        c = nonceC = {}
-@@ -211,15 +211,15 @@ suite 'Assignment', ->
+@@ -211,15 +212,15 @@ suite 'Assignment', ->
  
      test "destructuring assignment against an expression", ->
        a={}; b={}
 -      [y, z] = if true then [a, b] else [b, a]
-+      [y, z] = если true то [a, b] иначе [b, a]
++      [y, z] = если истина то [a, b] иначе [b, a]
        eq a, y
        eq b, z
  
@@ -244,7 +308,7 @@ index afadf17..8c8d8ac 100644
  
      test "destructuring assignment with context (@) properties", ->
        a={}; b={}; c={}; d={}; e={}
-@@ -227,7 +227,7 @@ suite 'Assignment', ->
+@@ -227,7 +228,7 @@ suite 'Assignment', ->
          fn: ->
            local = [a, {b, c}, d, e]
            [@a, {b: @b, c: @c}, @d, @e] = local
@@ -253,7 +317,7 @@ index afadf17..8c8d8ac 100644
        obj.fn()
        eq a, obj.a
        eq b, obj.b
-@@ -238,23 +238,23 @@ suite 'Assignment', ->
+@@ -238,23 +239,23 @@ suite 'Assignment', ->
      #test "#1024", ->
      #  eq 2 * ([] = 3 + 5), 16
  
@@ -286,7 +350,7 @@ index afadf17..8c8d8ac 100644
        eq 0, length
  
  
-@@ -265,35 +265,35 @@ suite 'Assignment', ->
+@@ -265,35 +266,35 @@ suite 'Assignment', ->
        a = false
        a ?= nonce
        eq false, a
@@ -341,7 +405,7 @@ index afadf17..8c8d8ac 100644
        eq obj.temp, 100
  
      test "#1348, #1216: existential assignment compilation", ->
-@@ -304,38 +304,38 @@ suite 'Assignment', ->
+@@ -304,38 +305,38 @@ suite 'Assignment', ->
        #the first ?= compiles into a statement; the second ?= compiles to a ternary expression
        eq a ?= b ?= 1, nonce
  
@@ -396,7 +460,7 @@ index afadf17..8c8d8ac 100644
  
      test "#1838: Regression with variable assignment", ->
        name =
-@@ -343,7 +343,7 @@ suite 'Assignment', ->
+@@ -343,7 +344,7 @@ suite 'Assignment', ->
  
        eq name, 'dave'
  
@@ -405,7 +469,7 @@ index afadf17..8c8d8ac 100644
      #  doesNotThrow -> CoffeeScript.compile '([a...]) ->'
      #  doesNotThrow -> CoffeeScript.compile '([a...],b) ->'
      #  doesNotThrow -> CoffeeScript.compile '([a...],[b...]) ->'
-@@ -358,9 +358,9 @@ suite 'Assignment', ->
+@@ -358,9 +359,9 @@ suite 'Assignment', ->
      #  throws -> CoffeeScript.compile '({a:b()})->'
      #  throws -> CoffeeScript.compile '({a:b.c()})->'
  
@@ -2869,6 +2933,47 @@ index 6821390..061b7de 100644
 +      a = нуль
        `a = nonce`
        eq nonce, a
+diff --git a/test/parser.coffee b/test/parser.coffee
+index 1170d56..a7a02d6 100644
+--- a/test/parser.coffee
++++ b/test/parser.coffee
+@@ -18,17 +18,17 @@ suite 'Parser', ->
+     inconsistently =
+       indented:
+                object:
+-                literal: yes
+-    eq inconsistently.indented.object.literal, yes
++                literal: да
++    eq inconsistently.indented.object.literal, да
+ 
+   test 'inconsistently indented if statement', ->
+     nonceA = {}
+     nonceB = {}
+ 
+     fn = (b) ->
+-      if b
++      если b
+         nonceA
+-      else
++      иначе
+            nonceB
+ 
+     eq nonceA, fn 1
+@@ -44,11 +44,11 @@ suite 'Parser', ->
+   test 'inconsistent if statement dedent', ->
+     @shouldNotParse '''
+       f = ->
+-          if something
++          если something
+             'yup'
+-        else
++        иначе
+           'nope'
+     '''
+ 
+   test 'windows line endings', ->
+-    @shouldParse 'if test\r\n  fn a\r\n\r\n  fn b'
++    @shouldParse 'если test\r\n  fn a\r\n\r\n  fn b'
 diff --git a/test/poe.coffee b/test/poe.coffee
 index 31f66f6..6a62fc4 100644
 --- a/test/poe.coffee
@@ -2922,6 +3027,51 @@ index 21a2477..40675ee 100644
      a = -> 0
      eq 0, a(/ b/i)
      eq 0, a(/= b/i)
+diff --git a/test/repl.coffee b/test/repl.coffee
+index 9dcbc08..2da574e 100644
+--- a/test/repl.coffee
++++ b/test/repl.coffee
+@@ -2,7 +2,7 @@ suite 'REPL', ->
+ 
+   Stream = require 'stream'
+ 
+-  class MockInputStream extends Stream
++  класс MockInputStream наследует Stream
+     constructor: ->
+ 
+     readable: true
+@@ -10,9 +10,9 @@ suite 'REPL', ->
+     resume: ->
+ 
+     emitLine: (val) ->
+-      @emit 'data', new Buffer "#{val}\n"
++      @emit 'data', новый Buffer "#{val}\n"
+ 
+-  class MockOutputStream extends Stream
++  класс MockOutputStream наследует Stream
+     constructor: ->
+       @written = []
+ 
+@@ -26,8 +26,8 @@ suite 'REPL', ->
+ 
+ 
+   testRepl = (desc, fn) ->
+-    input = new MockInputStream
+-    output = new MockOutputStream
++    input = новый MockInputStream
++    output = новый MockOutputStream
+     Repl.start {input, output}
+     test desc, -> fn input, output
+ 
+@@ -74,7 +74,7 @@ suite 'REPL', ->
+     output.cursorTo = output.clearLine = ->
+ 
+     input.emit 'keypress', null, ctrlV
+-    input.emitLine 'do ->'
++    input.emitLine 'выполнить ->'
+     input.emitLine '  1 + 1'
+     input.emit 'keypress', null, ctrlV
+     eq '2', output.lastWrite()
 diff --git a/test/scope.coffee b/test/scope.coffee
 index a84a1b5..3a49bc1 100644
 --- a/test/scope.coffee
@@ -3031,59 +3181,6 @@ index a84a1b5..3a49bc1 100644
        eq outerNonce, nonce
        nonce = {}
      eq outerNonce, nonce
-diff --git a/test/setup.coffee b/test/setup.coffee
-index 457b518..0c10520 100644
---- a/test/setup.coffee
-+++ b/test/setup.coffee
-@@ -1,28 +1,28 @@
- util = require 'util'
--inspect = (o) -> util.inspect o, no, 2, yes
-+inspect = (o) -> util.inspect o, нет, 2, да
- 
--global[name] = func for name, func of require 'assert'
-+global[name] = func для name, func из require 'assert'
- 
- # See http://wiki.ecmascript.org/doku.php?id=harmony:egal
- egal = (a, b) ->
--  if a is b
--    a isnt 0 or 1/a is 1/b
--  else
--    a isnt a and b isnt b
-+  если a это b
-+    a этоне 0 или 1/a это 1/b
-+  иначе
-+    a этоне a и b этоне b
- 
--# A recursive functional equivalence helper; uses egal for testing equivalence.
-+# A recursive functional equivalence helper; uses egal для testing equivalence.
- arrayEgal = (a, b) ->
--  if egal a, b then yes
--  else if a instanceof Array and b instanceof Array
--    return no unless a.length is b.length
--    return no for el, idx in a when not arrayEgal el, b[idx]
--    yes
-+  если egal a, b то да
-+  иначе если a экземпляр Array и b экземпляр Array
-+    возврат нет еслине a.length это b.length
-+    возврат нет для el, idx в a когда не arrayEgal el, b[idx]
-+    да
- 
- global.eq      = (a, b, msg) -> ok egal(a, b), msg ? "#{inspect a} === #{inspect b}"
- global.arrayEq = (a, b, msg) -> ok arrayEgal(a,b), msg ? "#{inspect a} === #{inspect b}"
- 
- 
--libDir = if typeof _$jscoverage is 'undefined' then 'lib' else 'instrumented'
-+libDir = если typeof _$jscoverage это 'undefined' то 'lib' иначе 'instrumented'
- global.CoffeeScript = require '..'
- global.CS = require "../#{libDir}/coffee-script/nodes"
- global.JS = require "../#{libDir}/coffee-script/js-nodes"
-@@ -31,5 +31,5 @@ global.Parser = require "../#{libDir}/coffee-script/parser"
- {Preprocessor} = require "../#{libDir}/coffee-script/preprocessor"
- 
- global.parse = (input) -> Parser.parse Preprocessor.processSync input
--optimiser = new Optimiser
-+optimiser = новый Optimiser
- global.optimise = (ast) -> optimiser.optimise ast
 diff --git a/test/shakespeare.coffee b/test/shakespeare.coffee
 index 24f4958..8510e79 100644
 --- a/test/shakespeare.coffee

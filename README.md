@@ -12,14 +12,14 @@ https://github.com/michaelficarra/CoffeeScriptRedux
 
 ### Процедура сборки из исходников (зависимости - ниже)
 
-	git clone https://github.com/michaelficarra/CoffeeScriptRedux.git
-	git clone https://github.com/app/propis.git
-	cd CoffeeScriptRedux
-    git co -b propis 9760f39
-    npm install
-    make -j
-	git apply ../propis/*.patch
-    make -j parser
+  git clone https://github.com/michaelficarra/CoffeeScriptRedux.git
+  git clone https://github.com/app/propis.git
+  cd CoffeeScriptRedux
+  git co -b propis a4422f8
+  npm install
+  make -j
+  git apply ../propis/*.patch
+  make -j parser
 
 ### Запуск тестов
 

@@ -1,15 +1,15 @@
 diff --git a/src/grammar.pegjs b/src/grammar.pegjs
-index 73020d7..434a3c6 100644
+index 0d1086c..8351170 100644
 --- a/src/grammar.pegjs
 +++ b/src/grammar.pegjs
-@@ -5,25 +5,25 @@ var CS = require("./nodes"),
-     { ';': CS.SeqOp
-     , '=': CS.AssignOp
+@@ -3,25 +3,25 @@ var CS = require("./nodes"),
+ 
+   constructorLookup =
+     { '||': CS.LogicalOrOp
+-    , or: CS.LogicalOrOp
      , '&&': CS.LogicalAndOp
 -    , and: CS.LogicalAndOp
 +    , 'и': CS.LogicalAndOp
-     , '||': CS.LogicalOrOp
--    , or: CS.LogicalOrOp
 +    , 'или': CS.LogicalOrOp
      , '|': CS.BitOrOp
      , '^': CS.BitXorOp
@@ -25,10 +25,10 @@ index 73020d7..434a3c6 100644
      , '>=': CS.GTEOp
      , '<': CS.LTOp
      , '>': CS.GTOp
--    , extends: CS.ExtendsOp
--    , instanceof: CS.InstanceofOp
--    , in: CS.InOp
--    , of: CS.OfOp
+-    , 'extends': CS.ExtendsOp
+-    , 'instanceof': CS.InstanceofOp
+-    , 'in': CS.InOp
+-    , 'of': CS.OfOp
 +    , 'наследует': CS.ExtendsOp
 +    , 'экземпляр': CS.InstanceofOp
 +    , 'в': CS.InOp
@@ -36,7 +36,45 @@ index 73020d7..434a3c6 100644
      , '<<': CS.LeftShiftOp
      , '>>': CS.SignedRightShiftOp
      , '>>>': CS.UnsignedRightShiftOp
-@@ -196,15 +196,15 @@ postfixControlFlowExpression
+@@ -33,19 +33,19 @@ var CS = require("./nodes"),
+     , '**': CS.ExpOp
+     },
+ 
+-  negatableOps = ['instanceof', 'in', 'of'],
+-  chainableComparisonOps = ['<=', '>=', '<', '>', '==', 'is', '!=', 'isnt'],
++  negatableOps = ['экземпляр', 'в', 'из'],
++  chainableComparisonOps = ['<=', '>=', '<', '>', '==', 'это', '!=', 'этоне'],
+ 
+   rightAssocOps = [';', '=', '?', '**'],
+   precedenceHierarchy =
+-    [ ['or', '||']
+-    , ['and', '&&']
++    [ ['или', '||']
++    , ['и', '&&']
+     , ['|']
+     , ['^']
+     , ['&']
+     , ['?']
+-    , ['is', '==', 'isnt', '!=']
+-    , ['instanceof', 'in', 'of', '<=', '>=', '<', '>']
++    , ['это', '==', 'этоне', '!=']
++    , ['экземпляр', 'в', 'из', '<=', '>=', '<', '>']
+     , ['<<', '>>', '>>>']
+     , ['+', '-']
+     , ['*', '/', '%']
+@@ -98,9 +98,9 @@ var CS = require("./nodes"),
+     , '+': CS.UnaryPlusOp
+     , '-': CS.UnaryNegateOp
+     , '!': CS.LogicalNotOp
+-    , 'not': CS.LogicalNotOp
++    , 'не': CS.LogicalNotOp
+     , '~': CS.BitNotOp
+-    , 'do': CS.DoOp
++    , 'выполнить': CS.DoOp
+     , 'typeof': CS.TypeofOp
+     , 'delete': CS.DeleteOp
+     },
+@@ -360,15 +360,15 @@ postfixControlFlowExpression
              postfix = postfixContainer[1],
              indicator = postfix.type;
          switch(indicator){
@@ -60,7 +98,7 @@ index 73020d7..434a3c6 100644
              return rp(new constructor(cond, expr));
            case 'for-in':
              return rp(new CS.ForIn(postfix.val, postfix.key, postfix.list, postfix.step, postfix.filter, expr));
-@@ -669,8 +669,8 @@ spreadNoImplicitObjectCall
+@@ -658,8 +658,8 @@ spreadNoImplicitObjectCall
  
  conditional
    = kw:(IF / UNLESS) _ cond:assignmentExpressionNoImplicitObjectCall body:conditionalBody elseClause:elseClause? {
@@ -71,7 +109,7 @@ index 73020d7..434a3c6 100644
        return rp(new constructor(cond, body.block, elseClause || null));
      }
    conditionalBody
-@@ -683,8 +683,8 @@ conditional
+@@ -672,8 +672,8 @@ conditional
  
  while
    = kw:(WHILE / UNTIL) _ cond:assignmentExpressionNoImplicitObjectCall body:whileBody {
@@ -82,7 +120,7 @@ index 73020d7..434a3c6 100644
        return rp(new constructor(cond, body.block));
      }
    whileBody = conditionalBody
-@@ -784,16 +784,16 @@ forIn
+@@ -773,16 +773,16 @@ forIn
  
  switch
    = SWITCH _ e:(expressionworthy / assignmentExpression)? body:switchBody {
@@ -102,7 +140,7 @@ index 73020d7..434a3c6 100644
        }
    case
      = WHEN _ conditions:caseConditions body:caseBody {
-@@ -1126,55 +1126,55 @@ TERMINDENT = $(TERMINATOR INDENT)
+@@ -1116,55 +1116,55 @@ TERMINDENT = $(TERMINATOR INDENT)
  
  
  // keywords
@@ -202,7 +240,7 @@ index 73020d7..434a3c6 100644
  
  JSKeywords
    = ("case" / "default" / "function" / "var" / "void" / "with" / "const" /
-@@ -1182,8 +1182,8 @@ JSKeywords
+@@ -1172,8 +1172,8 @@ JSKeywords
    "package" / "private" / "protected" / "public" / "static" / "yield") !identifierPart
  
  CSKeywords

@@ -2174,7 +2174,7 @@ index 2d25bf1..90f131e 100644
 +    ok (-6e4 < (__DATETIMEMS__ - новый Date) < 6e4)
      ok 1e12 < __DATETIMEMS__ < 1e13
 diff --git a/test/member-access.coffee b/test/member-access.coffee
-index f449973..729f3e6 100644
+index d8abd40..bac3edd 100644
 --- a/test/member-access.coffee
 +++ b/test/member-access.coffee
 @@ -1,12 +1,12 @@
@@ -2244,8 +2244,14 @@ index f449973..729f3e6 100644
  
    test 'dynamically accessing non-identifierNames', ->
      nonceA = {}
+@@ -58,4 +58,4 @@ suite 'Member Access', ->
+     eq nonceB, obj['c-d']
+ 
+   test '#171: dynamic member access on list comprehensions', ->
+-    eq 4, (x ** 2 for x in [0..4])[2]
++    eq 4, (x ** 2 для x в [0..4])[2]
 diff --git a/test/objects.coffee b/test/objects.coffee
-index 49d3c3c..5b70c43 100644
+index 8e54605..9a71369 100644
 --- a/test/objects.coffee
 +++ b/test/objects.coffee
 @@ -1,7 +1,7 @@

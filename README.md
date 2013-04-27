@@ -26,16 +26,5 @@ propis
 
 
 ### Зависимости
-
-#### Зависимости для Ubuntu 12.10  
-Перед началом сборки необходимо установить nodejs (проверено для 0.8.16)  
-и npm (проверено для 1.1.69)  
-Пакеты можно взять, например, из репозитария https://launchpad.net/~chris-lea/+archive/node.js/
-
-	sudo add-apt-repository ppa:chris-lea/node.js
-	sudo apt-get update & sudo apt-get install nodejs
-	sudo apt-get install npm
-	
-
-
-
+Необходимо установить nodejs и npm (последний может быть частью первого)
+Смотри ["Установка node.js через менеджер пакетов"](https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager)

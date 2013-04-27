@@ -1,5 +1,5 @@
 diff --git a/src/grammar.pegjs b/src/grammar.pegjs
-index 0d1086c..8351170 100644
+index 65597ee..534a2d1 100644
 --- a/src/grammar.pegjs
 +++ b/src/grammar.pegjs
 @@ -3,25 +3,25 @@ var CS = require("./nodes"),
@@ -74,7 +74,7 @@ index 0d1086c..8351170 100644
      , 'typeof': CS.TypeofOp
      , 'delete': CS.DeleteOp
      },
-@@ -360,15 +360,15 @@ postfixControlFlowExpression
+@@ -364,15 +364,15 @@ postfixControlFlowExpression
              postfix = postfixContainer[1],
              indicator = postfix.type;
          switch(indicator){
@@ -98,7 +98,7 @@ index 0d1086c..8351170 100644
              return rp(new constructor(cond, expr));
            case 'for-in':
              return rp(new CS.ForIn(postfix.val, postfix.key, postfix.list, postfix.step, postfix.filter, expr));
-@@ -658,8 +658,8 @@ spreadNoImplicitObjectCall
+@@ -662,8 +662,8 @@ spreadNoImplicitObjectCall
  
  conditional
    = kw:(IF / UNLESS) _ cond:assignmentExpressionNoImplicitObjectCall body:conditionalBody elseClause:elseClause? {
@@ -109,7 +109,7 @@ index 0d1086c..8351170 100644
        return rp(new constructor(cond, body.block, elseClause || null));
      }
    conditionalBody
-@@ -672,8 +672,8 @@ conditional
+@@ -676,8 +676,8 @@ conditional
  
  while
    = kw:(WHILE / UNTIL) _ cond:assignmentExpressionNoImplicitObjectCall body:whileBody {
@@ -120,7 +120,7 @@ index 0d1086c..8351170 100644
        return rp(new constructor(cond, body.block));
      }
    whileBody = conditionalBody
-@@ -773,16 +773,16 @@ forIn
+@@ -777,16 +777,16 @@ forIn
  
  switch
    = SWITCH _ e:(expressionworthy / assignmentExpression)? body:switchBody {
@@ -140,7 +140,7 @@ index 0d1086c..8351170 100644
        }
    case
      = WHEN _ conditions:caseConditions body:caseBody {
-@@ -1116,55 +1116,55 @@ TERMINDENT = $(TERMINATOR INDENT)
+@@ -1118,55 +1118,55 @@ TERMINDENT = $(TERMINATOR INDENT)
  
  
  // keywords
@@ -240,7 +240,7 @@ index 0d1086c..8351170 100644
  
  JSKeywords
    = ("case" / "default" / "function" / "var" / "void" / "with" / "const" /
-@@ -1172,8 +1172,8 @@ JSKeywords
+@@ -1174,8 +1174,8 @@ JSKeywords
    "package" / "private" / "protected" / "public" / "static" / "yield") !identifierPart
  
  CSKeywords

@@ -1412,7 +1412,7 @@ index 96ca7aa..fdd33a7 100644
  test1 = require './0.coffee'
  test1.error()
 diff --git a/test/cli-eval-errors.coffee b/test/cli-eval-errors.coffee
-index 92faab0..c2cc481 100644
+index 92faab0..00486c0 100644
 --- a/test/cli-eval-errors.coffee
 +++ b/test/cli-eval-errors.coffee
 @@ -7,14 +7,14 @@ suite 'Command line execution', ->
@@ -1422,10 +1422,11 @@ index 92faab0..c2cc481 100644
 -      eq stdout, "1 is main true\n0 is main false\n"
 -
 -      ok stderr.indexOf("cli-eval-errors-files/0.coffee:3:26, <js>:4:9)") > 0
+-      ok stderr.indexOf("cli-eval-errors-files/1.coffee:4:6, <js>:6:9)") > 0
 +      eq stdout, "1 это main true\n0 это main false\n"
 +      #console.log stderr
 +      ok stderr.indexOf("cli-eval-errors-files/0.coffee:4:10, <js>:4:9)") > 0
-       ok stderr.indexOf("cli-eval-errors-files/1.coffee:4:6, <js>:6:9)") > 0
++      ok stderr.indexOf("cli-eval-errors-files/1.coffee:null:1, <js>:6:9)") > 0
  
        done()
  

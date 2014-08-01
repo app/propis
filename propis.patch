@@ -89,8 +89,8 @@ index 65597ee..534a2d1 100644
              return rp(new constructor(cond, expr, null));
 -          case 'while':
 -          case 'until':
--            constructor = ('unless' === indicator) ? CS.NegatedWhile : CS.While;
--            cond = ('unless' === indicator) ? new CS.LogicalNotOp(postfix.cond).g() : postfix.cond;
+-            constructor = ('until' === indicator) ? CS.NegatedWhile : CS.While;
+-            cond = ('until' === indicator) ? new CS.LogicalNotOp(postfix.cond).g() : postfix.cond;
 +          case 'пока':
 +          case 'покане':
 +            constructor = ('еслине' === indicator) ? CS.NegatedWhile : CS.While;
@@ -249,5 +249,5 @@ index 65597ee..534a2d1 100644
 +  = ("неизвестно" / "еслине" / "покане" / "цикл" / "выкл" / "шаг" / "когда" /
 +  "или" / "этоне" / "это" / "нет" / "да" / "не" / "вкл" / "из" / "то" / "и") !identifierPart
  
- StandardPredefinedMacros
-   = "__" ("FILENAME" / "LINE" / "DATETIMEMS" / "DATE" / "TIME") "__"
+ reserved
+   = $(macro)
